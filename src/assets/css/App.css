@@ -1,0 +1,12 @@
+@import "tailwindcss";
+@import "./themes/index.css";
+
+@import "@fontsource/manrope/latin.css";
+@import "@fontsource/work-sans/latin.css";
+
+body {
+	width: 100vw;
+	height: 100vh;
+	margin: 0;
+	padding: 0;
+}

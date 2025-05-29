@@ -1,0 +1,64 @@
+@theme {
+	--color-primary-100: oklch(92.18% 0.049 224.39);
+	--color-primary-200: oklch(84.52% 0.097 224.95);
+	--color-primary-300: oklch(78.33% 0.132 228.53);
+	--color-primary-400: oklch(73.26% 0.153 234.7);
+	--color-primary-500: oklch(59.78% 0.126 234.77);
+	--color-primary-600: oklch(51.4% 0.107 234.22);
+	--color-primary-700: oklch(41.64% 0.086 233.36);
+	--color-primary-800: oklch(31.29% 0.062 231.95);
+
+	--color-secondary-100: oklch(93.29% 0.038 63.54);
+	--color-secondary-200: oklch(86.79% 0.078 62.71);
+	--color-secondary-300: oklch(80.02% 0.12 60.71);
+	--color-secondary-400: oklch(74.28% 0.153 57.81);
+	--color-secondary-500: oklch(68.77% 0.173 51.89);
+	--color-secondary-600: oklch(58.31% 0.144 52.93);
+	--color-secondary-700: oklch(47.2% 0.114 53.85);
+	--color-secondary-800: oklch(36.56% 0.086 54.92);
+
+	--color-tertiary-100: oklch(90.31% 0.039 359.58);
+	--color-tertiary-200: oklch(79.83% 0.087 1.7);
+	--color-tertiary-300: oklch(70.91% 0.131 3.79);
+	--color-tertiary-400: oklch(62.26% 0.177 7.73);
+	--color-tertiary-500: oklch(55.63% 0.195 12.05);
+	--color-tertiary-600: oklch(47.02% 0.163 11.39);
+	--color-tertiary-700: oklch(38.89% 0.132 10.88);
+	--color-tertiary-800: oklch(29.31% 0.093 9.19);
+
+	--color-font-100: oklch(1 0 0);
+	--color-font-200: oklch(0.931 0 0);
+	--color-font-300: oklch(0.8638 0 0);
+	--color-font-400: oklch(0.7921 0 0);
+	--color-font-500: oklch(0.7187 0 0);
+	--color-font-600: oklch(0.6467 0 0);
+	--color-font-700: oklch(0.5693 0 0);
+	--color-font-800: oklch(0.4891 0 102.07);
+	--color-font-900: oklch(0.4091 0 0);
+	--color-font-1000: oklch(0.3211 0 0);
+
+	--color-feedback-success-100: oklch(0.8627 0.1247 158.94);
+	--color-feedback-success-200: oklch(0.7139 0.1762 153.08);
+	--color-feedback-warning-100: oklch(0.8969 0.1648 95.17);
+	--color-feedback-warning-200: oklch(0.7857 0.160655 91.4);
+	--color-feedback-error-100: oklch(0.6471 0.2288 22.47);
+	--color-feedback-error-200: oklch(0.5404 0.2189 27.17);
+
+	/*----| Fonts config |-------------------------------------------------------------------------------*/
+
+	/* Font family */
+	--font-voces: "Monrope", "Helvetica Neue", Arial, sans;
+	--font-work-sans: "Work Sans", "Helvetica Neue", Arial, sans;
+
+	/* Font size */
+	--text-header-1: 2.027rem;
+	--text-header-2: 1.802rem;
+	--text-header-3: 1.602rem;
+	--text-header-4: 1.424rem;
+	--text-header-5: 1.266rem;
+	--text-header-6: 1.125rem;
+	--text-body-1: 1rem;
+	--text-body-2: 0.9rem;
+	--text-body-3: 0.85rem;
+	--text-body-4: 0.8rem;
+}
