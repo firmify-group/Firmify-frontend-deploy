@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./themes/index.css";
+@import "./components/container.css";
 
 @import "@fontsource/manrope/latin.css";
 @import "@fontsource/work-sans/latin.css";
@@ -13,5 +14,5 @@
 
 	display: flex;
 	flex-direction: row;
-	gap: 0.5rem;
+	gap: 1.25rem;
 }

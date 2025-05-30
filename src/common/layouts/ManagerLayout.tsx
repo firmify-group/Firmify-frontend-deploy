@@ -1,9 +1,7 @@
-import { Fragment } from 'react/jsx-runtime';
-
 const ManagerLayout: React.FC = () => {
 	return (
 		<>
-			<nav className="h-full w-64 bg-font-100 rounded-xl shadow-2xl">
+			<nav className="h-full w-64 container-base">
 				<ul>
 					<li>Inicio</li>
 					<li>Solicitudes</li>
@@ -13,9 +11,9 @@ const ManagerLayout: React.FC = () => {
 					<li>Cerrar sesión</li>
 				</ul>
 			</nav>
-			<main className="flex flex-row h-full w-full">
-				<header className="h-full w-64 bg-font-100 rounded-xl shadow-2xl">Titulo</header>
-				<section className="h-full w-64 bg-font-100 rounded-xl shadow-2xl">Body</section>
+			<main className="flex flex-col items-baseline size-full gap-5 *:w-full *:p-5">
+				<header className="h-24 container-base">Titulo</header>
+				<section className="h-full container-base">Body</section>
 			</main>
 		</>
 	);

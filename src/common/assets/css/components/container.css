@@ -1,0 +1,5 @@
+@layer components {
+    .container-base {
+        @apply p-5 rounded-xl bg-font-100 shadow-xl;
+    }
+}
