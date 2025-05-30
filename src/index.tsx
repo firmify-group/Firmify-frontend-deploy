@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router';
 import router from './common/router';
-import './assets/css/App.css';
+import './common/assets/css/App.css';
 
 const rootEl = document.getElementById('root');
 if (rootEl) {
