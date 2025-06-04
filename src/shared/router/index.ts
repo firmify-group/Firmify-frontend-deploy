@@ -4,7 +4,7 @@ import { createBrowserRouter } from 'react-router';
 const router = createBrowserRouter([
 	{
 		path: '/',
-		Component: React.lazy(() => import('../layouts/ManagerLayout')),
+		Component: React.lazy(() => import('@feature/auth/pages/LoginPage.tsx')),
 	},
 ]);
 
