@@ -1,0 +1,52 @@
+@layer components {
+	.header-1 {
+		@apply text-header-1 text-font-1000 font-manrope font-bold leading-none tracking-wide;
+	}
+
+	.header-2 {
+		@apply text-header-2 font-manrope font-bold leading-none tracking-wide;
+	}
+
+	.header-3 {
+		@apply text-header-3 font-manrope font-bold leading-none tracking-normal;
+	}
+
+	.header-4 {
+		@apply text-header-4   font-manrope font-bold leading-none tracking-normal;
+	}
+
+	.header-5 {
+		@apply text-header-5   font-manrope font-bold leading-none tracking-normal;
+	}
+
+	.header-6 {
+		@apply text-header-6   font-manrope font-medium leading-none tracking-wider;
+	}
+
+	.body-1 {
+		@apply text-body-1  font-work-sans font-normal leading-normal tracking-wide;
+	}
+	.body-2 {
+		@apply text-body-2  font-work-sans font-normal leading-normal tracking-wide;
+	}
+
+	.body-3 {
+		@apply text-body-3 font-work-sans font-normal leading-normal tracking-wide;
+	}
+
+	.body-4 {
+		@apply text-body-4 font-work-sans font-normal leading-normal tracking-wide;
+	}
+
+	.font-link {
+    @apply text-body-1 text-primary-600 underline cursor-pointer font-work-sans font-normal leading-normal tracking-wide hover:text-primary-700 active:text-primary-800 transition-colors duration-200;
+	}
+
+	.font-placeholder {
+		@apply text-body-1 text-font-1000 font-work-sans font-normal leading-none tracking-wide;
+	}
+
+	.font-cursive {
+		@apply text-body-2 text-font-1000  font-work-sans font-normal italic leading-none tracking-wide;
+	}
+}
