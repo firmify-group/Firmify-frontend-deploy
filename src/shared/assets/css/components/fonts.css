@@ -39,7 +39,7 @@
 	}
 
 	.font-link {
-    @apply text-body-1 text-primary-600 underline cursor-pointer font-work-sans font-normal leading-normal tracking-wide hover:text-primary-700 active:text-primary-800 transition-colors duration-200;
+    @apply text-body-1 text-primary-600 underline cursor-pointer font-work-sans font-normal leading-normal tracking-wider hover:text-primary-700 active:text-primary-800 transition-colors duration-200;
 	}
 
 	.font-placeholder {

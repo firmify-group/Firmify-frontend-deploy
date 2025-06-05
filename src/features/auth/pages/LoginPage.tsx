@@ -18,7 +18,7 @@ const ManagerLayout: React.FC = () => {
 						</h2>
 					</div>
 				</header>
-				<main className="size-full flex flex-col place-content-center px-40 2xl:px-52 gap-9">
+				<main className="size-full flex flex-col place-content-center px-36 2xl:px-52 gap-9">
 					<header className="h-fit w-full gap-3 flex flex-col">
 						<h1 className="header-2  2xl:header-1  text-font-1000">
 							Bienvenido de vuelta <span className="emoji">👋</span>
@@ -74,13 +74,10 @@ const ManagerLayout: React.FC = () => {
 						</button>
 					</form>
 					<footer className="flex gap-2 h-16 items-end">
-						<ArrowLeftIcon className="size-6 text-primary-500" />
-						<span className="font-link">Volver a la pagina de inicio.</span>
+						<ArrowLeftIcon className="size-6 text-font-900" />
+						<span className="body-1 text-font-900">Volver a la pagina de inicio.</span>
 					</footer>
 				</main>
-				<footer className="h-24 w-full header-7 text-center text-font-800">
-					© 2023 ALL RIGHTS RESERVED
-				</footer>
 			</article>
 			<aside className="bg-primary-500 size-full p-32 flex flex-col place-content-center gap-10 text-center rounded-2xl">
 				<header>
