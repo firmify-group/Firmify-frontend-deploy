@@ -3,18 +3,17 @@ import { createBrowserRouter } from 'react-router';
 
 const router = createBrowserRouter([
 	{
-		path: "/",
+		path: '/',
 		children: [
 			{
 				// path: "/", //Se redirecciona de forma automatica
-				path: "/landing", //Se redirecciona de forma automatica
+				path: '/landing', //Se redirecciona de forma automatica
 				Component: React.lazy(() => import('src/features/public/pages/LandingPage')),
-
 			},
 			{
 				path: '/',
 				Component: React.lazy(() => import('src/features/public/pages/LoginPage')),
-			}
+			},
 		],
 	},
 	{
@@ -26,13 +25,11 @@ const router = createBrowserRouter([
 					{
 						path: 'home',
 						Component: React.lazy(() => import('@feature/admin/pages/HomePage.tsx')),
-					}
-
-				]
-			}
-		]
-	}
-
+					},
+				],
+			},
+		],
+	},
 ]);
 
 export default router;
