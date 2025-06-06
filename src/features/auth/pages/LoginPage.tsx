@@ -3,7 +3,7 @@ import decorationImg from '@shared/assets/img/folder.png';
 import logoImg from '@shared/assets/img/logo.png';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 
-const ManagerLayout: React.FC = () => {
+const LoginPage: React.FC = () => {
 	return (
 		<>
 			<article className="size-full flex flex-col items-baseline gap-5 *:w-full *: ">
@@ -18,7 +18,7 @@ const ManagerLayout: React.FC = () => {
 						</h2>
 					</div>
 				</header>
-				<main className="size-full flex flex-col place-content-center px-36 2xl:px-52 gap-9">
+				<main className="size-full flex flex-col place-content-center px-32 2xl:px-52 gap-9">
 					<header className="h-fit w-full gap-3 flex flex-col">
 						<h1 className="header-2  2xl:header-1  text-font-1000">
 							Bienvenido de vuelta <span className="emoji">👋</span>
@@ -73,7 +73,7 @@ const ManagerLayout: React.FC = () => {
 							Iniciar sesión
 						</button>
 					</form>
-					<footer className="flex gap-2 h-16 items-end">
+					<footer className="flex gap-2 h-24 items-end">
 						<ArrowLeftIcon className="size-6 text-font-900" />
 						<span className="body-1 text-font-900">Volver a la pagina de inicio.</span>
 					</footer>
@@ -111,4 +111,4 @@ const ManagerLayout: React.FC = () => {
 	);
 };
 
-export default ManagerLayout;
+export default LoginPage;
