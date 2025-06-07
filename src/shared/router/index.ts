@@ -26,6 +26,14 @@ const router = createBrowserRouter([
 						path: 'home',
 						Component: React.lazy(() => import('@feature/admin/pages/HomePage.tsx')),
 					},
+					{
+						path: 'requests',
+						Component: React.lazy(() => import('@feature/admin/pages/RequestPage.tsx')),
+					},
+					{
+						path: 'users',
+						Component: React.lazy(() => import('@feature/admin/pages/UserPage.tsx')),
+					},
 				],
 			},
 		],

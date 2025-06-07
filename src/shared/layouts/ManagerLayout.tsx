@@ -8,16 +8,31 @@ import reportDisable from '@shared/assets/icons/report-disable.png';
 import cardGroupEnable from '@shared/assets/icons/card-group-enable.png';
 import cardGroupDisable from '@shared/assets/icons/card-group-disable.png';
 
-import { Outlet } from 'react-router';
+import { Outlet, NavLink } from 'react-router';
 import { useState } from 'react';
 
 const ManagerLayout: React.FC = () => {
 	const [selected, setSelected] = useState('Inicio');
 
 	const menuItems = [
-		{ label: 'Inicio', icon: homeEnable, iconDisabled: homeDisable },
-		{ label: 'Solicitudes', icon: reportEnable, iconDisabled: reportDisable },
-		{ label: 'Funcionarios', icon: cardGroupEnable, iconDisabled: cardGroupDisable },
+		{
+			label: 'Inicio',
+			path: 'home',
+			icon: homeEnable,
+			iconDisabled: homeDisable,
+		},
+		{
+			label: 'Solicitudes',
+			path: 'requests',
+			icon: reportEnable,
+			iconDisabled: reportDisable,
+		},
+		{
+			label: 'Funcionarios',
+			path: 'users',
+			icon: cardGroupEnable,
+			iconDisabled: cardGroupDisable,
+		},
 	];
 
 	return (
@@ -37,7 +52,8 @@ const ManagerLayout: React.FC = () => {
 					<ul className="flex flex-col gap-2 w-full">
 						{menuItems.map((item) => (
 							<li key={item.label}>
-								<button
+								<NavLink
+									to={`/manager/${item.path.toLowerCase()}`}
 									type="button"
 									className={`font-link no-underline flex items-center gap-2 text-font-600 header-6 font-normal cursor-pointer transition-colors w-full text-left rounded-md py-2 px-3  ${
 										selected === item.label
@@ -54,7 +70,7 @@ const ManagerLayout: React.FC = () => {
 										className="size-5"
 									/>
 									{item.label}
-								</button>
+								</NavLink>
 							</li>
 						))}
 					</ul>
@@ -62,7 +78,8 @@ const ManagerLayout: React.FC = () => {
 				<footer>
 					<ul className="flex flex-col gap-4 w-full">
 						<li>
-							<button
+							<NavLink
+								to={'/'}
 								type="button"
 								className={`font-link no-underline flex items-center gap-2 text-font-600 header-6 font-normal cursor-pointer transition-colors w-full text-left rounded-md py-2 px-3  ${
 									selected === 'Cerrar sesión'
@@ -77,7 +94,7 @@ const ManagerLayout: React.FC = () => {
 									className="size-5"
 								/>
 								<span>Cerrar sesión</span>
-							</button>
+							</NavLink>
 						</li>
 					</ul>
 				</footer>
