@@ -9,32 +9,29 @@ import cardGroupEnable from '@shared/assets/icons/card-group-enable.png';
 import cardGroupDisable from '@shared/assets/icons/card-group-disable.png';
 
 import { Outlet, NavLink } from 'react-router';
-import { useState } from 'react';
+
+const menuItems = [
+	{
+		label: 'Inicio',
+		path: 'home',
+		icon: homeEnable,
+		iconDisabled: homeDisable,
+	},
+	{
+		label: 'Solicitudes',
+		path: 'requests',
+		icon: reportEnable,
+		iconDisabled: reportDisable,
+	},
+	{
+		label: 'Funcionarios',
+		path: 'users',
+		icon: cardGroupEnable,
+		iconDisabled: cardGroupDisable,
+	},
+];
 
 const ManagerLayout: React.FC = () => {
-	const [selected, setSelected] = useState('Inicio');
-
-	const menuItems = [
-		{
-			label: 'Inicio',
-			path: 'home',
-			icon: homeEnable,
-			iconDisabled: homeDisable,
-		},
-		{
-			label: 'Solicitudes',
-			path: 'requests',
-			icon: reportEnable,
-			iconDisabled: reportDisable,
-		},
-		{
-			label: 'Funcionarios',
-			path: 'users',
-			icon: cardGroupEnable,
-			iconDisabled: cardGroupDisable,
-		},
-	];
-
 	return (
 		<div className="flex size-full gap-4">
 			<nav className="h-full w-72 container-base flex flex-col justify-between items-start gap-12">
@@ -55,21 +52,24 @@ const ManagerLayout: React.FC = () => {
 								<NavLink
 									to={`/manager/${item.path.toLowerCase()}`}
 									type="button"
-									className={`font-link no-underline flex items-center gap-2 text-font-600 header-6 font-normal cursor-pointer transition-colors w-full text-left rounded-l-md py-2 px-3  ${
-										selected === item.label
-											? 'text-primary-500 header-6 font-semibold bg-[#E5F7FE] border-r-[2.5px] border-primary-500'
-											: ''
-									}`}
-									onClick={() => setSelected(item.label)}
+									className={({ isActive }) =>
+										`font-link no-underline flex items-center gap-2 text-font-600 header-6 font-normal cursor-pointer transition-colors w-full text-left rounded-l-md py-2 px-3 ${
+											isActive
+												? 'text-primary-500 header-6 font-semibold bg-[#E5F7FE] border-r-[2.5px] border-primary-500'
+												: ''
+										}`
+									}
 								>
-									<img
-										src={
-											selected === item.label ? item.icon : item.iconDisabled
-										}
-										alt={item.label}
-										className="size-5"
-									/>
-									{item.label}
+									{({ isActive }) => (
+										<>
+											<img
+												src={isActive ? item.icon : item.iconDisabled}
+												alt={item.label}
+												className="size-5"
+											/>
+											{item.label}
+										</>
+									)}
 								</NavLink>
 							</li>
 						))}
@@ -81,19 +81,24 @@ const ManagerLayout: React.FC = () => {
 							<NavLink
 								to={'/'}
 								type="button"
-								className={`font-link no-underline flex items-center gap-2 text-font-600 header-6 font-normal cursor-pointer transition-colors w-full text-left rounded-md py-2 px-3  ${
-									selected === 'Cerrar sesión'
-										? 'text-primary-500 header-6 font-semibold bg-[#E5F7FE]'
-										: ''
-								}`}
-								onClick={() => setSelected('Cerrar sesión')}
+								className={({ isActive }) =>
+									`font-link no-underline flex items-center gap-2 text-font-600 header-6 font-normal cursor-pointer transition-colors w-full text-left rounded-md py-2 px-3 ${
+										isActive
+											? 'text-primary-500 header-6 font-semibold bg-[#E5F7FE]'
+											: ''
+									}`
+								}
 							>
-								<img
-									src={selected === 'Cerrar sesión' ? exitEnable : exitDisable}
-									alt="Cerrar sesión"
-									className="size-5"
-								/>
-								<span>Cerrar sesión</span>
+								{({ isActive }) => (
+									<>
+										<img
+											src={isActive ? exitEnable : exitDisable}
+											alt="Cerrar sesión"
+											className="size-5"
+										/>
+										<span>Cerrar sesión</span>
+									</>
+								)}
 							</NavLink>
 						</li>
 					</ul>
