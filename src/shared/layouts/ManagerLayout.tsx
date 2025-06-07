@@ -36,8 +36,8 @@ const ManagerLayout: React.FC = () => {
 	];
 
 	return (
-		<div className="flex size-full">
-			<nav className="h-full w-72 container-base flex flex-col justify-between items-start gap-14">
+		<div className="flex size-full gap-4">
+			<nav className="h-full w-72 container-base flex flex-col justify-between items-start gap-12">
 				<header className="flex flex-row gap-2 size-fit">
 					<img className="size-12" src={logoImg} alt="logo firmify" />
 					<div className="size-full flex flex-col items-start justify-center">
@@ -47,7 +47,7 @@ const ManagerLayout: React.FC = () => {
 						</h2>
 					</div>
 				</header>
-				<main className="flex flex-col justify-start items-center size-full pl-1 gap-3">
+				<main className="flex flex-col justify-start items-center size-full pl-1 gap-2">
 					<p className="body-1 text-font-700 text-start w-full">MENU</p>
 					<ul className="flex flex-col gap-2 w-full">
 						{menuItems.map((item) => (
@@ -99,7 +99,7 @@ const ManagerLayout: React.FC = () => {
 					</ul>
 				</footer>
 			</nav>
-			<main className="flex flex-col items-baseline size-full gap-5 *:w-full *:p-5 overflow-auto">
+			<main className="flex flex-col items-baseline size-full gap-4 *:w-full">
 				<Outlet />
 			</main>
 		</div>

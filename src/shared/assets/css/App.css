@@ -19,3 +19,25 @@
 	flex-direction: row;
 	gap: 1.25rem;
 }
+
+.progress-bar {
+  @apply w-full h-2 rounded-lg bg-gray-200;
+  appearance: none;
+  overflow: hidden;
+}
+.progress-bar::-webkit-progress-bar {
+  background-color: #e5e7eb; /* Tailwind gray-200 */
+  border-radius: 0.5rem;
+}
+.progress-bar::-webkit-progress-value {
+  background: linear-gradient(90deg, var(--color-primary-400) 0%, var(--color-primary-500) 100%);
+  border-radius: 0.5rem;
+}
+.progress-bar::-moz-progress-bar {
+  background: linear-gradient(90deg, var(--color-primary-400) 0%, var(--color-primary-500) 100%);
+  border-radius: 0.5rem;
+}
+.progress-bar::-ms-fill {
+  background: linear-gradient(90deg, var(--color-primary-400) 0%, var(--color-primary-500) 100%);
+  border-radius: 0.5rem;
+}
