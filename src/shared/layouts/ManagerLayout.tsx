@@ -55,9 +55,9 @@ const ManagerLayout: React.FC = () => {
 								<NavLink
 									to={`/manager/${item.path.toLowerCase()}`}
 									type="button"
-									className={`font-link no-underline flex items-center gap-2 text-font-600 header-6 font-normal cursor-pointer transition-colors w-full text-left rounded-md py-2 px-3  ${
+									className={`font-link no-underline flex items-center gap-2 text-font-600 header-6 font-normal cursor-pointer transition-colors w-full text-left rounded-l-md py-2 px-3  ${
 										selected === item.label
-											? 'text-primary-500 header-6 font-semibold bg-[#E5F7FE] '
+											? 'text-primary-500 header-6 font-semibold bg-[#E5F7FE] border-r-[2.5px] border-primary-500'
 											: ''
 									}`}
 									onClick={() => setSelected(item.label)}
