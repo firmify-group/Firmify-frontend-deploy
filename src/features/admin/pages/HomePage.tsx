@@ -1,4 +1,4 @@
-import Header from '@feature/admin/components/molecules/Header';
+import Header from '@feature/admin/components/atoms/Header';
 import MonitoringSummary from '@feature/admin/components/organisms/MonitoringSummary';
 import type { CategoryRequest, CounterRequest } from '../types/home.type';
 
