@@ -1,5 +1,8 @@
 import Header from '@feature/admin/components/atoms/Header';
 import MonitoringSummary from '@feature/admin/components/organisms/MonitoringSummary';
+import ToDoSummary from '@feature/admin/components/molecules/ToDoSummary';
+import CounterSummary from '@feature/admin/components/molecules/CounterSummary';
+import CategorySummary from '@feature/admin/components/molecules/CategorySummary';
 import type { CategoryRequest, CounterRequest } from '../types/home.type';
 
 const categoryExample: CategoryRequest = {
@@ -26,8 +29,13 @@ const HomeManagerPage: React.FC = () => {
 				title="Monitoreo de solicitudes"
 				subtitle="Ultima actualización hoy a las 12:00hrs"
 			/>
-			<MonitoringSummary categoryData={categoryExample} counterData={counterExample} />
-			<section className="size-full container-base">a</section>
+
+			<MonitoringSummary>
+				<CounterSummary {...counterExample} />
+				<CategorySummary {...categoryExample} />
+			</MonitoringSummary>
+
+			<ToDoSummary />
 		</>
 	);
 };

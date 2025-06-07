@@ -5,7 +5,7 @@ const CounterSummary: React.FC<CounterRequest> = (props) => {
 	return (
 		<section className="container-base size-full flex flex-col gap-4">
 			<header className="flex flex-col items-start justify-center gap-1">
-				<h3 className="header-6 font-semibold text-font-1000">Solicitudes en proceso</h3>
+				<h3 className="header-6 font-semibold text-font-1000">Resumen de solicitudes</h3>
 				<p className="body-3 text-font-600">Solicitudes activas dento del sistema</p>
 			</header>
 

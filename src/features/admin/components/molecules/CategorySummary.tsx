@@ -7,9 +7,9 @@ const CategorySummary: React.FC<CategoryRequest> = (props) => {
 		>
 			<header className="flex flex-col items-start justify-center gap-1">
 				<h2 id="category-summary-title" className="header-6 font-semibold text-font-1000">
-					Solicitudes en proceso
+					Categorías de las solicitudes
 				</h2>
-				<p className="body-3 text-font-600">Solicitudes activas dentro del sistema</p>
+				<p className="body-3 text-font-600">Categorías mas solicitadas</p>
 			</header>
 
 			<div className="flex-1 w-full overflow-auto">
