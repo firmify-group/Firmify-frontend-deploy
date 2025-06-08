@@ -53,7 +53,7 @@ const ManagerLayout: React.FC = () => {
 									to={`/manager/${item.path.toLowerCase()}`}
 									type="button"
 									className={({ isActive }) =>
-										`font-link no-underline flex items-center gap-2 text-font-600 header-6 font-normal cursor-pointer transition-colors w-full text-left rounded-l-md py-2 px-3 ${
+										`font-link no-underline flex items-center gap-2 text-font-900 header-6 font-normal cursor-pointer transition-colors w-full text-left rounded-l-md py-2 px-3 ${
 											isActive
 												? 'text-primary-500 header-6 font-semibold bg-[#E5F7FE] border-r-[2.5px] border-primary-500'
 												: ''
@@ -82,7 +82,7 @@ const ManagerLayout: React.FC = () => {
 								to={'/'}
 								type="button"
 								className={({ isActive }) =>
-									`font-link no-underline flex items-center gap-2 text-font-600 header-6 font-normal cursor-pointer transition-colors w-full text-left rounded-md py-2 px-3 ${
+									`font-link no-underline flex items-center gap-2 text-font-900 header-6 font-normal cursor-pointer transition-colors w-full text-left rounded-md py-2 px-3 ${
 										isActive
 											? 'text-primary-500 header-6 font-semibold bg-[#E5F7FE]'
 											: ''
