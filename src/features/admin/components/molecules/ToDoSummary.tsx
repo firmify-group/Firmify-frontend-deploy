@@ -29,6 +29,13 @@ const rows = [
 		estatus: 'Pendiente',
 		plazo: '15/08/2025 - 20/08/2025',
 	},
+	{
+		id: '05',
+		funcionario: 'Carlos Ruiz',
+		categoria: 'Permiso',
+		estatus: 'Aprobado',
+		plazo: '10/06/2025 - 12/06/2025',
+	},
 ];
 
 const ToDoSummary: React.FC = () => {
@@ -75,7 +82,7 @@ const ToDoSummary: React.FC = () => {
 						{rows.map((row) => (
 							<tr key={row.id}>
 								<td colSpan={5} className="p-0">
-									<div className="flex rounded-lg border-[1.5px] border-font-300  overflow-hidden cursor-pointer hover:bg-[#E5F7FE] active:bg-primary-200 active:text-font-100 active:border-primary-200">
+									<div className="flex rounded-lg border-[1.5px] border-font-300  overflow-hidden cursor-pointer hover:bg-[#E5F7FE] active:bg-primary-500 active:*:text-font-100 active:border-primary-500">
 										<div className="body-4 text-font-1000 w-1/12 text-center py-2 bg-transparent">
 											{row.id}
 										</div>
