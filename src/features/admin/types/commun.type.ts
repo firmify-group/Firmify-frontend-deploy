@@ -3,7 +3,6 @@ export type HeaderProps = {
 	subtitle?: string;
 };
 
-
 export type InputProps = {
 	id?: string;
 	name?: string;

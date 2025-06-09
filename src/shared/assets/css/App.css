@@ -44,23 +44,23 @@
 
 /* ...existing code... */
 .kanva-scroll {
-  scrollbar-width: thin;
-  scrollbar-color: #d4d4d4 #f3f4f6;
+	scrollbar-width: thin;
+	scrollbar-color: #d4d4d4 #f3f4f6;
 }
 
 .kanva-scroll::-webkit-scrollbar {
-  width: 8px;
-  border-radius: 8px;
-  background: #f3f4f6;
+	width: 8px;
+	border-radius: 8px;
+	background: #f3f4f6;
 }
 
 .kanva-scroll::-webkit-scrollbar-thumb {
-  background: #a3a3a3;
-  border-radius: 8px;
-  transition: background 0.2s;
+	background: #a3a3a3;
+	border-radius: 8px;
+	transition: background 0.2s;
 }
 
 .kanva-scroll::-webkit-scrollbar-thumb:hover {
-  background: #f2f2f2;
+	background: #f2f2f2;
 }
 /* ...existing code... */
