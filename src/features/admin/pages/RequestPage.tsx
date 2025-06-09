@@ -34,7 +34,7 @@ const allCards = [
 		dateStart: '2025-08-12',
 		dateEnd: '2025-08-18',
 		status: 'Pendientes',
-		category: 'Vacaciones4',
+		category: 'Vacaciones2',
 	},
 	{
 		id: 'kanva-5',
@@ -42,7 +42,7 @@ const allCards = [
 		dateStart: '2025-09-05',
 		dateEnd: '2025-09-10',
 		status: 'Concluidos',
-		category: 'Vacaciones5',
+		category: 'Vacaciones2',
 	},
 	{
 		id: 'kanva-6',
@@ -50,7 +50,7 @@ const allCards = [
 		dateStart: '2025-10-01',
 		dateEnd: '2025-10-07',
 		status: 'Objetados',
-		category: 'Vacaciones6',
+		category: 'Vacaciones3',
 	},
 	{
 		id: 'kanva-7',
@@ -58,7 +58,7 @@ const allCards = [
 		dateStart: '2025-11-15',
 		dateEnd: '2025-11-20',
 		status: 'Pendientes',
-		category: 'Vacaciones7',
+		category: 'Vacaciones3',
 	},
 	{
 		id: 'kanva-8',
@@ -66,7 +66,7 @@ const allCards = [
 		dateStart: '2025-12-01',
 		dateEnd: '2025-12-06',
 		status: 'Concluidos',
-		category: 'Vacaciones8',
+		category: 'Vacaciones3',
 	},
 ];
 
