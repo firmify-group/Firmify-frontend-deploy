@@ -38,6 +38,20 @@ const router = createBrowserRouter([
 			},
 		],
 	},
+	{
+		path: '/client',
+		children: [
+			{
+				Component: React.lazy(() => import('@shared/layouts/ClientLayout.tsx')),
+				children: [
+					{
+						path: 'process',
+						Component: React.lazy(() => import('@feature/client/pages/HomeClientPage.tsx')),
+					},
+				],
+			},
+		],
+	},
 ]);
 
 export default router;
