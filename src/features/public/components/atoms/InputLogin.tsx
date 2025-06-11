@@ -15,14 +15,14 @@ const InputLogin: React.FC<InputsFormType> = (props) => {
 				type={props.type}
 				name={props.name}
 				autoComplete={props.type}
-				aria-describedby="email-error"
+				aria-describedby={`${props.name}-error`}
 				aria-invalid="false"
 				min={props.minLength}
 				max={props.maxLength}
 			/>
 			<span
 				className="text-red-500 text-sm hidden"
-				id="email-error"
+				id={`${props.name}-error`}
 				role="alert"
 				aria-live="polite"
 			>
