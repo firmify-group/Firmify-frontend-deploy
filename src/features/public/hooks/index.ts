@@ -2,19 +2,20 @@ import { useState } from "react";
 import type { LoginResponse } from '@feature/public/types/login.types';
 import { jwtDecode, type JwtPayload } from 'jwt-decode';
 import { useNavigate } from 'react-router';
+import { ROLE, LOGIN_STATUS, FETCH_EXCEPTIONS, PATH_ROUTES } from '@shared/const/'
 
 
 export const useFetchLogin = () => {
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState(true);
-    const [message, setMessage] = useState<string>('Iniciar sesión');
+    const [message, setMessage] = useState<string>(LOGIN_STATUS.IDLE);
 
     const fetchLogin = async (username: string, password: string): Promise<LoginResponse> => {
         setLoading(true);
-        setMessage('Cargando...');
+        setMessage(LOGIN_STATUS.LOADING);
 
         const timeoutPromise: Promise<never> = new Promise<never>((_, reject) =>
-            setTimeout(() => reject(new Error('Tiempo de espera agotado')), 5000)
+            setTimeout(() => reject(new Error(FETCH_EXCEPTIONS.TIMEOUT)), 5000)
         );
 
         const fetchPromise: Promise<LoginResponse> = fetch('http://localhost:8080/api/authentication/login', {
@@ -24,9 +25,9 @@ export const useFetchLogin = () => {
         })
             .then(async response => {
                 if (!response.ok) {
-                    setMessage('Error en el login');
+                    setMessage(LOGIN_STATUS.ERROR);
                     setStatus(false);
-                    throw new Error('Error en el login');
+                    throw new Error(FETCH_EXCEPTIONS.LOGIN_ERROR);
                 }
                 const result: LoginResponse = await response.json();
                 setMessage(result.message);
@@ -39,11 +40,11 @@ export const useFetchLogin = () => {
 
         return Promise.race([fetchPromise, timeoutPromise])
             .catch(() => {
-                setMessage('Error al iniciar sesión');
+                setMessage(LOGIN_STATUS.ERROR);
                 setStatus(false);
                 return {
                     status: false,
-                    message: 'Error al iniciar sesión',
+                    message: LOGIN_STATUS.ERROR,
                     data: { token: '', expires_in: 0, token_type: '' }
                 };
             });
@@ -63,13 +64,13 @@ export const useRoleNavigation = (): { navigateByRole: (token: string) => void }
         if (token) {
             const decoded: JwtPayload & { id?: string; role?: string; sub?: string } =
                 jwtDecode(token);
-            const role: string = decoded.role ?? 'ERROR';
-            if (role === 'SUPERVISOR') {
-                navigate('/manager/home');
-            } else if (role === 'EMPLEADO') {
-                navigate('/client/process');
+            const role: string = decoded.role ?? FETCH_EXCEPTIONS.LOGIN_ERROR;
+            if (role === ROLE.ADMIN) {
+                navigate(PATH_ROUTES.MANAGER_HOME);
+            } else if (role === ROLE.USER) {
+                navigate(PATH_ROUTES.USER_HOME);
             } else {
-                navigate('/');
+                navigate(PATH_ROUTES.HOME);
             }
         }
     };
