@@ -46,7 +46,9 @@ const router = createBrowserRouter([
 				children: [
 					{
 						path: 'process',
-						Component: React.lazy(() => import('@feature/client/pages/HomeClientPage.tsx')),
+						Component: React.lazy(
+							() => import('@feature/client/pages/HomeClientPage.tsx'),
+						),
 					},
 				],
 			},
