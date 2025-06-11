@@ -1,29 +1,19 @@
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { NavLink } from 'react-router';
 import type { Slot } from '@feature/public/types/login.types';
-import { useState } from 'react';
 import { LoginService } from '@feature/public/services';
 
 const FormLogin: React.FC<Slot> = ({ children }) => {
-	const [loading, setLoading] = useState(false);
-	const [status, setStatus] = useState(true);
-	const [message, setMessage] = useState<string>('Iniciar sesión');
+	const { status, message, loading, login } = LoginService();
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		setLoading(true);
-		setMessage('Cargando...');
 
 		const formData = new FormData(e.currentTarget);
 		const username = formData.get('username');
 		const password = formData.get('password');
 
-		const { login } = LoginService();
 		const response = await login(username as string, password as string);
-
-		setLoading(false);
-		setMessage(response.message);
-		setStatus(response.status);
 
 		console.log('Login response:', response);
 	};
