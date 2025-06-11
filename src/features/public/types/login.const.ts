@@ -4,7 +4,7 @@ export const InputsForm = [
 		label: 'Correo electrónico',
 		type: 'email',
 		placeholder: 'correo@ejemplo.com',
-		pattern: '^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$',
+		pattern: '^[\\w.]+@([\\w.]+)\\.[\\w]{2,4}$',
 		maxLength: 150,
 		minLength: 0,
 		alert: 'Por favor ingresa un correo válido.',

@@ -2,22 +2,30 @@ import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { NavLink } from 'react-router';
 import type { Slot } from '@feature/public/types/login.types';
 import { useState } from 'react';
+import { LoginService } from '@feature/public/services';
 
 const FormLogin: React.FC<Slot> = ({ children }) => {
 	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState<string>();
+	const [status, setStatus] = useState(true);
+	const [message, setMessage] = useState<string>('Iniciar sesión');
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setLoading(true);
-		setError('Sexo erroneo');
+		setMessage('Cargando...');
 
 		const formData = new FormData(e.currentTarget);
-		const email = formData.get('email');
+		const username = formData.get('username');
 		const password = formData.get('password');
 
-		// TODO: Implementa la lógica de autenticación aquí
-		console.log(formData, 'password:', password, 'Email:', email);
+		const { login } = LoginService();
+		const response = await login(username as string, password as string);
+
+		setLoading(false);
+		setMessage(response.message);
+		setStatus(response.status);
+
+		console.log('Login response:', response);
 	};
 
 	return (
@@ -31,13 +39,14 @@ const FormLogin: React.FC<Slot> = ({ children }) => {
 			<div className="flex flex-col gap-2 w-full h-16">
 				<button
 					type="submit"
-					className="button button-primary-IDLE"
+					className={
+						status ? 'button button-primary-IDLE' : 'button button-primary-ERROR'
+					}
 					aria-describedby="login-description"
 					disabled={loading}
 				>
-					{loading ? 'Cargando...' : 'Iniciar sesión'}
+					{message}
 				</button>
-				<small>{error}</small>
 			</div>
 
 			<footer className="flex gap-2 h-24 items-end">
