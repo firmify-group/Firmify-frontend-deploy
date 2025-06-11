@@ -1,29 +1,23 @@
 import { useState } from "react";
+import type { LoginResponse } from '@feature/public/types/login.types';
+import { jwtDecode, type JwtPayload } from 'jwt-decode';
+import { useNavigate } from 'react-router';
 
-type LoginResponse = {
-    status: boolean;
-    message: string;
-    data: {
-        token: string;
-        expires_in: number;
-        token_type: string;
-    };
-};
 
-export const LoginService = () => {
+export const useFetchLogin = () => {
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState(true);
     const [message, setMessage] = useState<string>('Iniciar sesión');
 
-    const login = async (username: string, password: string): Promise<LoginResponse> => {
+    const fetchLogin = async (username: string, password: string): Promise<LoginResponse> => {
         setLoading(true);
         setMessage('Cargando...');
 
-        const timeoutPromise = new Promise<never>((_, reject) =>
+        const timeoutPromise: Promise<never> = new Promise<never>((_, reject) =>
             setTimeout(() => reject(new Error('Tiempo de espera agotado')), 5000)
         );
 
-        const fetchPromise = fetch('http://localhost:8080/api/authentication/login', {
+        const fetchPromise: Promise<LoginResponse> = fetch('http://localhost:8080/api/authentication/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password }),
@@ -59,6 +53,28 @@ export const LoginService = () => {
         loading,
         status,
         message,
-        login
+        fetchLogin
+    };
+};
+export const useRoleNavigation = (): { navigateByRole: (token: string) => void } => {
+    const navigate = useNavigate();
+
+    const navigateByRole = (token: string): void => {
+        if (token) {
+            const decoded: JwtPayload & { id?: string; role?: string; sub?: string } =
+                jwtDecode(token);
+            const role: string = decoded.role ?? 'ERROR';
+            if (role === 'SUPERVISOR') {
+                navigate('/manager/home');
+            } else if (role === 'EMPLEADO') {
+                navigate('/client/process');
+            } else {
+                navigate('/');
+            }
+        }
+    };
+
+    return {
+        navigateByRole
     };
 };

@@ -1,21 +1,22 @@
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { NavLink } from 'react-router';
-import type { Slot } from '@feature/public/types/login.types';
-import { LoginService } from '@feature/public/services';
+import type { LoginResponse, Slot } from '@feature/public/types/login.types';
+import { useFetchLogin, useRoleNavigation } from '@feature/public/hooks';
 
 const FormLogin: React.FC<Slot> = ({ children }) => {
-	const { status, message, loading, login } = LoginService();
+	const { status, message, loading, fetchLogin } = useFetchLogin();
+	const { navigateByRole } = useRoleNavigation();
 
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
 		e.preventDefault();
 
-		const formData = new FormData(e.currentTarget);
-		const username = formData.get('username');
-		const password = formData.get('password');
+		const formData: FormData = new FormData(e.currentTarget);
+		const username: FormDataEntryValue | null = formData.get('username');
+		const password: FormDataEntryValue | null = formData.get('password');
 
-		const response = await login(username as string, password as string);
+		const response: LoginResponse = await fetchLogin(username as string, password as string);
 
-		console.log('Login response:', response);
+		if (response.status) navigateByRole(response.data.token);
 	};
 
 	return (
