@@ -60,21 +60,16 @@ export const useFetchLogin = () => {
 		fetchLogin,
 	};
 };
-export const useRoleNavigation = (): { navigateByRole: (token: string) => void } => {
+export const useRoleNavigation = (): { navigateByRole: (role: string) => void } => {
 	const navigate = useNavigate();
 
-	const navigateByRole = (token: string): void => {
-		if (token) {
-			const decoded: JwtPayload & { id?: string; role?: string; sub?: string } =
-				jwtDecode(token);
-			const role: string = decoded.role ?? FETCH_EXCEPTIONS.LOGIN_ERROR;
-			if (role === ROLE.ADMIN) {
-				navigate(PATH_ROUTES.MANAGER_HOME);
-			} else if (role === ROLE.USER) {
-				navigate(PATH_ROUTES.USER_HOME);
-			} else {
-				navigate(PATH_ROUTES.HOME);
-			}
+	const navigateByRole = (role: string): void => {
+		if (role === ROLE.ADMIN) {
+			navigate(PATH_ROUTES.MANAGER_HOME);
+		} else if (role === ROLE.USER) {
+			navigate(PATH_ROUTES.USER_HOME);
+		} else {
+			navigate(PATH_ROUTES.HOME);
 		}
 	};
 

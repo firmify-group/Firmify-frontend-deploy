@@ -1,11 +1,15 @@
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { NavLink } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { setAuth } from '@shared/store/auth';
 import type { LoginResponse, Slot } from '@feature/public/types/login.types';
 import { useFetchLogin, useRoleNavigation } from '@feature/public/hooks';
+import { jwtDecode, type JwtPayload } from 'jwt-decode';
 
 const FormLogin: React.FC<Slot> = ({ children }) => {
 	const { status, message, loading, fetchLogin } = useFetchLogin();
 	const { navigateByRole } = useRoleNavigation();
+	const dispatch = useDispatch();
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
 		e.preventDefault();
@@ -16,7 +20,21 @@ const FormLogin: React.FC<Slot> = ({ children }) => {
 
 		const response: LoginResponse = await fetchLogin(username as string, password as string);
 
-		if (response.status) navigateByRole(response.data.token);
+		if (response.status) {
+			const token = response.data.token;
+			const decoded: JwtPayload & { id?: string; role?: string; sub?: string } =
+				jwtDecode(token);
+
+			dispatch(
+				setAuth({
+					token: token,
+					id: decoded.id ?? '',
+					role: decoded.role ?? '',
+				}),
+			);
+
+			navigateByRole(decoded.role ?? '');
+		}
 	};
 
 	return (
