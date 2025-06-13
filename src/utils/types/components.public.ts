@@ -1,5 +1,6 @@
 import type { FETCH_STATUS } from "../constant/API";
 
+
 export type HeaderProps = {
 	title: string;
 	subtitle?: string;

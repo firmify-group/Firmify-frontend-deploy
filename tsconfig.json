@@ -1,31 +1,32 @@
 {
-	"compilerOptions": {
-		"lib": ["DOM", "ES2020"],
-		"jsx": "react-jsx",
-		"target": "ES2020",
-		"noEmit": true,
-		"skipLibCheck": true,
-		"useDefineForClassFields": true,
+  "compilerOptions": {
+    "lib": ["DOM", "ES2020"],
+    "jsx": "react-jsx",
+    "target": "ES2020",
+    "noEmit": true,
+    "skipLibCheck": true,
+    "useDefineForClassFields": true,
 
-		"baseUrl": ".",
-		"paths": {
-			"@feature/client/*": ["./src/features/client/*"],
-			"@feature/admin/*": ["./src/features/admin/*"],
-			"@feature/public/*": ["./src/features/public/*"],
-			"@shared/*": ["./src/shared/*"]
-		},
+    "baseUrl": ".",
+    "paths": {
+      "@feature/client/*": ["./src/features/client/*"],
+      "@feature/admin/*": ["./src/features/admin/*"],
+      "@feature/public/*": ["./src/features/public/*"],
+      "@shared/*": ["./src/shared/*"]
+    },
 
-		/* modules */
-		"module": "ESNext",
-		"isolatedModules": true,
-		"resolveJsonModule": true,
-		"moduleResolution": "bundler",
-		"allowImportingTsExtensions": true,
+    /* modules */
+    "module": "ESNext",
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "typeRoots": ["./node_modules/@types", "./src/types"],
 
-		/* type checking */
-		"strict": true,
-		"noUnusedLocals": true,
-		"noUnusedParameters": true
-	},
-	"include": ["src"]
+    /* type checking */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+  },
+  "include": ["src/**/*", "src/types/env.d.ts"]
 }
