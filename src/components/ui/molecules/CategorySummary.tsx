@@ -1,0 +1,52 @@
+import type { CategoryRequest } from 'src/utils/types/components.admin';
+const CategorySummary: React.FC<CategoryRequest> = (props) => {
+	return (
+		<section
+			className="container-base size-full flex flex-col gap-4"
+			aria-labelledby="category-summary-title"
+		>
+			<header className="flex flex-col items-start justify-center gap-1">
+				<h2 id="category-summary-title" className="header-6 font-semibold text-font-1000">
+					Categorías de las solicitudes
+				</h2>
+				<p className="body-3 text-font-600">Categorías mas solicitadas</p>
+			</header>
+
+			<div className="flex-1 w-full overflow-auto">
+				<table className="w-full h-full table-fixed text-left border-separate ">
+					<thead>
+						<tr>
+							<th className="body-4 text-font-1000 w-[10%]">ID</th>
+							<th className="body-4 text-font-1000 w-[20%]">Categoría</th>
+							<th className="body-4 text-font-1000 w-[55%]">Progreso</th>
+							<th className="body-4 text-font-1000 w-[15%]">Porcentaje</th>
+						</tr>
+					</thead>
+					<tbody className="h-full">
+						{props.categorySumers.map((item) => (
+							<tr key={item.name} className="body-3 text-font-700">
+								<td className="w-[10%]">{item.name}</td>
+								<td className="w-[20%] ">Vacaciones</td>
+								<td className="w-[50%]   pr-8">
+									<progress
+										value={item.total}
+										max={props.totalProcesos}
+										aria-valuenow={item.total}
+										aria-valuemax={props.totalProcesos}
+										aria-label="Progreso"
+										className={'progress-bar'}
+									/>
+								</td>
+								<td className="w-[15%] ">
+									{(item.total / props.totalProcesos) * 100}%
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
+		</section>
+	);
+};
+
+export default CategorySummary;
