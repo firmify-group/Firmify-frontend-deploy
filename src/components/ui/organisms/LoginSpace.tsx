@@ -1,11 +1,9 @@
 import placeholderImg from '@shared/assets/img/placeholder.png';
 import decorationImg from '@shared/assets/img/folder.png';
+import { Slot } from 'src/utils/types/components.public';
 
-interface MonitoringSummaryProps {
-	children: React.ReactNode;
-}
 
-const LoginSpace: React.FC<MonitoringSummaryProps> = ({ children }) => {
+const LoginSpace: React.FC<Slot> = ({ children }) => {
 	return (
 		<>
 			<main className="size-full flex flex-col items-baseline gap-5 *:w-full">

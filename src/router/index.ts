@@ -8,11 +8,11 @@ const router = createBrowserRouter([
 			{
 				// path: "/", //Se redirecciona de forma automatica
 				path: '/landing', //Se redirecciona de forma automatica
-				Component: React.lazy(() => import('src/features/public/pages/LandingPage')),
+				Component: React.lazy(() => import('src/pages/LandingPage')),
 			},
 			{
 				path: '/',
-				Component: React.lazy(() => import('src/features/public/pages/LoginPage')),
+				Component: React.lazy(() => import('src/pages/LoginPage')),
 			},
 		],
 	},
@@ -47,7 +47,7 @@ const router = createBrowserRouter([
 					{
 						path: 'process',
 						Component: React.lazy(
-							() => import('@feature/client/pages/HomeClientPage.tsx'),
+							() => import('src/pages/client/HomeClientPage'),
 						),
 					},
 				],

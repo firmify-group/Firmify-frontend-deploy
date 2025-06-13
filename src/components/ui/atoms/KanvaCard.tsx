@@ -1,12 +1,5 @@
 import { useMemo } from 'react';
-
-type KanvaCardProps = {
-	id: string;
-	name: string;
-	dateStart: string;
-	dateEnd: string;
-	status: string;
-};
+import { KanvaCardProps } from 'src/utils/types/components.admin';
 
 const COLORS = [
 	'#2563eb',

@@ -1,4 +1,4 @@
-import type { InputProps } from 'src/utils/types/commun.type';
+import type { InputProps } from 'src/utils/types/components.public';
 
 const Input: React.FC<InputProps> = (props) => {
 	return (

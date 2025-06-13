@@ -1,20 +1,10 @@
 import { useEffect, useState, useCallback } from 'react';
+import { UserTableProps } from 'src/utils/types/components.admin';
 
-interface IProduct {
-	id: string;
-	category: string;
-	state: string;
-	action: number;
-}
-
-interface UserTableProps {
-	products: IProduct[];
-	selectCardHandler: (product: IProduct) => void;
-}
 
 const PAGE_SIZE = 10;
 
-function usePagination(products: IProduct[], pageSize = PAGE_SIZE) {
+function usePagination(products: UserTableProps['products'], pageSize = PAGE_SIZE) {
 	const [currentPage, setCurrentPage] = useState(1);
 
 	const totalPages = Math.ceil(products.length / pageSize);

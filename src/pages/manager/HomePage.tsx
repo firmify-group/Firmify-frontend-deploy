@@ -3,7 +3,7 @@ import MonitoringSummary from 'src/components/ui/organisms/MonitoringSummary';
 import ToDoSummary from 'src/components/ui/molecules/ToDoSummary';
 import CounterSummary from 'src/components/ui/molecules/CounterSummary';
 import CategorySummary from 'src/components/ui/molecules/CategorySummary';
-import type { CategoryRequest, CounterRequest } from '../../utils/types/home.type';
+import type { CategoryRequest, CounterRequest } from '../../utils/types/components.admin';
 
 const categoryExample: CategoryRequest = {
 	total_procesos: 100,

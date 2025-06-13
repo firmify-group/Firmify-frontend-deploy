@@ -2,7 +2,8 @@ import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { NavLink } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { setAuth } from 'src/store/auth';
-import type { LoginResponse, Slot } from 'src/utils/types/login.types';
+import type { Slot } from 'src/utils/types/components.public';
+import type { LoginResponse } from 'src/utils/types/response.public';
 import { useFetchLogin, useRoleNavigation } from 'src/hook';
 import { jwtDecode, type JwtPayload } from 'jwt-decode';
 

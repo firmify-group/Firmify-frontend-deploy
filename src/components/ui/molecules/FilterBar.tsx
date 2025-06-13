@@ -1,14 +1,5 @@
 import Input from 'src/components/ui/atoms/Input';
-
-type FilterBarProps = {
-	filters: {
-		name: string;
-		category: string;
-		startDate: string;
-		endDate: string;
-	};
-	onChange: (filters: Partial<FilterBarProps['filters']>) => void;
-};
+import { FilterBarProps } from 'src/utils/types/components.admin';
 
 const FilterBar: React.FC<FilterBarProps> = ({ filters, onChange }) => {
 	return (

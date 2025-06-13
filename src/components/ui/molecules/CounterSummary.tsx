@@ -1,4 +1,4 @@
-import type { CounterRequest } from 'src/utils/types/home.type';
+import type { CounterRequest } from 'src/utils/types/components.admin';
 import docImg from '@shared/assets/icons/doc.png';
 
 const CounterSummary: React.FC<CounterRequest> = (props) => {

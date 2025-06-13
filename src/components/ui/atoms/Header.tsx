@@ -1,4 +1,4 @@
-import type { HeaderProps } from 'src/utils/types/commun.type';
+import type { HeaderProps } from 'src/utils/types/components.public';
 
 const Header: React.FC<HeaderProps> = (props) => {
 	return (

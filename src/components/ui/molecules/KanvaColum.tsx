@@ -1,19 +1,5 @@
-import KanvaCard from '@feature/admin/components/atoms/KanvaCard';
-
-export type KanvaColumnProps = {
-	id?: string;
-	name?: string;
-	low?: string;
-	higt?: string;
-	cards: Array<{
-		id: string;
-		name: string;
-		dateStart: string;
-		dateEnd: string;
-		status: string;
-		category?: string;
-	}>;
-};
+import KanvaCard from 'src/components/ui/atoms/KanvaCard';
+import type { KanvaColumnProps } from 'src/utils/types/components.admin';
 
 const getBgClass = (color?: string) => {
 	if (!color) return '';

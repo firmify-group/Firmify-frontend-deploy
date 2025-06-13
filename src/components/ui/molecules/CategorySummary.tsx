@@ -1,4 +1,4 @@
-import type { CategoryRequest } from 'src/utils/types/home.type';
+import type { CategoryRequest } from 'src/utils/types/components.admin';
 const CategorySummary: React.FC<CategoryRequest> = (props) => {
 	return (
 		<section

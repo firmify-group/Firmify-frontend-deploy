@@ -1,4 +1,4 @@
-import type { InputsFormType } from 'src/utils/types/login.types';
+import type { InputsFormType } from 'src/utils/types/components.public';
 
 const InputLogin: React.FC<InputsFormType> = (props) => {
 	return (
