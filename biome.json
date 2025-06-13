@@ -40,9 +40,15 @@
 		"enabled": true
 	},
 	"linter": {
-		"enabled": true,
 		"rules": {
-			"recommended": true
+			"suspicious": {
+				"noDebugger": "off",
+				"noConsoleLog": "info"
+			},
+			"style": {
+				"noShoutyConstants": "warn",
+				"useNamingConvention": "off"
+			}
 		}
 	}
 }

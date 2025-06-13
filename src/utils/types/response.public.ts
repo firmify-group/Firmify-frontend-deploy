@@ -4,7 +4,7 @@ export type LoginResponse = {
     message: string;
     data: {
         token: string;
-        expires_in: number;
-        token_type: string;
+        expiresIn: number;
+        tokenType: string;
     };
 };

@@ -1,4 +1,4 @@
-import { Slot } from "src/utils/types/components.public";
+import type { Slot } from 'src/utils/types/components.public';
 
 const MonitoringSummary: React.FC<Slot> = ({ children }) => {
 	return (

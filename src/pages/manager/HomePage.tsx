@@ -6,8 +6,8 @@ import CategorySummary from 'src/components/ui/molecules/CategorySummary';
 import type { CategoryRequest, CounterRequest } from '../../utils/types/components.admin';
 
 const categoryExample: CategoryRequest = {
-	total_procesos: 100,
-	category_sumers: [
+	totalProcesos: 100,
+	categorySumers: [
 		{ name: '01', total: 40 },
 		{ name: '02', total: 65 },
 		{ name: '03', total: 20 },
@@ -16,10 +16,10 @@ const categoryExample: CategoryRequest = {
 };
 
 const counterExample: CounterRequest = {
-	total_resueltos: 30,
-	total_pendientes: 50,
-	total_objeciones: 40,
-	total_procesos: 120,
+	totalResueltos: 30,
+	totalPendientes: 50,
+	totalObjeciones: 40,
+	totalProcesos: 120,
 };
 
 const HomeManagerPage: React.FC = () => {

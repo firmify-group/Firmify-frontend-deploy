@@ -17,7 +17,7 @@ const CounterSummary: React.FC<CounterRequest> = (props) => {
 						alt="doc icon"
 					/>
 					<strong className="font-bold text-xl text-font-1000">
-						{props.total_resueltos}
+						{props.totalResueltos}
 					</strong>
 					<div className="flex flex-col items-start h-fit">
 						<p className="body-2 text-font-1000">Resueltos</p>
@@ -31,7 +31,7 @@ const CounterSummary: React.FC<CounterRequest> = (props) => {
 						alt="doc icon"
 					/>
 					<strong className="font-bold text-xl text-font-1000">
-						{props.total_pendientes}
+						{props.totalPendientes}
 					</strong>
 					<div className="flex flex-col items-start h-fit">
 						<p className="body-2 text-font-1000">Pendientes</p>
@@ -45,7 +45,7 @@ const CounterSummary: React.FC<CounterRequest> = (props) => {
 						alt="doc icon"
 					/>
 					<strong className="font-bold text-xl text-font-1000">
-						{props.total_objeciones}
+						{props.totalObjeciones}
 					</strong>
 					<div className="flex flex-col items-start h-fit">
 						<p className="body-2 text-font-1000">Objetados</p>
@@ -59,7 +59,7 @@ const CounterSummary: React.FC<CounterRequest> = (props) => {
 						alt="doc icon"
 					/>
 					<strong className="font-bold text-xl text-font-1000">
-						{props.total_procesos}
+						{props.totalProcesos}
 					</strong>
 					<div className="flex flex-col items-start h-fit ">
 						<p className="body-2 text-font-1000">Total procesos</p>

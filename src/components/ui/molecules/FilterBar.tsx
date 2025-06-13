@@ -1,5 +1,5 @@
 import Input from 'src/components/ui/atoms/Input';
-import { FilterBarProps } from 'src/utils/types/components.admin';
+import type { FilterBarProps } from 'src/utils/types/components.admin';
 
 const FilterBar: React.FC<FilterBarProps> = ({ filters, onChange }) => {
 	return (

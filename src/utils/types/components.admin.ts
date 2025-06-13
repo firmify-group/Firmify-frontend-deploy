@@ -1,13 +1,13 @@
 export type CounterRequest = {
-    total_resueltos: number;
-    total_pendientes: number;
-    total_objeciones: number;
-    total_procesos: number;
+    totalResueltos: number;
+    totalPendientes: number;
+    totalObjeciones: number;
+    totalProcesos: number;
 };
 
 export type CategoryRequest = {
-    total_procesos: number;
-    category_sumers: {
+    totalProcesos: number;
+    categorySumers: {
         name: string;
         total: number;
     }[];

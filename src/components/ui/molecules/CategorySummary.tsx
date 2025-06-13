@@ -23,22 +23,22 @@ const CategorySummary: React.FC<CategoryRequest> = (props) => {
 						</tr>
 					</thead>
 					<tbody className="h-full">
-						{props.category_sumers.map((item) => (
+						{props.categorySumers.map((item) => (
 							<tr key={item.name} className="body-3 text-font-700">
 								<td className="w-[10%]">{item.name}</td>
 								<td className="w-[20%] ">Vacaciones</td>
 								<td className="w-[50%]   pr-8">
 									<progress
 										value={item.total}
-										max={props.total_procesos}
+										max={props.totalProcesos}
 										aria-valuenow={item.total}
-										aria-valuemax={props.total_procesos}
+										aria-valuemax={props.totalProcesos}
 										aria-label="Progreso"
 										className={'progress-bar'}
 									/>
 								</td>
 								<td className="w-[15%] ">
-									{(item.total / props.total_procesos) * 100}%
+									{(item.total / props.totalProcesos) * 100}%
 								</td>
 							</tr>
 						))}
