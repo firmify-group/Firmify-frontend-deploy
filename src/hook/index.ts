@@ -1,26 +1,26 @@
 import { useState } from 'react';
-import type { LoginResponse } from 'src/utils/types/login.types';
-import { jwtDecode, type JwtPayload } from 'jwt-decode';
+import type { LoginResponse } from 'src/utils/types/response.public';
 import { useNavigate } from 'react-router';
 import { useBaseUrl } from 'src/hook/useBaseUrl.API';
-import { ROLE, LOGIN_STATUS, FETCH_EXCEPTIONS, PATH_ROUTES, API_ROUTES } from 'src/utils/constant';
+import { API_ENDPOINTS, EXCEPTION_TYPE, REQUEST_STATUS } from 'src/utils/constant/API';
+import { PATH_ROUTES, ROLE } from 'src/utils/constant/path';
 
 export const useFetchLogin = () => {
 	const [loading, setLoading] = useState(false);
 	const [status, setStatus] = useState(true);
-	const [message, setMessage] = useState<string>(LOGIN_STATUS.IDLE);
+	const [message, setMessage] = useState<string>('Iniciar sesión');
 	const USE_BASE_URL = useBaseUrl();
 
 	const fetchLogin = async (username: string, password: string): Promise<LoginResponse> => {
 		setLoading(true);
-		setMessage(LOGIN_STATUS.LOADING);
+		setMessage(REQUEST_STATUS.IN_PROGRESS);
 
 		const timeoutPromise: Promise<never> = new Promise<never>((_, reject) =>
-			setTimeout(() => reject(new Error(FETCH_EXCEPTIONS.TIMEOUT)), 5000),
+			setTimeout(() => reject(new Error(EXCEPTION_TYPE.TIMEOUT)), 5000),
 		);
 
 		const fetchPromise: Promise<LoginResponse> = fetch(
-			`${USE_BASE_URL}${API_ROUTES.LOGIN_URL}`,
+			`${USE_BASE_URL}${API_ENDPOINTS.LOGIN}`,
 			{
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -29,9 +29,9 @@ export const useFetchLogin = () => {
 		)
 			.then(async (response) => {
 				if (!response.ok) {
-					setMessage(LOGIN_STATUS.ERROR);
+					setMessage(REQUEST_STATUS.FAILED);
 					setStatus(false);
-					throw new Error(FETCH_EXCEPTIONS.LOGIN_ERROR);
+					throw new Error(EXCEPTION_TYPE.NETWORK_ERROR);
 				}
 				const result: LoginResponse = await response.json();
 				setMessage(result.message);
@@ -40,14 +40,18 @@ export const useFetchLogin = () => {
 			})
 			.finally(() => {
 				setLoading(false);
+
+				setTimeout(() => {
+					setMessage('Iniciar sesión');
+				}, 2500)
 			});
 
 		return Promise.race([fetchPromise, timeoutPromise]).catch(() => {
-			setMessage(LOGIN_STATUS.ERROR);
+			setMessage(REQUEST_STATUS.FAILED);
 			setStatus(false);
 			return {
 				status: false,
-				message: LOGIN_STATUS.ERROR,
+				message: REQUEST_STATUS.FAILED,
 				data: { token: '', expires_in: 0, token_type: '' },
 			};
 		});
@@ -67,7 +71,7 @@ export const useRoleNavigation = (): { navigateByRole: (role: string) => void } 
 		if (role === ROLE.ADMIN) {
 			navigate(PATH_ROUTES.MANAGER_HOME);
 		} else if (role === ROLE.USER) {
-			navigate(PATH_ROUTES.USER_HOME);
+			navigate(PATH_ROUTES.USER_PROCESS);
 		} else {
 			navigate(PATH_ROUTES.HOME);
 		}

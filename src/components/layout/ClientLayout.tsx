@@ -1,19 +1,8 @@
-import logoImg from '@shared/assets/img/logo.png';
-import homeEnable from '@shared/assets/icons/home-enable.png';
-import homeDisable from '@shared/assets/icons/home-disable.png';
-import exitEnable from '@shared/assets/icons/exit-enable.png';
-import exitDisable from '@shared/assets/icons/exit-disable.png';
-
+import logoImg from 'src/assets/img/logo.png';
+import exitEnable from 'src/assets/icons/exit-enable.png';
+import exitDisable from 'src/assets/icons/exit-disable.png';
 import { Outlet, NavLink } from 'react-router';
-
-const menuItems = [
-	{
-		label: 'Inicio',
-		path: 'process',
-		icon: homeEnable,
-		iconDisabled: homeDisable,
-	},
-];
+import { menuItemsClient } from 'src/utils/constant/components';
 
 const ManagerLayout: React.FC = () => {
 	return (
@@ -31,7 +20,7 @@ const ManagerLayout: React.FC = () => {
 				<main className="flex flex-col justify-start items-center size-full pl-1 gap-2">
 					<p className="body-1 text-font-700 text-start w-full">MENU</p>
 					<ul className="flex flex-col gap-2 w-full">
-						{menuItems.map((item) => (
+						{menuItemsClient.map((item) => (
 							<li key={item.label}>
 								<NavLink
 									to={`/client/${item.path.toLowerCase()}`}

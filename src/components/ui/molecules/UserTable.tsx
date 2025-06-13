@@ -1,6 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { UserTableProps } from 'src/utils/types/components.admin';
-
+import type { UserTableProps } from 'src/utils/types/components.admin';
 
 const PAGE_SIZE = 10;
 

@@ -1,4 +1,4 @@
-import logoImg from '@shared/assets/img/logo.png';
+import logoImg from 'src/assets/img/logo.png';
 
 const HeaderIcon: React.FC = () => {
 	return (

@@ -1,5 +1,5 @@
-import Header from '@feature/client/components/atoms/Header';
-import Input from '@feature/client/components/atoms/Input';
+import Header from 'src/components/ui/atoms/Header';
+import Input from 'src/components/ui/atoms/Input';
 import UserTable from 'src/components/ui/molecules/UserTable';
 
 const mockProducts = [

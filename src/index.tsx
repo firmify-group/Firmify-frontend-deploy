@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router';
 import router from './router';
 import { store } from './store';
-import './shared/assets/css/App.css';
+import './assets/css/APP.css';
 
 const rootEl = document.getElementById('root');
 

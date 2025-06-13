@@ -29,3 +29,7 @@ export type Slot = {
 	children: React.ReactNode;
 };
 
+export type AuthMiddlewareProps = {
+	requiredRoles?: string[];
+	redirectPath?: string;
+};

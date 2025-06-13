@@ -1,7 +1,6 @@
-import placeholderImg from '@shared/assets/img/placeholder.png';
-import decorationImg from '@shared/assets/img/folder.png';
-import { Slot } from 'src/utils/types/components.public';
-
+import placeholderImg from 'src/assets/img/placeholder.png';
+import decorationImg from 'src/assets/img/folder.png';
+import type { Slot } from 'src/utils/types/components.public';
 
 const LoginSpace: React.FC<Slot> = ({ children }) => {
 	return (

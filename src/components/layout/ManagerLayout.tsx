@@ -1,37 +1,15 @@
-import logoImg from '@shared/assets/img/logo.png';
-import homeEnable from '@shared/assets/icons/home-enable.png';
-import homeDisable from '@shared/assets/icons/home-disable.png';
-import exitEnable from '@shared/assets/icons/exit-enable.png';
-import exitDisable from '@shared/assets/icons/exit-disable.png';
-import reportEnable from '@shared/assets/icons/report-enable.png';
-import reportDisable from '@shared/assets/icons/report-disable.png';
-import cardGroupEnable from '@shared/assets/icons/card-group-enable.png';
-import cardGroupDisable from '@shared/assets/icons/card-group-disable.png';
-
+import logoImg from 'src/assets/img/logo.png';
+import { menuItemsAdmin, exitItem } from 'src/utils/constant/components';
+import { useDispatch } from 'react-redux';
+import { removeAuth } from 'src/store/auth';
 import { Outlet, NavLink } from 'react-router';
 
-const menuItems = [
-	{
-		label: 'Inicio',
-		path: 'home',
-		icon: homeEnable,
-		iconDisabled: homeDisable,
-	},
-	{
-		label: 'Solicitudes',
-		path: 'requests',
-		icon: reportEnable,
-		iconDisabled: reportDisable,
-	},
-	{
-		label: 'Funcionarios',
-		path: 'users',
-		icon: cardGroupEnable,
-		iconDisabled: cardGroupDisable,
-	},
-];
-
 const ManagerLayout: React.FC = () => {
+	const dispatch = useDispatch();
+
+	const handleExit = () => {
+		dispatch(removeAuth());
+	};
 	return (
 		<div className="flex size-full gap-4">
 			<nav className="h-full w-72 container-base flex flex-col justify-between items-start gap-12">
@@ -47,16 +25,15 @@ const ManagerLayout: React.FC = () => {
 				<main className="flex flex-col justify-start items-center size-full pl-1 gap-2">
 					<p className="body-1 text-font-700 text-start w-full">MENU</p>
 					<ul className="flex flex-col gap-2 w-full">
-						{menuItems.map((item) => (
+						{menuItemsAdmin.map((item) => (
 							<li key={item.label}>
 								<NavLink
-									to={`/manager/${item.path.toLowerCase()}`}
-									type="button"
+									to={`/manager/${item.path}`}
 									className={({ isActive }) =>
 										`font-link no-underline flex items-center gap-2 text-font-900 header-6 font-normal cursor-pointer transition-colors w-full text-left rounded-l-md py-2 px-3 ${
 											isActive
 												? 'text-primary-500 header-6 font-semibold bg-[#E5F7FE] border-r-[2.5px] border-primary-500'
-												: ''
+												: 'hover:bg-gray-50'
 										}`
 									}
 								>
@@ -79,24 +56,24 @@ const ManagerLayout: React.FC = () => {
 					<ul className="flex flex-col gap-4 w-full">
 						<li>
 							<NavLink
-								to={'/'}
-								type="button"
+								to={exitItem.path}
+								onClick={handleExit}
 								className={({ isActive }) =>
 									`font-link no-underline flex items-center gap-2 text-font-900 header-6 font-normal cursor-pointer transition-colors w-full text-left rounded-md py-2 px-3 ${
 										isActive
 											? 'text-primary-500 header-6 font-semibold bg-[#E5F7FE]'
-											: ''
+											: 'hover:bg-gray-50'
 									}`
 								}
 							>
 								{({ isActive }) => (
 									<>
 										<img
-											src={isActive ? exitEnable : exitDisable}
-											alt="Cerrar sesión"
+											src={isActive ? exitItem.icon : exitItem.iconDisabled}
+											alt={exitItem.label}
 											className="size-5"
 										/>
-										<span>Cerrar sesión</span>
+										<span>{exitItem.label}</span>
 									</>
 								)}
 							</NavLink>

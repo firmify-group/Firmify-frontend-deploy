@@ -2,7 +2,7 @@ import LoginSpace from 'src/components/ui/organisms/LoginSpace';
 import HeaderIcon from 'src/components/ui/atoms/HeaderIcon';
 import FormLogin from 'src/components/ui/molecules/FormLogin';
 import InputLogin from 'src/components/ui/atoms/InputLogin';
-import { InputsForm } from 'src/utils/constant/login.const';
+import { InputsForm } from 'src/utils/constant/components';
 
 const LoginPage: React.FC = () => {
 	return (

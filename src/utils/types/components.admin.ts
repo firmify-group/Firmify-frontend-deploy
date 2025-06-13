@@ -53,6 +53,9 @@ export type FilterBarProps = {
 
 export type ProductProps = {
     id: string;
+    name?: string;
+    rut?: string
+    email?: string;
     category: string;
     state: string;
     action: number;
