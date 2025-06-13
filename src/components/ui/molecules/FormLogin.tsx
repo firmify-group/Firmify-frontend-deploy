@@ -4,11 +4,14 @@ import { useDispatch } from 'react-redux';
 import { setAuth } from 'src/store/auth';
 import type { Slot } from 'src/utils/types/components.public';
 import type { LoginResponse } from 'src/utils/types/response.public';
-import { useFetchLogin, useRoleNavigation } from 'src/hook';
+import { useRoleNavigation } from 'src/hook';
 import { jwtDecode, type JwtPayload } from 'jwt-decode';
+import { usePublicAPI } from 'src/config/api/useRequest';
+import { API_ENDPOINTS, FETCH_STATUS } from 'src/utils/constant/API';
 
 const FormLogin: React.FC<Slot> = ({ children }) => {
-	const { status, message, loading, fetchLogin } = useFetchLogin();
+	const { message, status, post } = usePublicAPI();
+
 	const { navigateByRole } = useRoleNavigation();
 	const dispatch = useDispatch();
 
@@ -19,9 +22,12 @@ const FormLogin: React.FC<Slot> = ({ children }) => {
 		const username: FormDataEntryValue | null = formData.get('username');
 		const password: FormDataEntryValue | null = formData.get('password');
 
-		const response: LoginResponse = await fetchLogin(username as string, password as string);
+		const response = await post<LoginResponse>(API_ENDPOINTS.LOGIN, {
+			username,
+			password,
+		});
 
-		if (response.status) {
+		if (response.data.token) {
 			const token = response.data.token;
 			const decoded: JwtPayload & { id?: string; role?: string; sub?: string } =
 				jwtDecode(token);
@@ -50,12 +56,14 @@ const FormLogin: React.FC<Slot> = ({ children }) => {
 				<button
 					type="submit"
 					className={
-						status ? 'button button-primary-IDLE' : 'button button-primary-ERROR'
+						status === FETCH_STATUS.IDLE || status === FETCH_STATUS.LOADING
+							? 'button button-primary-IDLE'
+							: 'button button-primary-ERROR'
 					}
 					aria-describedby="login-description"
-					disabled={loading}
+					disabled={status === FETCH_STATUS.LOADING}
 				>
-					{message}
+					{message || 'Iniciar Sesión'}
 				</button>
 			</div>
 

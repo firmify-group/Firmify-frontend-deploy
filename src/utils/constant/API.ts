@@ -19,16 +19,6 @@ export enum EXCEPTION_TYPE {
     DATABASE_ERROR = 'Error de Base de Datos',
 }
 
-export enum HTTP_METHOD {
-    GET = 'GET',
-    POST = 'POST',
-    PUT = 'PUT',
-    PATCH = 'PATCH',
-    DELETE = 'DELETE',
-    HEAD = 'HEAD',
-    OPTIONS = 'OPTIONS'
-}
-
 export enum CONTENT_TYPE {
     JSON = 'application/json',
     FORM_DATA = 'multipart/form-data',
@@ -61,26 +51,31 @@ export enum API_ENDPOINTS {
     USER_OBJECT_PROCESS = 'api/office/request/object',
 }
 
-export enum API_VERSION {
-    V1 = 'v1',
-    V2 = 'v2'
+export enum HTTP_METHOD {
+    GET = 'GET',
+    POST = 'POST',
+    PUT = 'PUT',
+    PATCH = 'PATCH',
+    DELETE = 'DELETE',
+    HEAD = 'HEAD',
+    OPTIONS = 'OPTIONS'
 }
 
-export enum REQUEST_STATUS {
-    PENDING = 'Pendiente',
-    IN_PROGRESS = 'En Progreso',
-    COMPLETED = 'Completada',
-    FAILED = 'Fallida',
-    CANCELLED = 'Cancelada',
-    TIMED_OUT = 'Tiempo Agotado',
-    RETRYING = 'Reintentando'
-}
+export enum FETCH_STATUS {
+    IDLE = 'idle',
+    LOADING = 'loading',
+    SUCCESS = 'success',
+    ERROR = 'error'
+};
 
-export enum REQUEST_TYPE {
-    UPLOAD = 'Carga',
-    DOWNLOAD = 'Descarga',
-    QUERY = 'Consulta',
-    CREATE = 'Creación',
-    UPDATE = 'Actualización',
-    DELETE = 'Eliminación'
-}
+
+export const FETCH_EXCEPTIONS: Record<number, string> = {
+    400: 'Solicitud incorrecta',
+    401: 'Error de autenticación',
+    403: 'Acceso denegado',
+    404: 'Recurso no encontrado',
+    500: 'Error interno del servidor',
+    502: 'Puerta de enlace incorrecta',
+    503: 'Servicio no disponible',
+};
+

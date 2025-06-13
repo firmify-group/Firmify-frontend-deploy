@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import type { LoginResponse } from 'src/utils/types/response.public';
 import { useNavigate } from 'react-router';
-import { useBaseUrl } from 'src/hook/useBaseUrl.API';
-import { API_ENDPOINTS, EXCEPTION_TYPE, REQUEST_STATUS } from 'src/utils/constant/API';
+import { useBaseUrl } from 'src/config/api/useBaseUrl.API';
+import { API_ENDPOINTS, EXCEPTION_TYPE, FETCH_STATUS } from 'src/utils/constant/API';
 import { PATH_ROUTES, ROLE } from 'src/utils/constant/path';
 
 export const useFetchLogin = () => {
@@ -13,7 +13,7 @@ export const useFetchLogin = () => {
 
 	const fetchLogin = async (username: string, password: string): Promise<LoginResponse> => {
 		setLoading(true);
-		setMessage(REQUEST_STATUS.IN_PROGRESS);
+		setMessage(FETCH_STATUS.IDLE);
 
 		const timeoutPromise: Promise<never> = new Promise<never>((_, reject) =>
 			setTimeout(() => reject(new Error(EXCEPTION_TYPE.TIMEOUT)), 5000),
@@ -29,7 +29,7 @@ export const useFetchLogin = () => {
 		)
 			.then(async (response) => {
 				if (!response.ok) {
-					setMessage(REQUEST_STATUS.FAILED);
+					setMessage(FETCH_STATUS.ERROR);
 					setStatus(false);
 					throw new Error(EXCEPTION_TYPE.NETWORK_ERROR);
 				}
@@ -47,12 +47,12 @@ export const useFetchLogin = () => {
 			});
 
 		return Promise.race([fetchPromise, timeoutPromise]).catch(() => {
-			setMessage(REQUEST_STATUS.FAILED);
+			setMessage(FETCH_STATUS.ERROR);
 			setStatus(false);
 			return {
 				status: false,
-				message: REQUEST_STATUS.FAILED,
-				data: { token: '', expires_in: 0, token_type: '' },
+				message: FETCH_STATUS.ERROR,
+				data: { token: '', expiresIn: 0, tokenType: '' },
 			};
 		});
 	};

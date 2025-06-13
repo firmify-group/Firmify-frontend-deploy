@@ -67,6 +67,11 @@
 		@apply bg-feedback-success-100 text-font-100  border-[1.5px] border-feedback-success-100;
 	}
 
+	.button-primary-LOADING {
+		@apply bg-primary-300 text-font-100  border-[1.5px] border-primary-300;
+	}
+
+
 	.button-primary-ERROR {
 		@apply bg-feedback-error-100 text-font-100  border-[1.5px] border-feedback-error-100;
 	}
