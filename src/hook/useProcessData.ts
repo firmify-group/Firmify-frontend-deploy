@@ -162,9 +162,10 @@ export const useAllUsers = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_USERS) =>
     }, []);
 
     const filteredUsers = users.filter((user) => {
+        const normalize = (str: string) => str.replace(/\./g, '').toLowerCase();
         return (
-            user.name?.toLowerCase().includes(filters.name.toLowerCase()) &&
-            user.rut?.toLowerCase().includes(filters.rut.toLowerCase())
+            normalize(user.name ?? '').includes(normalize(filters.name)) &&
+            normalize(user.rut ?? '').includes(normalize(filters.rut))
         );
     });
 
