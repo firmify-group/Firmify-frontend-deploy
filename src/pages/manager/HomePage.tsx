@@ -9,7 +9,7 @@ import { API_ENDPOINTS } from 'src/utils/constant/API';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 const HomeManagerPage: React.FC = () => {
-	const { message, status, get } = usePrivateAPI();
+	const { get } = usePrivateAPI();
 	const [summaryData, setSummaryData] = useState<SummaryRequest | null>(null);
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
@@ -23,8 +23,8 @@ const HomeManagerPage: React.FC = () => {
 	}, [fetchSummaryData]);
 
 	const subtitleText = useMemo(
-		() => `Ultima actualización hoy a las ${summaryData?.timestap ?? 'N/A'}`,
-		[summaryData?.timestap],
+		() => `Ultima actualización hoy a las ${summaryData?.timestamp ?? 'N/A'}`,
+		[summaryData?.timestamp],
 	);
 
 	const hasRequestData = useMemo(

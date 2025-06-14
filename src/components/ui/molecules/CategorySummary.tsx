@@ -24,7 +24,8 @@ const CategorySummary: React.FC<CategoryRequest> = ({ totalProcesos, categorySum
 					</thead>
 					<tbody className="h-full">
 						{categorySumers?.map((item, key) => (
-							<tr key={item.name} className="body-3 text-font-700">
+							// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+							<tr key={item.total + key} className="body-3 text-font-700">
 								<td className="w-[10%]">{key + 1}</td>
 								<td className="w-[20%] ">Vacaciones</td>
 								<td className="w-[50%]   pr-8">
