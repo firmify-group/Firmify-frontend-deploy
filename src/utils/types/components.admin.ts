@@ -53,17 +53,19 @@ export type FilterBarProps = {
 };
 
 
-export type ProductProps = {
-    id: string;
+export type usersProps = {
+    id?: number | string;
     name?: string;
     rut?: string
     email?: string;
-    category: string;
-    state: string;
-    action: number;
+    category?: string;
+    state?: string;
+    action?: number;
 }
 
 export type UserTableProps = {
-    products: ProductProps[];
-    selectCardHandler: (product: ProductProps) => void;
+    users: usersProps[];
+    onDeleteUser?: (userId: number) => void;
+    showFilterInfo?: boolean;
+    totalUsers?: number;
 }

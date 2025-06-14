@@ -34,3 +34,18 @@ export type AllProcessesResponse = {
     message: string;
     timestamp: string;
 }
+
+export type AllUserResponse = {
+    status: boolean;
+    data: {
+        users: {
+            id: number;
+            rut: string;
+            email: string;
+            name: string;
+
+        }[];
+    };
+    message: string;
+    timestamp: string;
+}

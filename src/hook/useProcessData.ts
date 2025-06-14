@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { usePrivateAPI } from 'src/config/api/usePrivateRequest';
-import type { AllProcessesResponse, SummaryRequest } from 'src/utils/types/response.admin';
+import type { AllProcessesResponse, SummaryRequest, AllUserResponse } from 'src/utils/types/response.admin';
 import { API_ENDPOINTS } from 'src/utils/constant/API';
 
 export const useProcessData = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_PROCESSES) => {
@@ -115,4 +115,66 @@ export const useAllProcesses = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_PROCE
         summaryData,
         pendingProcesses,
     }
+}
+export const useAllUsers = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_USERS) => {
+    const { get } = usePrivateAPI();
+    const [usersData, setUsersData] = useState<AllUserResponse | null>(null);
+
+    // TODO: No puedo simular el SEE con los mocks usando json. Aqui deberia implementarse esta logica
+    const fetchUsersData = useCallback(async () => {
+        const response = await get<AllUserResponse>(endpoint);
+        setUsersData(response);
+        console.log('Users data fetched:', response);
+    }, [get, endpoint]);
+
+    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+    useEffect(() => {
+        fetchUsersData();
+    }, []);
+
+    // TODO: Cuando hagas el cambio debes mantener esto, puesto que evita que se re consulte al re-renderizar el componente
+    const users = useMemo(() => {
+        if (!usersData?.data?.users) return [];
+        return usersData.data.users;
+    }, [usersData?.data?.users]);
+
+    type FilterState = {
+        name: string;
+        rut: string;
+    };
+
+    const [filters, setFilters] = useState<FilterState>({
+        name: '',
+        rut: '',
+    });
+
+    const handleDeleteUser = useCallback(async (userId: number) => {
+        console.log('Eliminando usuario con ID:', userId);
+        await fetchUsersData();
+    }, [fetchUsersData]);
+
+    const updateFilter = useCallback((field: keyof FilterState, value: string) => {
+        setFilters((prev) => ({ ...prev, [field]: value }));
+    }, []);
+
+    const clearFilters = useCallback(() => {
+        setFilters({ name: '', rut: '' });
+    }, []);
+
+    const filteredUsers = users.filter((user) => {
+        return (
+            user.name?.toLowerCase().includes(filters.name.toLowerCase()) &&
+            user.rut?.toLowerCase().includes(filters.rut.toLowerCase())
+        );
+    });
+
+    return {
+        users,
+        filteredUsers,
+        filters,
+        handleDeleteUser,
+        updateFilter,
+        clearFilters,
+        refetch: fetchUsersData,
+    };
 }
