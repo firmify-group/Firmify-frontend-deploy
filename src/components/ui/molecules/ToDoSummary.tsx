@@ -1,33 +1,8 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
 import { NavLink } from 'react-router';
-import { usePrivateAPI } from 'src/config/api/usePrivateRequest';
-import { API_ENDPOINTS } from 'src/utils/constant/API';
-import type { AllProcessesResponse } from 'src/utils/types/response.admin';
+import { useAllProcesses } from 'src/hook/useProcessData';
 
 const ToDoSummary: React.FC = () => {
-	const { get } = usePrivateAPI();
-	const [summaryData, setSummaryData] = useState<AllProcessesResponse | null>(null);
-
-	// TODO: No puedo simular el SEE con los mocks usando json. Aqui deberia implementarse esta logica
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-	const fetchSummaryData = useCallback(async () => {
-		const response = await get<AllProcessesResponse>(API_ENDPOINTS.ADMIN_ALL_PROCESSES);
-		setSummaryData(response);
-	}, []);
-
-	useEffect(() => {
-		fetchSummaryData();
-	}, [fetchSummaryData]);
-
-	// TODO: Cuando hagas el cambio debes mantener esto, puesto que evita que se re consulte al re-renderizar el componente
-	const pendingProcesses = useMemo(() => {
-		if (!summaryData?.data?.processes) return [];
-
-		return summaryData.data.processes
-			.filter((process) => process.status === 'Pendiente')
-			.reverse()
-			.slice(0, 5);
-	}, [summaryData?.data?.processes]);
+	const { pendingProcesses } = useAllProcesses();
 
 	return (
 		<section className="container-base size-full flex flex-col gap-4">
