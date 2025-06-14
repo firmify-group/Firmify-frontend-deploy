@@ -13,5 +13,5 @@ export type SummaryRequest = {
         }[];
     };
     message: string;
-    timestamp: string;
+    timestap: string;
 };

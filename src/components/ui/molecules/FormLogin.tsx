@@ -4,9 +4,9 @@ import { useDispatch } from 'react-redux';
 import { setAuth } from 'src/store/auth';
 import type { Slot } from 'src/utils/types/components.public';
 import type { LoginResponse } from 'src/utils/types/response.public';
-import { useRoleNavigation } from 'src/hook';
+import { useRoleNavigation } from 'src/hook/useNavegation';
 import { jwtDecode, type JwtPayload } from 'jwt-decode';
-import { usePublicAPI } from 'src/config/api/useRequest';
+import { usePublicAPI } from 'src/config/api/usePublicRequest';
 import { API_ENDPOINTS, FETCH_STATUS } from 'src/utils/constant/API';
 
 const FormLogin: React.FC<Slot> = ({ children }) => {

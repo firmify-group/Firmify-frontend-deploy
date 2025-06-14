@@ -1,5 +1,5 @@
 import type { CategoryRequest } from 'src/utils/types/components.admin';
-const CategorySummary: React.FC<CategoryRequest> = (props) => {
+const CategorySummary: React.FC<CategoryRequest> = ({ totalProcesos, categorySumers }) => {
 	return (
 		<section
 			className="container-base size-full flex flex-col gap-4"
@@ -23,22 +23,24 @@ const CategorySummary: React.FC<CategoryRequest> = (props) => {
 						</tr>
 					</thead>
 					<tbody className="h-full">
-						{props.categorySumers.map((item) => (
+						{categorySumers?.map((item, key) => (
 							<tr key={item.name} className="body-3 text-font-700">
-								<td className="w-[10%]">{item.name}</td>
+								<td className="w-[10%]">{key + 1}</td>
 								<td className="w-[20%] ">Vacaciones</td>
 								<td className="w-[50%]   pr-8">
 									<progress
 										value={item.total}
-										max={props.totalProcesos}
+										max={totalProcesos}
 										aria-valuenow={item.total}
-										aria-valuemax={props.totalProcesos}
+										aria-valuemax={totalProcesos}
 										aria-label="Progreso"
 										className={'progress-bar'}
 									/>
 								</td>
 								<td className="w-[15%] ">
-									{(item.total / props.totalProcesos) * 100}%
+									{totalProcesos
+										? `${((item.total / totalProcesos) * 100).toFixed(2)}%`
+										: 'N/A'}
 								</td>
 							</tr>
 						))}

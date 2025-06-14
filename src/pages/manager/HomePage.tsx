@@ -3,38 +3,52 @@ import MonitoringSummary from 'src/components/ui/organisms/MonitoringSummary';
 import ToDoSummary from 'src/components/ui/molecules/ToDoSummary';
 import CounterSummary from 'src/components/ui/molecules/CounterSummary';
 import CategorySummary from 'src/components/ui/molecules/CategorySummary';
-import type { CategoryRequest, CounterRequest } from '../../utils/types/components.admin';
-
-const categoryExample: CategoryRequest = {
-	totalProcesos: 100,
-	categorySumers: [
-		{ name: '01', total: 40 },
-		{ name: '02', total: 65 },
-		{ name: '03', total: 20 },
-		{ name: '04', total: 85 },
-	],
-};
-
-const counterExample: CounterRequest = {
-	totalResueltos: 30,
-	totalPendientes: 50,
-	totalObjeciones: 40,
-	totalProcesos: 120,
-};
+import type { SummaryRequest } from 'src/utils/types/response.admin';
+import { usePrivateAPI } from 'src/config/api/usePrivateRequest';
+import { API_ENDPOINTS } from 'src/utils/constant/API';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 const HomeManagerPage: React.FC = () => {
+	const { message, status, get } = usePrivateAPI();
+	const [summaryData, setSummaryData] = useState<SummaryRequest | null>(null);
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	const fetchSummaryData = useCallback(async () => {
+		const response = await get<SummaryRequest>(API_ENDPOINTS.ADMIN_SUMMARY_PROCESS);
+		setSummaryData(response);
+	}, []);
+
+	useEffect(() => {
+		fetchSummaryData();
+	}, [fetchSummaryData]);
+
+	const subtitleText = useMemo(
+		() => `Ultima actualización hoy a las ${summaryData?.timestap ?? 'N/A'}`,
+		[summaryData?.timestap],
+	);
+
+	const hasRequestData = useMemo(
+		() => Boolean(summaryData?.data?.request),
+		[summaryData?.data?.request],
+	);
+
+	const counterCategoryData = useMemo(
+		() => Boolean(summaryData?.data?.categorySumers),
+		[summaryData?.data?.categorySumers],
+	);
+
 	return (
 		<>
-			<Header
-				title="Monitoreo de solicitudes"
-				subtitle="Ultima actualización hoy a las 12:00hrs"
-			/>
-
+			<Header title="Monitoreo de solicitudes" subtitle={subtitleText} />
 			<MonitoringSummary>
-				<CounterSummary {...counterExample} />
-				<CategorySummary {...categoryExample} />
+				{hasRequestData && <CounterSummary {...summaryData?.data.request} />}
+				{counterCategoryData && (
+					<CategorySummary
+						totalProcesos={summaryData?.data?.request?.totalProcesos}
+						categorySumers={summaryData?.data?.categorySumers}
+					/>
+				)}
 			</MonitoringSummary>
-
 			<ToDoSummary />
 		</>
 	);
