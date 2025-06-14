@@ -1,48 +1,32 @@
 import KanvaCard from 'src/components/ui/atoms/KanvaCard';
 import type { KanvaColumnProps } from 'src/utils/types/components.admin';
-
-const getBgClass = (color?: string) => {
-	if (!color) return '';
-	if (color.startsWith('#')) return '';
-	return `bg-${color}`;
-};
-
-const getBorderClass = (color?: string) => {
-	if (!color) return '';
-	if (color.startsWith('#')) return '';
-	return `border-${color}`;
-};
-
-const getTextClass = (color?: string) => {
-	if (!color) return '';
-	if (color.startsWith('#')) return '';
-	return `text-${color}`;
-};
+import { useSelectiónColors } from 'src/hook/useResource';
 
 const KanvaColumn: React.FC<KanvaColumnProps> = (props) => {
-	const bgClass = getBgClass(props.low);
-	const borderClass = getBorderClass(props.higt);
-	const textClass = getTextClass(props.higt);
+	const { getBgClass, getBorderClass, getTextClass } = useSelectiónColors();
+
+	const cardsCount = props.cards?.length ?? 0;
+	const hasCards = cardsCount > 0;
 
 	return (
 		<section className="flex flex-col size-full gap-3">
 			<header
-				className={`w-full py-2 text-center border-2 ${borderClass} ${bgClass} rounded-md gap-2 flex flex-row place-content-center`}
+				className={`w-full py-2 text-center border-[1.5px] ${getBorderClass(props.higt)} ${getBgClass(props.low)} rounded-md gap-2 flex flex-row place-content-center`}
 				style={{
 					backgroundColor: props.low?.startsWith('#') ? props.low : undefined,
 					borderColor: props.higt?.startsWith('#') ? props.higt : undefined,
 				}}
 			>
 				<small
-					className={` body-1 font-medium ${textClass}`}
+					className={`body-1 font-medium ${getTextClass(props.higt)}`}
 					style={{
 						color: props.higt?.startsWith('#') ? props.higt : undefined,
 					}}
 				>
-					{props.cards.length}
+					{cardsCount}
 				</small>
 				<small
-					className={` body-1 font-medium  ${textClass}`}
+					className={`body-1 font-medium ${getTextClass(props.higt)}`}
 					style={{
 						color: props.higt?.startsWith('#') ? props.higt : undefined,
 					}}
@@ -50,17 +34,25 @@ const KanvaColumn: React.FC<KanvaColumnProps> = (props) => {
 					{props.name}
 				</small>
 			</header>
-			<main className="flex flex-col h-[27.7rem] gap-2 justify-start items-center overflow-y-auto scroll-smooth kanva-scroll ">
-				{props.cards.map((card) => (
-					<KanvaCard
-						key={card.id}
-						id={card.id}
-						name={card.name}
-						dateStart={card.dateStart}
-						dateEnd={card.dateEnd}
-						status={card.status}
-					/>
-				))}
+			<main className="flex flex-col h-[27.7rem] gap-2 justify-start items-center overflow-y-auto scroll-smooth kanva-scroll">
+				{hasCards ? (
+					props.cards
+						?.filter((card) => typeof card.id === 'string')
+						.map((card) => (
+							<KanvaCard
+								key={card.id}
+								id={card.id as string}
+								name={card.name as string}
+								dateStart={card.start_date as string}
+								dateEnd={card.end_date as string}
+								status={card.status as string}
+							/>
+						))
+				) : (
+					<div className="flex flex-col items-center justify-start h-full text-gray-500 text-sm text-center px-4">
+						<p>No hay solicitudes {props.name?.toLowerCase()}</p>
+					</div>
+				)}
 			</main>
 		</section>
 	);

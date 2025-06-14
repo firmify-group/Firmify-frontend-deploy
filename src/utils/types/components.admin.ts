@@ -23,12 +23,12 @@ export type KanvaColumnProps = {
     name?: string;
     low?: string;
     higt?: string;
-    cards: Array<{
-        id: string;
-        name: string;
-        dateStart: string;
-        dateEnd: string;
-        status: string;
+    cards?: Array<{
+        id?: string;
+        name?: string;
+        start_date?: string;
+        end_date?: string;
+        status?: string;
         category?: string;
     }>;
 };
@@ -49,7 +49,9 @@ export type FilterBarProps = {
         endDate: string;
     };
     onChange: (filters: Partial<FilterBarProps['filters']>) => void;
+    availableCategories?: string[];
 };
+
 
 export type ProductProps = {
     id: string;

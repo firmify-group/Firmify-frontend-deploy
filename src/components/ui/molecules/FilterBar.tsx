@@ -1,7 +1,7 @@
 import Input from 'src/components/ui/atoms/Input';
 import type { FilterBarProps } from 'src/utils/types/components.admin';
 
-const FilterBar: React.FC<FilterBarProps> = ({ filters, onChange }) => {
+const FilterBar: React.FC<FilterBarProps> = ({ availableCategories, filters, onChange }) => {
 	return (
 		<aside className="container-base flex flex-row justify-between items-center gap-8">
 			<Input
@@ -20,17 +20,18 @@ const FilterBar: React.FC<FilterBarProps> = ({ filters, onChange }) => {
 					Categoria de solicitud
 				</label>
 				<select
-					name="category"
 					id="category"
-					className="body-2 text-font-900 base-input-slim py-2"
+					name="category"
 					value={filters.category}
 					onChange={(e) => onChange({ category: e.target.value })}
+					className="body-2 text-font-900 base-input-slim py-2"
 				>
-					<option value="">Todas</option>
-					<option value="Vacaciones1">Vacaciones1</option>
-					<option value="Vacaciones2">Vacaciones2</option>
-					<option value="Vacaciones3">Vacaciones3</option>
-					<option value="Vacaciones4">Vacaciones4</option>
+					<option value="">Todas las categorías</option>
+					{availableCategories?.map((category) => (
+						<option key={category} value={category}>
+							{category}
+						</option>
+					))}
 				</select>
 			</div>
 

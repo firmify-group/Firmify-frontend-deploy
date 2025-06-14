@@ -12,6 +12,7 @@ const HomeManagerPage: React.FC = () => {
 	const { get } = usePrivateAPI();
 	const [summaryData, setSummaryData] = useState<SummaryRequest | null>(null);
 
+	// TODO: Aqui se debe modificar el endpoint y adaptarlo al back.
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	const fetchSummaryData = useCallback(async () => {
 		const response = await get<SummaryRequest>(API_ENDPOINTS.ADMIN_SUMMARY_PROCESS);
@@ -22,6 +23,7 @@ const HomeManagerPage: React.FC = () => {
 		fetchSummaryData();
 	}, [fetchSummaryData]);
 
+	// TODO: Cuando hagas el cambio debes mantener esto, puesto que evita que se re consulte al re-renderizar el componente
 	const subtitleText = useMemo(
 		() => `Ultima actualización hoy a las ${summaryData?.timestamp ?? 'N/A'}`,
 		[summaryData?.timestamp],

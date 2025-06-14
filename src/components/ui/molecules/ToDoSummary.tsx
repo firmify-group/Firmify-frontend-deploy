@@ -8,6 +8,7 @@ const ToDoSummary: React.FC = () => {
 	const { get } = usePrivateAPI();
 	const [summaryData, setSummaryData] = useState<AllProcessesResponse | null>(null);
 
+	// TODO: No puedo simular el SEE con los mocks usando json. Aqui deberia implementarse esta logica
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	const fetchSummaryData = useCallback(async () => {
 		const response = await get<AllProcessesResponse>(API_ENDPOINTS.ADMIN_ALL_PROCESSES);
@@ -18,6 +19,7 @@ const ToDoSummary: React.FC = () => {
 		fetchSummaryData();
 	}, [fetchSummaryData]);
 
+	// TODO: Cuando hagas el cambio debes mantener esto, puesto que evita que se re consulte al re-renderizar el componente
 	const pendingProcesses = useMemo(() => {
 		if (!summaryData?.data?.processes) return [];
 
