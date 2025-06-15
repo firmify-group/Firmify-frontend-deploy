@@ -81,7 +81,7 @@ const ManagerLayout: React.FC = () => {
 					</ul>
 				</footer>
 			</nav>
-			<main className="flex flex-col items-baseline size-full gap-4 *:w-full">
+			<main className="flex flex-col items-baseline size-full gap-4 *:w-full relative">
 				<Outlet />
 			</main>
 		</div>

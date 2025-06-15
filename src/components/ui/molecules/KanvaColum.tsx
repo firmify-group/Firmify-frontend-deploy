@@ -2,7 +2,9 @@ import KanvaCard from 'src/components/ui/atoms/KanvaCard';
 import type { KanvaColumnProps } from 'src/utils/types/components.admin';
 import { useSelectiónColors } from 'src/hook/useResource';
 
-const KanvaColumn: React.FC<KanvaColumnProps> = (props) => {
+const KanvaColumn: React.FC<KanvaColumnProps & { onCardClick?: (cardId: string) => void }> = (
+	props,
+) => {
 	const { getBgClass, getBorderClass, getTextClass } = useSelectiónColors();
 
 	const cardsCount = props.cards?.length ?? 0;
@@ -46,6 +48,7 @@ const KanvaColumn: React.FC<KanvaColumnProps> = (props) => {
 								dateStart={card.start_date as string}
 								dateEnd={card.end_date as string}
 								status={card.status as string}
+								onClick={() => props.onCardClick?.(card.id as string)}
 							/>
 						))
 				) : (

@@ -53,7 +53,6 @@ const UserTable: React.FC<
 
 	return (
 		<div className="border-[1.5px] border-font-400 rounded-lg box-border overflow-hidden flex flex-col">
-			{/* Header */}
 			<div className="flex bg-[#f7f7f7] border-b-[1.5px] border-font-400 shrink-0">
 				<div className="body-3 text-font-800 w-1/12 pl-5 py-2.5 bg-transparent font-medium">
 					ID
@@ -72,7 +71,6 @@ const UserTable: React.FC<
 				</div>
 			</div>
 
-			{/* Body con altura fija */}
 			<div className="flex-1 h-full">
 				{users.length === 0 ? (
 					<div className="flex items-center justify-center h-full">
@@ -82,11 +80,10 @@ const UserTable: React.FC<
 					</div>
 				) : (
 					<>
-						{/* Filas con datos */}
 						{paginatedUsers.map((user) => (
 							<div
 								key={user.id}
-								className="flex cursor-pointer hover:bg-font-50 border-b border-font-300 items-center h-[38px]"
+								className="flex hover:bg-font-50 border-b border-font-300 items-center h-[38px]"
 							>
 								<div className="body-3 text-font-1000 w-1/12 pl-5 truncate">
 									{user.id}
@@ -118,7 +115,6 @@ const UserTable: React.FC<
 							</div>
 						))}
 
-						{/* Filas vacías para mantener altura consistente */}
 						{emptyRows.map((_, index) => (
 							<div
 								key={`empty-row-page-${currentPage}-users-${paginatedUsers.length}-slot-${index}`}

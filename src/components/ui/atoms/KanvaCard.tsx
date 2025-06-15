@@ -21,7 +21,14 @@ function getRandomColor(seed: string) {
 	return COLORS[idx];
 }
 
-const KanvaCard: React.FC<KanvaCardProps> = ({ id, name, dateStart, dateEnd, status }) => {
+const KanvaCard: React.FC<KanvaCardProps & { onClick?: () => void }> = ({
+	id,
+	name,
+	dateStart,
+	dateEnd,
+	status,
+	onClick,
+}) => {
 	const initials = useMemo(
 		() =>
 			name
@@ -36,9 +43,11 @@ const KanvaCard: React.FC<KanvaCardProps> = ({ id, name, dateStart, dateEnd, sta
 	const bgColor = useMemo(() => getRandomColor(name), [name]);
 
 	return (
-		<div
+		<button
 			id={id}
-			className="w-full flex flex-row justify-between items-center gap-4 p-2 border-2 px-3 border-font-300 rounded-md bg-font-100"
+			type="button"
+			className="w-full flex flex-row justify-between items-center gap-4 p-2 border-2 px-3 border-font-300 rounded-md bg-font-100 cursor-pointer hover:bg-font-200 transition-colors"
+			onClick={onClick}
 		>
 			<div
 				className="rounded-4xl py-1.5 px-2 text-font-100 font-bold"
@@ -54,7 +63,7 @@ const KanvaCard: React.FC<KanvaCardProps> = ({ id, name, dateStart, dateEnd, sta
 				</p>
 			</div>
 			<small>{status}</small>
-		</div>
+		</button>
 	);
 };
 

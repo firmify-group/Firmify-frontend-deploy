@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import Header from 'src/components/ui/atoms/Header';
 import FilterBar from 'src/components/ui/molecules/FilterBar';
 import KanvaColumn from 'src/components/ui/molecules/KanvaColum';
+import RequestModal from 'src/components/ui/molecules/KanvaModal';
 import { useProcessData } from 'src/hook/useProcessData';
 import { useFilteredData } from 'src/hook/useFilteredData';
 import { useGroupedByStatus } from 'src/hook/useStatus';
@@ -10,9 +12,22 @@ const RequestManagerPage: React.FC = () => {
 	const { filters, filteredData, updateFilters } = useFilteredData(processes);
 	const { pending, rejected, completed } = useGroupedByStatus(filteredData);
 
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [selectedCardId, setSelectedCardId] = useState<string>('');
+
+	const handleCardClick = (cardId: string) => {
+		setSelectedCardId(cardId);
+		setIsModalOpen(true);
+	};
+
+	const handleCloseModal = () => {
+		setIsModalOpen(false);
+		setSelectedCardId('');
+	};
+
 	return (
 		<>
-			<Header title="Submitted Requests" subtitle={subtitleText} />
+			<Header title="Solicitudes ingresadas" subtitle={subtitleText} />
 
 			<FilterBar
 				filters={filters}
@@ -20,7 +35,7 @@ const RequestManagerPage: React.FC = () => {
 				availableCategories={categories}
 			/>
 
-			<article className="flex flex-row justify-between items-start gap-4 size-full">
+			<article className="flex flex-row justify-between items-start gap-4 size-full relative">
 				<KanvaColumn
 					name="Pending"
 					low="#FCE3CD"
@@ -30,6 +45,7 @@ const RequestManagerPage: React.FC = () => {
 						...card,
 						id: card.id !== undefined ? String(card.id) : undefined,
 					}))}
+					onCardClick={handleCardClick}
 				/>
 				<KanvaColumn
 					name="Rejected"
@@ -40,6 +56,7 @@ const RequestManagerPage: React.FC = () => {
 						...card,
 						id: card.id !== undefined ? String(card.id) : undefined,
 					}))}
+					onCardClick={handleCardClick}
 				/>
 				<KanvaColumn
 					name="Completed"
@@ -50,8 +67,11 @@ const RequestManagerPage: React.FC = () => {
 						...card,
 						id: card.id !== undefined ? String(card.id) : undefined,
 					}))}
+					onCardClick={handleCardClick}
 				/>
 			</article>
+
+			<RequestModal isOpen={isModalOpen} onClose={handleCloseModal} cardId={selectedCardId} />
 		</>
 	);
 };
