@@ -3,35 +3,19 @@ import { usePrivateAPI } from 'src/config/api/usePrivateRequest';
 import type { AllProcessesResponse, SummaryRequest, AllUserResponse } from 'src/utils/types/response.admin';
 import { API_ENDPOINTS } from 'src/utils/constant/API';
 
-//  TODO: Este es el punto central de la integración con la API de procesos.
-//  Aquí se gestionan las solicitudes de datos y se exponen los hooks para su uso en componentes.
-
 export const useProcessData = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_PROCESSES) => {
     const { get } = usePrivateAPI();
     const [data, setData] = useState<AllProcessesResponse | null>(null);
-    const [isLoading, setIsLoading] = useState(false);
+
+    // TODO: Aqui se debe modificar el endpoint y adaptarlo al back.
 
     const fetchData = useCallback(async () => {
-        setIsLoading(true);
-        try {
-            const response = await get<AllProcessesResponse>(endpoint);
-            setData(response);
-        } finally {
-            setIsLoading(false);
-        }
+        const response = await get<AllProcessesResponse>(endpoint);
+        setData(response);
     }, [get, endpoint]);
 
     useEffect(() => {
         fetchData();
-    }, [fetchData]);
-
-    useEffect(() => {
-        const handleFocus = () => {
-            fetchData();
-        };
-
-        window.addEventListener('focus', handleFocus);
-        return () => window.removeEventListener('focus', handleFocus);
     }, [fetchData]);
 
     const processes = useMemo(() => {
@@ -60,39 +44,25 @@ export const useProcessData = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_PROCES
         subtitleText,
         processes,
         categories,
-        isLoading,
-        refetch: fetchData,
     };
 };
 
 export const useSummaryData = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_PROCESSES) => {
     const { get } = usePrivateAPI();
     const [summaryData, setSummaryData] = useState<SummaryRequest | null>(null);
-    const [isLoading, setIsLoading] = useState(false);
 
+    // TODO: Aqui se debe modificar el endpoint y adaptarlo al back.
+    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
     const fetchSummaryData = useCallback(async () => {
-        setIsLoading(true);
-        try {
-            const response = await get<SummaryRequest>(endpoint);
-            setSummaryData(response);
-        } finally {
-            setIsLoading(false);
-        }
-    }, [get, endpoint]);
+        const response = await get<SummaryRequest>(API_ENDPOINTS.ADMIN_SUMMARY_PROCESS);
+        setSummaryData(response);
+    }, []);
 
     useEffect(() => {
         fetchSummaryData();
     }, [fetchSummaryData]);
 
-    useEffect(() => {
-        const handleFocus = () => {
-            fetchSummaryData();
-        };
-
-        window.addEventListener('focus', handleFocus);
-        return () => window.removeEventListener('focus', handleFocus);
-    }, [fetchSummaryData]);
-
+    // TODO: Cuando hagas el cambio debes mantener esto, puesto que evita que se re consulte al re-renderizar el componente
     const subtitleText = useMemo(
         () => `Ultima actualización hoy a las ${summaryData?.timestamp ?? 'N/A'}`,
         [summaryData?.timestamp],
@@ -107,13 +77,11 @@ export const useSummaryData = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_PROCES
         () => Boolean(summaryData?.data?.categorySumers),
         [summaryData?.data?.categorySumers],
     );
-
     return {
         summaryData,
         subtitleText,
         hasRequestData,
         counterCategoryData,
-        isLoading,
         refetch: fetchSummaryData,
     };
 }
@@ -121,31 +89,19 @@ export const useSummaryData = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_PROCES
 export const useAllProcesses = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_PROCESSES) => {
     const { get } = usePrivateAPI();
     const [summaryData, setSummaryData] = useState<AllProcessesResponse | null>(null);
-    const [isLoading, setIsLoading] = useState(false);
 
+    // TODO: No puedo simular el SEE con los mocks usando json. Aqui deberia implementarse esta logica
+    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
     const fetchSummaryData = useCallback(async () => {
-        setIsLoading(true);
-        try {
-            const response = await get<AllProcessesResponse>(endpoint);
-            setSummaryData(response);
-        } finally {
-            setIsLoading(false);
-        }
-    }, [get, endpoint]);
+        const response = await get<AllProcessesResponse>(endpoint);
+        setSummaryData(response);
+    }, []);
 
     useEffect(() => {
         fetchSummaryData();
     }, [fetchSummaryData]);
 
-    useEffect(() => {
-        const handleFocus = () => {
-            fetchSummaryData();
-        };
-
-        window.addEventListener('focus', handleFocus);
-        return () => window.removeEventListener('focus', handleFocus);
-    }, [fetchSummaryData]);
-
+    // TODO: Cuando hagas el cambio debes mantener esto, puesto que evita que se re consulte al re-renderizar el componente
     const pendingProcesses = useMemo(() => {
         if (!summaryData?.data?.processes) return [];
 
@@ -158,40 +114,25 @@ export const useAllProcesses = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_PROCE
     return {
         summaryData,
         pendingProcesses,
-        isLoading,
-        refetch: fetchSummaryData,
     }
 }
-
 export const useAllUsers = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_USERS) => {
     const { get } = usePrivateAPI();
     const [usersData, setUsersData] = useState<AllUserResponse | null>(null);
-    const [isLoading, setIsLoading] = useState(false);
 
+    // TODO: No puedo simular el SEE con los mocks usando json. Aqui deberia implementarse esta logica
     const fetchUsersData = useCallback(async () => {
-        setIsLoading(true);
-        try {
-            const response = await get<AllUserResponse>(endpoint);
-            setUsersData(response);
-            console.log('Users data fetched:', response);
-        } finally {
-            setIsLoading(false);
-        }
+        const response = await get<AllUserResponse>(endpoint);
+        setUsersData(response);
+        console.log('Users data fetched:', response);
     }, [get, endpoint]);
 
+    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
     useEffect(() => {
         fetchUsersData();
-    }, [fetchUsersData]);
+    }, []);
 
-    useEffect(() => {
-        const handleFocus = () => {
-            fetchUsersData();
-        };
-
-        window.addEventListener('focus', handleFocus);
-        return () => window.removeEventListener('focus', handleFocus);
-    }, [fetchUsersData]);
-
+    // TODO: Cuando hagas el cambio debes mantener esto, puesto que evita que se re consulte al re-renderizar el componente
     const users = useMemo(() => {
         if (!usersData?.data?.users) return [];
         return usersData.data.users;
@@ -235,7 +176,6 @@ export const useAllUsers = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_USERS) =>
         handleDeleteUser,
         updateFilter,
         clearFilters,
-        isLoading,
         refetch: fetchUsersData,
     };
 }
