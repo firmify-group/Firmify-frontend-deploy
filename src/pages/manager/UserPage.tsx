@@ -1,9 +1,12 @@
 import Header from 'src/components/ui/atoms/Header';
 import Input from 'src/components/ui/atoms/Input';
+import UserModal from 'src/components/ui/molecules/UserModal';
 import UserTable from 'src/components/ui/molecules/UserTable';
+import { useModal } from 'src/hook/useModal';
 import { useAllUsers } from 'src/hook/useProcessData';
 
 const RequestManagerPage: React.FC = () => {
+	const { isModalOpen, handleCardClick, handleCloseModal } = useModal();
 	const { users, clearFilters, filteredUsers, handleDeleteUser, updateFilter, filters } =
 		useAllUsers();
 
@@ -13,6 +16,7 @@ const RequestManagerPage: React.FC = () => {
 				title="Funcionarios registrados"
 				subtitle="Ultima actualización hoy a las 12:00hrs"
 			/>
+
 			<main className="size-full container-base flex flex-col justify-between items-center gap-5 ">
 				<section className="w-full h-16 flex flex-row justify-between items-center">
 					<div className="flex flex-row gap-4 w-[30rem] items-center">
@@ -45,7 +49,11 @@ const RequestManagerPage: React.FC = () => {
 								Limpiar filtros
 							</button>
 						)}
-						<button type="button" className="button button-primary-IDLE">
+						<button
+							type="button"
+							className="button button-primary-IDLE"
+							onClick={handleCardClick}
+						>
 							+ Agregar
 						</button>
 					</div>
@@ -59,6 +67,7 @@ const RequestManagerPage: React.FC = () => {
 					/>
 				</section>
 			</main>
+			<UserModal isOpen={isModalOpen} onClose={handleCloseModal} />
 		</>
 	);
 };

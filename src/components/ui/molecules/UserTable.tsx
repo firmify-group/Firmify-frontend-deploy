@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import type { UserTableProps } from 'src/utils/types/components.admin';
+import UserModal from './UserModal';
 
 const PAGE_SIZE = 10;
 
@@ -50,6 +51,8 @@ const UserTable: React.FC<
 
 	const emptyRowsCount = PAGE_SIZE - paginatedUsers.length;
 	const emptyRows = Array(emptyRowsCount).fill(null);
+
+	// TODO: Implementar lógica para aprobar/rechazar solicitudes
 
 	return (
 		<div className="border-[1.5px] border-font-400 rounded-lg box-border overflow-hidden flex flex-col">

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Header from 'src/components/ui/atoms/Header';
 import FilterBar from 'src/components/ui/molecules/FilterBar';
 import KanvaColumn from 'src/components/ui/molecules/KanvaColum';
@@ -6,25 +5,12 @@ import RequestModal from 'src/components/ui/molecules/KanvaModal';
 import { useProcessData } from 'src/hook/useProcessData';
 import { useFilteredData } from 'src/hook/useFilteredData';
 import { useGroupedByStatus } from 'src/hook/useStatus';
-import type { cardInformation } from 'src/utils/types/components.admin';
-
+import { useModal } from 'src/hook/useModal';
 const RequestManagerPage: React.FC = () => {
 	const { processes, categories, subtitleText } = useProcessData();
 	const { filters, filteredData, updateFilters } = useFilteredData(processes);
 	const { pending, rejected, completed } = useGroupedByStatus(filteredData);
-
-	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [selectedCardId, setSelectedCardId] = useState<cardInformation | null>(null);
-
-	const handleCardClick = (cardInfo: cardInformation) => {
-		setSelectedCardId(cardInfo);
-		setIsModalOpen(true);
-	};
-
-	const handleCloseModal = () => {
-		setIsModalOpen(false);
-		setSelectedCardId(null);
-	};
+	const { isModalOpen, selectedCardId, handleCardClick, handleCloseModal } = useModal();
 
 	return (
 		<>

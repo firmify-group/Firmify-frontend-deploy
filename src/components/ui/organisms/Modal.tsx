@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { useModal } from 'src/hook/useModal';
+import { useModalBase } from 'src/hook/useModal';
 import type { Slot } from 'src/utils/types/components.public';
 
 interface RequestModalSimpleProps extends Slot {
@@ -8,7 +8,7 @@ interface RequestModalSimpleProps extends Slot {
 }
 
 const RequestModalSimple: FC<RequestModalSimpleProps> = ({ children, isOpen, onClose }) => {
-	const { handleBackdropClick, handleContentClick } = useModal({ isOpen, onClose });
+	const { handleBackdropClick, handleContentClick } = useModalBase({ isOpen, onClose });
 
 	if (!isOpen) return null;
 
