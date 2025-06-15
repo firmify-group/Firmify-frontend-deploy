@@ -6,6 +6,7 @@ import RequestModal from 'src/components/ui/molecules/KanvaModal';
 import { useProcessData } from 'src/hook/useProcessData';
 import { useFilteredData } from 'src/hook/useFilteredData';
 import { useGroupedByStatus } from 'src/hook/useStatus';
+import type { cardInformation } from 'src/utils/types/components.admin';
 
 const RequestManagerPage: React.FC = () => {
 	const { processes, categories, subtitleText } = useProcessData();
@@ -13,16 +14,16 @@ const RequestManagerPage: React.FC = () => {
 	const { pending, rejected, completed } = useGroupedByStatus(filteredData);
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [selectedCardId, setSelectedCardId] = useState<string>('');
+	const [selectedCardId, setSelectedCardId] = useState<cardInformation | null>(null);
 
-	const handleCardClick = (cardId: string) => {
-		setSelectedCardId(cardId);
+	const handleCardClick = (cardInfo: cardInformation) => {
+		setSelectedCardId(cardInfo);
 		setIsModalOpen(true);
 	};
 
 	const handleCloseModal = () => {
 		setIsModalOpen(false);
-		setSelectedCardId('');
+		setSelectedCardId(null);
 	};
 
 	return (
@@ -71,7 +72,11 @@ const RequestManagerPage: React.FC = () => {
 				/>
 			</article>
 
-			<RequestModal isOpen={isModalOpen} onClose={handleCloseModal} cardId={selectedCardId} />
+			<RequestModal
+				isOpen={isModalOpen}
+				onClose={handleCloseModal}
+				cardId={selectedCardId ?? undefined}
+			/>
 		</>
 	);
 };

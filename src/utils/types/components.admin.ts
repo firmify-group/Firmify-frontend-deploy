@@ -33,6 +33,24 @@ export type KanvaColumnProps = {
     }>;
 };
 
+export type cardInformation = {
+    id?: number;
+    rut?: string;
+    email?: string;
+    name?: string;
+    category?: string;
+    status?: string;
+    start_date?: string;
+    end_date?: string;
+};
+
+export type RequestModalProps = {
+    isOpen: boolean;
+    onClose: () => void;
+    cardId?: cardInformation;
+}
+
+
 export type KanvaCardProps = {
     id: string;
     name: string;

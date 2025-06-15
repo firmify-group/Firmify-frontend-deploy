@@ -16,7 +16,7 @@ const FilterBar: React.FC<FilterBarProps> = ({ availableCategories, filters, onC
 			/>
 
 			<div className="flex flex-col gap-1 w-1/4">
-				<label htmlFor="category" className="body-2 font-medium text-font-1000">
+				<label htmlFor="category" className="body-2 font-normal text-font-1000">
 					Categoria de solicitud
 				</label>
 				<select

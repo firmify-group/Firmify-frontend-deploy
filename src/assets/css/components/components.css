@@ -40,8 +40,14 @@
 	}
 
 	.button {
-		@apply text-body-1 font-work-sans font-medium cursor-pointer  box-border leading-none tracking-wide flex justify-center  px-3 py-2.5 rounded-md transition-all duration-300 ease-in;
+		@apply text-body-2 font-work-sans font-medium cursor-pointer  box-border leading-none tracking-wide flex justify-center  px-3 py-2.5 rounded-md transition-all duration-300 ease-in;
 	}
+
+	
+	.button-slim {
+		@apply text-body-2 font-work-sans font-medium cursor-pointer  box-border leading-none tracking-wide flex justify-center  px-3 py-1 rounded-md transition-all duration-300 ease-in;
+	}
+
 
 	.button-primary-IDLE {
 		@apply bg-primary-500 text-font-100 border-[1.5px] border-primary-500;

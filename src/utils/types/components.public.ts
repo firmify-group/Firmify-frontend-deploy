@@ -10,6 +10,7 @@ export type InputProps = {
 	id?: string;
 	name?: string;
 	type?: string;
+	disabled?: boolean;
 	placeholder?: string;
 	decoration?: string;
 	label?: string;
