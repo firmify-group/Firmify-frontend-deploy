@@ -3,6 +3,9 @@ import { usePrivateAPI } from 'src/config/api/usePrivateRequest';
 import type { AllProcessesResponse, SummaryRequest, AllUserResponse } from 'src/utils/types/response.admin';
 import { API_ENDPOINTS } from 'src/utils/constant/API';
 
+//  TODO: Este es el punto central de la integración con la API de procesos.
+//  Aquí se gestionan las solicitudes de datos y se exponen los hooks para su uso en componentes.
+
 export const useProcessData = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_PROCESSES) => {
     const { get } = usePrivateAPI();
     const [data, setData] = useState<AllProcessesResponse | null>(null);

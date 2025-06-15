@@ -1,35 +1,14 @@
-import { useEffect } from 'react';
-import type { FC, MouseEvent } from 'react';
+import type { FC } from 'react';
 import type { RequestModalProps } from 'src/utils/types/components.admin';
 import Input from 'src/components/ui/atoms/Input';
+import { useModal } from 'src/hook/useModal';
 
 const RequestModalSimple: FC<RequestModalProps> = ({ isOpen, onClose, cardId }) => {
-	// Manejar ESC y scroll del body
-	useEffect(() => {
-		if (!isOpen) return;
+	const { handleBackdropClick, handleContentClick } = useModal({ isOpen, onClose });
 
-		const handleEsc = (event: KeyboardEvent) => {
-			if (event.key === 'Escape') {
-				onClose();
-			}
-		};
-
-		document.addEventListener('keydown', handleEsc);
-		document.body.style.overflow = 'hidden';
-
-		return () => {
-			document.removeEventListener('keydown', handleEsc);
-			document.body.style.overflow = 'unset';
-		};
-	}, [isOpen, onClose]);
+	// TODO: Implementar lógica para aprobar/rechazar solicitudes
 
 	if (!isOpen) return null;
-
-	const handleBackdropClick = (event: MouseEvent<HTMLDivElement>) => {
-		if (event.target === event.currentTarget) {
-			onClose();
-		}
-	};
 
 	return (
 		// biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
@@ -37,7 +16,7 @@ const RequestModalSimple: FC<RequestModalProps> = ({ isOpen, onClose, cardId }) 
 			{/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
 			<div
 				className="absolute right-2 top-2 w-[30rem] max-w-[90.5vw] h-[45rem] gap-6 bg-font-100 rounded-lg shadow-xl overflow-hidden flex flex-col justify-between box-border p-5"
-				onClick={(e) => e.stopPropagation()}
+				onClick={handleContentClick}
 			>
 				<header className="flex justify-center items-center header-4">
 					<h2 className="text-[1.3rem] font-manrope font-bold text-font-1000">
