@@ -10,11 +10,7 @@ const router = createBrowserRouter([
 		element: React.createElement(GuestMiddleware),
 		children: [
 			{
-				path: "/",
-				Component: React.lazy(() => import('src/pages/LandingPage')),
-			},
-			{
-				path: '/login',
+				path: '/',
 				Component: React.lazy(() => import('src/pages/LoginPage')),
 			},
 		],

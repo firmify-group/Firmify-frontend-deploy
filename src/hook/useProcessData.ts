@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { usePrivateAPI } from 'src/config/api/usePrivateRequest';
 import type { AllProcessesResponse, SummaryRequest, AllUserResponse } from 'src/utils/types/response.admin';
+import type { AllProcessByUser } from 'src/utils/types/response.client';
 import { API_ENDPOINTS } from 'src/utils/constant/API';
 
 export const useProcessData = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_PROCESSES) => {
@@ -161,7 +162,7 @@ export const useAllUsers = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_USERS) =>
         setFilters({ name: '', rut: '' });
     }, []);
 
-    const filteredUsers = users.filter((user) => {
+    const filteredUsers = users.filter((user: { name: string; rut: string; }) => {
         const normalize = (str: string) => str.replace(/\./g, '').toLowerCase();
         return (
             normalize(user.name ?? '').includes(normalize(filters.name)) &&
@@ -178,4 +179,98 @@ export const useAllUsers = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_USERS) =>
         clearFilters,
         refetch: fetchUsersData,
     };
+}
+
+
+export const useAllProcessByUser = (endpoint: string = API_ENDPOINTS.USER_ALL_REQUESTS) => {
+    const { get } = usePrivateAPI();
+    const [processData, setProcessData] = useState<AllProcessByUser | null>(null);
+
+    const fetchProcessData = useCallback(async () => {
+        const response = await get<AllProcessByUser>(endpoint);
+        setProcessData(response);
+        console.log('Process data fetched:', response);
+    }, [get, endpoint]);
+
+    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+    useEffect(() => {
+        fetchProcessData();
+    }, []);
+
+    const processes = useMemo(() => {
+        if (!processData?.data?.request) return [];
+        return processData.data.request.map((req) => ({
+            id: req.id,
+            category: req.category,
+            state: req.state,
+            created_at: req.created_at,
+            finished_at: req.finished_at
+        }));
+    }, [processData?.data?.request]);
+
+    type FilterProcess = {
+        id: number | string;
+        category: string;
+        state: string;
+        created_at: string;
+        finished_at: string;
+    };
+
+    const [filters, setFilters] = useState<FilterProcess>({
+        id: '',
+        category: '',
+        state: '',
+        created_at: '',
+        finished_at: '',
+    });
+
+    const handleObjectProcess = useCallback(async (processId: number) => {
+        console.log('Objetando proceso con ID:', processId);
+        // Aquí implementarías la lógica para objetar el proceso
+        await fetchProcessData();
+    }, [fetchProcessData]);
+
+    const handleViewProcess = useCallback(async (processId: number) => {
+        console.log('Viendo proceso con ID:', processId);
+        // Aquí implementarías la lógica para ver el proceso
+    }, []);
+
+    const updateFilter = useCallback((field: keyof FilterProcess, value: string) => {
+        setFilters((prev) => ({ ...prev, [field]: value }));
+    }, []);
+
+    const clearFilters = useCallback(() => {
+        setFilters({ id: '', category: '', state: '', created_at: '', finished_at: '' });
+    }, []);
+
+    const filteredProcesses = processes.filter((process) => {
+        const normalize = (str: string) => str.replace(/\./g, '').toLowerCase();
+        return (
+            normalize(String(process.id ?? '')).includes(normalize(String(filters.id))) &&
+            normalize(process.category ?? '').includes(normalize(filters.category)) &&
+            normalize(process.state ?? '').includes(normalize(filters.state)) &&
+            normalize(process.created_at ?? '').includes(normalize(filters.created_at)) &&
+            normalize(process.finished_at ?? '').includes(normalize(filters.finished_at))
+        );
+    });
+    4
+
+
+    const subtitleText = useMemo(
+        () => `Ultima actualización hoy a las ${processData?.timestamp ?? 'N/A'}`,
+        [processData?.timestamp],
+    );
+
+
+    return {
+        processes,
+        filteredProcesses,
+        filters,
+        handleObjectProcess,
+        handleViewProcess,
+        updateFilter,
+        clearFilters,
+        refetch: fetchProcessData,
+        date: subtitleText
+    }
 }
