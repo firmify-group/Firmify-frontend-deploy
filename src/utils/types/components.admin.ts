@@ -50,6 +50,11 @@ export type RequestModalProps = {
     cardId?: cardInformation;
 }
 
+export type UserFormData = {
+    requesterName: string;
+    requesterRut: string;
+    requesterEmail: string;
+};
 
 export type KanvaCardProps = {
     id: string;

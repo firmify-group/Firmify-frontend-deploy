@@ -17,7 +17,7 @@ const RequestModalSimple: FC<RequestModalSimpleProps> = ({ children, isOpen, onC
 		<div className="fixed inset-0 z-50 right-0 bg-black/50" onClick={handleBackdropClick}>
 			{/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
 			<div
-				className="absolute right-2 top-2 w-[30rem] max-w-[90.5vw] h-[45rem] gap-6 bg-font-100 rounded-lg shadow-xl overflow-hidden flex flex-col justify-between box-border p-5"
+				className="absolute right-2 top-2 w-[32rem] max-w-[90.5vw] h-[45rem] gap-6 bg-font-100 rounded-lg shadow-xl overflow-hidden flex flex-col justify-between box-border p-7"
 				onClick={handleContentClick}
 			>
 				{children}
