@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import type { ProcessPagination } from 'src/utils/types/components.client';
+import Input from 'src/components/ui/atoms/Input';
 
 const PAGE_SIZE = 10;
 
@@ -54,7 +55,6 @@ const ProcessTable: React.FC<ProcessTableProps> = ({
 	onViewProcess,
 	onUpdateFilter,
 	onClearFilters,
-	onRefetch,
 	showFilterInfo = false,
 	totalProcesses,
 }) => {
@@ -111,82 +111,71 @@ const ProcessTable: React.FC<ProcessTableProps> = ({
 	const emptyRowsCount = PAGE_SIZE - paginatedProcesses.length;
 	const emptyRows = Array(emptyRowsCount).fill(null);
 
+	const hasActiveFilters =
+		filters.id ||
+		filters.category ||
+		filters.state ||
+		filters.created_at ||
+		filters.finished_at;
+
 	return (
 		<div className="space-y-4">
 			{/* Filters Section */}
-			<div className="grid grid-cols-5 gap-4 items-end">
-				<div className="flex flex-col gap-1">
-					<label
-						id="idProcessLabel"
-						htmlFor="idProcessInput"
-						className="body-3 text-font-800"
-					>
-						ID del Proceso
-					</label>
-					<input
-						id="idProcessInput"
-						type="text"
-						value={filters.id}
-						onChange={(e) => onUpdateFilter('id', e.target.value)}
-						placeholder='Ej: "001"'
-						className="input-base"
-					/>
-				</div>
-				<div className="flex flex-col gap-1">
-					<label
-						id="categoryLabel"
-						htmlFor="categoryInput"
-						className="body-3 text-font-800"
-					>
-						Categoría
-					</label>
-					<input
-						id="categoryInput"
-						type="text"
-						value={filters.category}
-						onChange={(e) => onUpdateFilter('category', e.target.value)}
-						placeholder='Ej: "Vacaciones"'
-						className="input-base"
-					/>
-				</div>
-				<div className="flex flex-col gap-1">
-					<label id="stateLabel" htmlFor="stateInput" className="body-3 text-font-800">
-						Estado
-					</label>
-					<input
-						id="stateInput"
-						type="text"
-						value={filters.state}
-						onChange={(e) => onUpdateFilter('state', e.target.value)}
-						placeholder='Ej: "Pendiente"'
-						className="input-base"
-					/>
-				</div>
-				<div className="flex flex-col gap-1">
-					<label
-						id="createdAtLabel"
-						htmlFor="createdAtInput"
-						className="body-3 text-font-800"
-					>
-						Fecha de Creación
-					</label>
-					<input
-						id="createdAtInput"
-						type="text"
-						value={filters.created_at}
-						onChange={(e) => onUpdateFilter('created_at', e.target.value)}
-						placeholder='Ej: "03/06/2025"'
-						className="input-base"
-					/>
-				</div>
+			<div className="grid grid-cols-6 gap-4 items-end">
+				<Input
+					label="Categoría"
+					decoration="flex flex-col gap-1"
+					id="categoryFilter"
+					name="categoryFilter"
+					placeholder='Ej: "Vacaciones"'
+					type="text"
+					value={filters.category}
+					onChange={(e) => onUpdateFilter('category', e.target.value)}
+				/>
+
+				<Input
+					label="Estado"
+					decoration="flex flex-col gap-1"
+					id="stateFilter"
+					name="stateFilter"
+					placeholder='Ej: "Pendiente"'
+					type="text"
+					value={filters.state}
+					onChange={(e) => onUpdateFilter('state', e.target.value)}
+				/>
+
+				<Input
+					label="Fecha Creación"
+					decoration="flex flex-col gap-1"
+					id="createdAtFilter"
+					name="createdAtFilter"
+					placeholder='Ej: "2024-01-01"'
+					type="text"
+					value={filters.created_at}
+					onChange={(e) => onUpdateFilter('created_at', e.target.value)}
+				/>
+
+				<Input
+					label="Fecha Finalización"
+					decoration="flex flex-col gap-1"
+					id="finishedAtFilter"
+					name="finishedAtFilter"
+					placeholder='Ej: "2024-12-31"'
+					type="text"
+					value={filters.finished_at}
+					onChange={(e) => onUpdateFilter('finished_at', e.target.value)}
+				/>
+
 				<div className="flex gap-2">
-					<button
-						type="button"
-						onClick={onClearFilters}
-						className="button button-secondary-IDLE"
-					>
-						Limpiar
-					</button>
+					{hasActiveFilters && (
+						<button
+							type="button"
+							onClick={onClearFilters}
+							className="text-sm text-font-600 hover:text-font-800 underline"
+						>
+							Limpiar filtros
+						</button>
+					)}
 				</div>
 			</div>
 

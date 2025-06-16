@@ -1,5 +1,5 @@
 import Header from 'src/components/ui/atoms/Header';
-import ProcessTable from 'src/components/ui/molecules/UserProcess';
+import ProcessTable from 'src/components/ui/molecules/ProcessTable';
 import { useAllProcessByUser } from 'src/hook/useProcessData';
 
 const HomeClientPage: React.FC = () => {
