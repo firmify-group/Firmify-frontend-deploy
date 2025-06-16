@@ -8,15 +8,19 @@ import { useAllUsers } from 'src/hook/useProcessData';
 // ...existing code...
 const RequestManagerPage: React.FC = () => {
 	const { isModalOpen, handleCardClick, handleCloseModal } = useModal();
-	const { users, clearFilters, filteredUsers, handleDeleteUser, updateFilter, filters } =
-		useAllUsers();
+	const {
+		users,
+		clearFilters,
+		filteredUsers,
+		handleDeleteUser,
+		updateFilter,
+		filters,
+		subtitleText,
+	} = useAllUsers();
 
 	return (
 		<>
-			<Header
-				title="Funcionarios registrados"
-				subtitle="Ultima actualización hoy a las 12:00hrs"
-			/>
+			<Header title="Funcionarios registrados" subtitle={subtitleText} />
 
 			<main className="size-full container-base flex flex-col justify-between items-center gap-5 ">
 				<section className="w-full h-16 flex flex-row justify-between items-center">

@@ -170,6 +170,12 @@ export const useAllUsers = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_USERS) =>
         );
     });
 
+    const subtitleText = useMemo(
+        () => `Ultima actualización hoy a las ${usersData?.timestamp ?? 'N/A'}`,
+        [usersData?.timestamp],
+    );
+
+
     return {
         users,
         filteredUsers,
@@ -178,6 +184,7 @@ export const useAllUsers = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_USERS) =>
         updateFilter,
         clearFilters,
         refetch: fetchUsersData,
+        subtitleText,
     };
 }
 
@@ -253,7 +260,6 @@ export const useAllProcessByUser = (endpoint: string = API_ENDPOINTS.USER_ALL_RE
             normalize(process.finished_at ?? '').includes(normalize(filters.finished_at))
         );
     });
-    4
 
 
     const subtitleText = useMemo(
