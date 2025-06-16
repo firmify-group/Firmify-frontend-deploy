@@ -2,7 +2,12 @@ import Header from 'src/components/ui/atoms/Header';
 import ProcessTable from 'src/components/ui/molecules/ProcessTable';
 import { useAllProcessByUser } from 'src/hook/useProcessData';
 import FilterTable from 'src/components/ui/molecules/FilterProcess';
+import ProcessModal from 'src/components/ui/molecules/ProcessModal';
+import { useState } from 'react';
+
 const HomeClientPage: React.FC = () => {
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
 	const {
 		processes,
 		filteredProcesses,
@@ -21,12 +26,22 @@ const HomeClientPage: React.FC = () => {
 
 	const handleObjectProcessAction = (processId: number) => {
 		console.log(`Objetar proceso: ${processId}`);
+		// Aquí puedes agregar lógica específica para objetar o redirigir a otra página
 		handleObjectProcess(processId);
 	};
 
 	const handleViewProcessAction = (processId: number) => {
 		console.log(`Ver detalles del proceso: ${processId}`);
+		// Aquí puedes agregar lógica específica para ver detalles o redirigir a otra página
 		handleViewProcess(processId);
+	};
+
+	const handleNewProcessClick = () => {
+		setIsModalOpen(true);
+	};
+
+	const handleCloseModal = () => {
+		setIsModalOpen(false);
 	};
 
 	return (
@@ -40,7 +55,11 @@ const HomeClientPage: React.FC = () => {
 						filters={filters}
 					/>
 					<div className="h-full w-fit flex flex-row justify-end items-end">
-						<button type="button" className="button button-primary-IDLE w-48">
+						<button
+							type="button"
+							className="button button-primary-IDLE w-48"
+							onClick={handleNewProcessClick}
+						>
 							+ Nueva Solicitud
 						</button>
 					</div>
@@ -57,6 +76,8 @@ const HomeClientPage: React.FC = () => {
 					/>
 				</section>
 			</main>
+
+			<ProcessModal isOpen={isModalOpen} onClose={handleCloseModal} />
 		</>
 	);
 };

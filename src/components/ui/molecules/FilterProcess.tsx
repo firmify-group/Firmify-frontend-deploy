@@ -3,6 +3,7 @@ import Input from 'src/components/ui/atoms/Input';
 export type FilterProcessProps = {
 	onUpdateFilter: (field: keyof FilterProcess, value: string) => void;
 	onClearFilters: () => void;
+	openModal?: () => void;
 	filters: FilterProcess;
 };
 

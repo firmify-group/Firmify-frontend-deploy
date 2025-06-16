@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import type { MouseEvent } from 'react';
+
 
 export const useModal = <T = unknown>() => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedCardId, setSelectedCardId] = useState<T | null>(null);
 
     const handleCardClick = (information?: T) => {
-        setSelectedCardId(information || null);
+        setSelectedCardId(information ?? null);
         setIsModalOpen(true);
     };
 
@@ -22,8 +24,6 @@ export const useModal = <T = unknown>() => {
     };
 };
 
-import { useEffect, useCallback } from 'react';
-import type { MouseEvent } from 'react';
 
 interface UseModalProps {
     isOpen: boolean;
