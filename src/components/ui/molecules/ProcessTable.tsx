@@ -1,8 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import type { ProcessPagination } from 'src/utils/types/components.client';
-import Input from 'src/components/ui/atoms/Input';
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 8;
 
 function usePagination(processes: ProcessPagination[], pageSize = PAGE_SIZE) {
 	const [currentPage, setCurrentPage] = useState(1);
@@ -26,22 +25,11 @@ function usePagination(processes: ProcessPagination[], pageSize = PAGE_SIZE) {
 	return { currentPage, totalPages, paginatedProcesses, handlePageClick };
 }
 
-type FilterProcess = {
-	id: number | string;
-	category: string;
-	state: string;
-	created_at: string;
-	finished_at: string;
-};
-
 interface ProcessTableProps {
 	processes: ProcessPagination[];
-	filters: FilterProcess;
 	onProcessAction?: (processId: number) => void;
 	onObjectProcess?: (processId: number) => void;
 	onViewProcess?: (processId: number) => void;
-	onUpdateFilter: (field: keyof FilterProcess, value: string) => void;
-	onClearFilters: () => void;
 	onRefetch: () => void;
 	showFilterInfo?: boolean;
 	totalProcesses?: number;
@@ -49,28 +37,14 @@ interface ProcessTableProps {
 
 const ProcessTable: React.FC<ProcessTableProps> = ({
 	processes,
-	filters,
-	onProcessAction,
 	onObjectProcess,
 	onViewProcess,
-	onUpdateFilter,
-	onClearFilters,
 	showFilterInfo = false,
 	totalProcesses,
 }) => {
 	const { currentPage, totalPages, paginatedProcesses, handlePageClick } = usePagination(
 		processes,
 		PAGE_SIZE,
-	);
-
-	const handleProcessAction = useCallback(
-		(e: React.MouseEvent, processId: number) => {
-			e.stopPropagation();
-			if (onProcessAction) {
-				onProcessAction(processId);
-			}
-		},
-		[onProcessAction],
 	);
 
 	const handleObjectProcess = useCallback(
@@ -111,93 +85,26 @@ const ProcessTable: React.FC<ProcessTableProps> = ({
 	const emptyRowsCount = PAGE_SIZE - paginatedProcesses.length;
 	const emptyRows = Array(emptyRowsCount).fill(null);
 
-	const hasActiveFilters =
-		filters.id ||
-		filters.category ||
-		filters.state ||
-		filters.created_at ||
-		filters.finished_at;
-
 	return (
 		<div className="space-y-4">
-			{/* Filters Section */}
-			<div className="grid grid-cols-6 gap-4 items-end">
-				<Input
-					label="Categoría"
-					decoration="flex flex-col gap-1"
-					id="categoryFilter"
-					name="categoryFilter"
-					placeholder='Ej: "Vacaciones"'
-					type="text"
-					value={filters.category}
-					onChange={(e) => onUpdateFilter('category', e.target.value)}
-				/>
-
-				<Input
-					label="Estado"
-					decoration="flex flex-col gap-1"
-					id="stateFilter"
-					name="stateFilter"
-					placeholder='Ej: "Pendiente"'
-					type="text"
-					value={filters.state}
-					onChange={(e) => onUpdateFilter('state', e.target.value)}
-				/>
-
-				<Input
-					label="Fecha Creación"
-					decoration="flex flex-col gap-1"
-					id="createdAtFilter"
-					name="createdAtFilter"
-					placeholder='Ej: "2024-01-01"'
-					type="text"
-					value={filters.created_at}
-					onChange={(e) => onUpdateFilter('created_at', e.target.value)}
-				/>
-
-				<Input
-					label="Fecha Finalización"
-					decoration="flex flex-col gap-1"
-					id="finishedAtFilter"
-					name="finishedAtFilter"
-					placeholder='Ej: "2024-12-31"'
-					type="text"
-					value={filters.finished_at}
-					onChange={(e) => onUpdateFilter('finished_at', e.target.value)}
-				/>
-
-				<div className="flex gap-2">
-					{hasActiveFilters && (
-						<button
-							type="button"
-							onClick={onClearFilters}
-							className="text-sm text-font-600 hover:text-font-800 underline"
-						>
-							Limpiar filtros
-						</button>
-					)}
-				</div>
-			</div>
-
-			{/* Table */}
 			<div className="border-[1.5px] border-font-400 rounded-lg box-border overflow-hidden flex flex-col">
 				<div className="flex bg-[#f7f7f7] border-b-[1.5px] border-font-400 shrink-0">
-					<div className="body-3 text-font-800 w-[10%] pl-5 py-2.5 bg-transparent font-medium">
+					<div className="body-3 text-font-800 w-[10%] pl-5 py-1.5 bg-transparent font-medium">
 						ID
 					</div>
-					<div className="body-3 text-font-800 w-[20%] pl-3 py-2.5 bg-transparent font-medium">
+					<div className="body-3 text-font-800 w-[20%] pl-3 py-1.5 bg-transparent font-medium">
 						Categoría
 					</div>
-					<div className="body-3 text-font-800 w-[15%] pl-3 py-2.5 bg-transparent font-medium">
+					<div className="body-3 text-font-800 w-[15%] pl-3 py-1.5 bg-transparent font-medium">
 						Estado
 					</div>
-					<div className="body-3 text-font-800 w-[15%] pl-3 py-2.5 bg-transparent font-medium">
+					<div className="body-3 text-font-800 w-[15%] pl-3 py-1.5 bg-transparent font-medium">
 						Fecha Creación
 					</div>
-					<div className="body-3 text-font-800 w-[15%] pl-3 py-2.5 bg-transparent font-medium">
+					<div className="body-3 text-font-800 w-[15%] pl-3 py-1.5 bg-transparent font-medium">
 						Fecha Finalización
 					</div>
-					<div className="body-3 text-font-800 w-[25%] pl-3 py-2.5 bg-transparent font-medium text-center">
+					<div className="body-3 text-font-800 w-[25%] pl-3 py-1.5 bg-transparent font-medium text-center">
 						Acciones
 					</div>
 				</div>
@@ -233,7 +140,7 @@ const ProcessTable: React.FC<ProcessTableProps> = ({
 										{process.created_at}
 									</div>
 									<div className="body-3 text-font-1000 w-[15%] pl-3 truncate">
-										{process.finished_at || 'N/A'}
+										{process.finished_at ?? 'N/A'}
 									</div>
 									<div className="w-[25%] pl-3 flex gap-2 justify-center">
 										<button
@@ -275,7 +182,7 @@ const ProcessTable: React.FC<ProcessTableProps> = ({
 				</div>
 
 				{/* Footer */}
-				<div className="flex justify-between items-center px-5 py-5 bg-font-50 shrink-0">
+				<div className="flex justify-between items-center px-5 py-2 bg-font-50 shrink-0">
 					<span className="body-2 italic text-font-800">
 						Página {currentPage} de {totalPages} ({processes.length} procesos
 						{showFilterInfo &&

@@ -13,6 +13,10 @@ const router = createBrowserRouter([
 				path: '/',
 				Component: React.lazy(() => import('src/pages/LoginPage')),
 			},
+			{
+				path: '/login',
+				Component: React.lazy(() => import('src/pages/LoginPage')),
+			},
 		],
 	},
 	{

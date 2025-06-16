@@ -3,8 +3,16 @@ import exitEnable from 'src/assets/icons/exit-enable.png';
 import exitDisable from 'src/assets/icons/exit-disable.png';
 import { Outlet, NavLink } from 'react-router';
 import { menuItemsClient } from 'src/utils/constant/components';
+import { useDispatch } from 'react-redux';
+import { removeAuth } from 'src/store/auth';
 
 const ManagerLayout: React.FC = () => {
+	const dispatch = useDispatch();
+
+	const handleExit = () => {
+		dispatch(removeAuth());
+	};
+
 	return (
 		<div className="flex size-full gap-4">
 			<nav className="h-full w-72 container-base flex flex-col justify-between items-start gap-12">
@@ -54,6 +62,7 @@ const ManagerLayout: React.FC = () => {
 							<NavLink
 								to={'/'}
 								type="button"
+								onClick={handleExit}
 								className={({ isActive }) =>
 									`font-link no-underline flex items-center gap-2 text-font-900 header-6 font-normal cursor-pointer transition-colors w-full text-left rounded-md py-2 px-3 ${
 										isActive
