@@ -3,12 +3,12 @@ import ProcessTable from 'src/components/ui/molecules/ProcessTable';
 import { useAllProcessByUser } from 'src/hook/useProcessData';
 import FilterTable from 'src/components/ui/molecules/FilterProcess';
 import ProcessModal from 'src/components/ui/molecules/ProcessModal';
-import { useState } from 'react';
+import { useModal } from 'src/hook/useModal';
 
 const HomeClientPage: React.FC = () => {
-	const [isModalOpen, setIsModalOpen] = useState(false);
-
+	const { isModalOpen, handleCloseModal, handleCardClick } = useModal();
 	const {
+		date,
 		processes,
 		filteredProcesses,
 		filters,
@@ -17,7 +17,6 @@ const HomeClientPage: React.FC = () => {
 		updateFilter,
 		clearFilters,
 		refetch,
-		date,
 	} = useAllProcessByUser();
 
 	const handleProcessAction = (processId: number) => {
@@ -36,14 +35,6 @@ const HomeClientPage: React.FC = () => {
 		handleViewProcess(processId);
 	};
 
-	const handleNewProcessClick = () => {
-		setIsModalOpen(true);
-	};
-
-	const handleCloseModal = () => {
-		setIsModalOpen(false);
-	};
-
 	return (
 		<>
 			<Header title="Mis Solicitudes" subtitle={date} />
@@ -58,7 +49,7 @@ const HomeClientPage: React.FC = () => {
 						<button
 							type="button"
 							className="button button-primary-IDLE w-48"
-							onClick={handleNewProcessClick}
+							onClick={handleCardClick}
 						>
 							+ Nueva Solicitud
 						</button>

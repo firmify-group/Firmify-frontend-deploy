@@ -6,6 +6,7 @@ import { useProcessData } from 'src/hook/useProcessData';
 import { useFilteredData } from 'src/hook/useFilteredData';
 import { useGroupedByStatus } from 'src/hook/useStatus';
 import { useModal } from 'src/hook/useModal';
+
 const RequestManagerPage: React.FC = () => {
 	const { processes, categories, subtitleText } = useProcessData();
 	const { filters, filteredData, updateFilters } = useFilteredData(processes);

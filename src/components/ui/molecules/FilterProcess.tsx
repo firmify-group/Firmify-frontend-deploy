@@ -1,19 +1,5 @@
 import Input from 'src/components/ui/atoms/Input';
-
-export type FilterProcessProps = {
-	onUpdateFilter: (field: keyof FilterProcess, value: string) => void;
-	onClearFilters: () => void;
-	openModal?: () => void;
-	filters: FilterProcess;
-};
-
-type FilterProcess = {
-	id: number | string;
-	category: string;
-	state: string;
-	created_at: string;
-	finished_at: string;
-};
+import type { FilterProcessProps } from 'src/utils/types/components.admin';
 
 const FilterTable: React.FC<FilterProcessProps> = ({ onClearFilters, onUpdateFilter, filters }) => {
 	const hasActiveFilters =

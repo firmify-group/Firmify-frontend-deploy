@@ -34,7 +34,7 @@ export type KanvaColumnProps = {
 };
 
 export type cardInformation = {
-    id?: number;
+    id?: number | string;
     rut?: string;
     email?: string;
     name?: string;
@@ -92,3 +92,18 @@ export type UserTableProps = {
     showFilterInfo?: boolean;
     totalUsers?: number;
 }
+
+export type FilterProcessProps = {
+    onUpdateFilter: (field: keyof FilterProcess, value: string) => void;
+    onClearFilters: () => void;
+    openModal?: () => void;
+    filters: FilterProcess;
+};
+
+export type FilterProcess = {
+    id: number | string;
+    category: string;
+    state: string;
+    created_at: string;
+    finished_at: string;
+};

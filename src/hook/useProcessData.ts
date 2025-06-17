@@ -280,3 +280,19 @@ export const useAllProcessByUser = (endpoint: string = API_ENDPOINTS.USER_ALL_RE
         date: subtitleText
     }
 }
+
+export const createHandleObjectProcess = (onObjectProcess?: (id: number) => void) =>
+    (e: React.MouseEvent, processId: number) => {
+        e.stopPropagation();
+        if (onObjectProcess) {
+            onObjectProcess(processId);
+        }
+    };
+
+export const createHandleViewProcess = (onViewProcess?: (id: number) => void) =>
+    (e: React.MouseEvent, processId: number) => {
+        e.stopPropagation();
+        if (onViewProcess) {
+            onViewProcess(processId);
+        }
+    };

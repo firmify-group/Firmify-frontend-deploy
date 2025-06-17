@@ -1,6 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
 import type { UserTableProps } from 'src/utils/types/components.admin';
-import UserModal from './UserModal';
 
 const PAGE_SIZE = 10;
 

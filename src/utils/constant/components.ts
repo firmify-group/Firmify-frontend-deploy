@@ -66,3 +66,14 @@ export const menuItemsAdmin = [
 		iconDisabled: cardGroupDisable,
 	},
 ];
+
+export const COLORS = [
+	'#2563eb',
+	'#16a34a',
+	'#ea580c',
+	'#db2777',
+	'#7c3aed',
+	'#f59e42',
+	'#0ea5e9',
+	'#f43f5e',
+];

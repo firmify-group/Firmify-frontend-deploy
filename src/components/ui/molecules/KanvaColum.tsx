@@ -6,7 +6,6 @@ const KanvaColumn: React.FC<
 	KanvaColumnProps & { onCardClick?: (cardId: cardInformation) => void }
 > = (props) => {
 	const { getBgClass, getBorderClass, getTextClass } = useSelectiónColors();
-
 	const cardsCount = props.cards?.length ?? 0;
 	const hasCards = cardsCount > 0;
 

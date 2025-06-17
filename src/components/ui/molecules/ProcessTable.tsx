@@ -1,39 +1,6 @@
-import { useEffect, useState, useCallback } from 'react';
-import type { ProcessPagination } from 'src/utils/types/components.client';
-
-const PAGE_SIZE = 8;
-
-function usePagination(processes: ProcessPagination[], pageSize = PAGE_SIZE) {
-	const [currentPage, setCurrentPage] = useState(1);
-
-	const totalPages = Math.ceil(processes.length / pageSize);
-
-	const paginatedProcesses = processes.slice(
-		(currentPage - 1) * pageSize,
-		currentPage * pageSize,
-	);
-
-	const handlePageClick = useCallback((page: number) => {
-		setCurrentPage(page);
-	}, []);
-
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-	useEffect(() => {
-		setCurrentPage(1);
-	}, [processes]);
-
-	return { currentPage, totalPages, paginatedProcesses, handlePageClick };
-}
-
-interface ProcessTableProps {
-	processes: ProcessPagination[];
-	onProcessAction?: (processId: number) => void;
-	onObjectProcess?: (processId: number) => void;
-	onViewProcess?: (processId: number) => void;
-	onRefetch: () => void;
-	showFilterInfo?: boolean;
-	totalProcesses?: number;
-}
+import type { ProcessTableProps } from 'src/utils/types/components.client';
+import { usePagination } from 'src/hook/usePagination';
+import { useCallback } from 'react';
 
 const ProcessTable: React.FC<ProcessTableProps> = ({
 	processes,
@@ -42,10 +9,8 @@ const ProcessTable: React.FC<ProcessTableProps> = ({
 	showFilterInfo = false,
 	totalProcesses,
 }) => {
-	const { currentPage, totalPages, paginatedProcesses, handlePageClick } = usePagination(
-		processes,
-		PAGE_SIZE,
-	);
+	const { currentPage, totalPages, paginatedProcesses, handlePageClick } =
+		usePagination(processes);
 
 	const handleObjectProcess = useCallback(
 		(e: React.MouseEvent, processId: number) => {
@@ -82,13 +47,13 @@ const ProcessTable: React.FC<ProcessTableProps> = ({
 		}
 	};
 
-	const emptyRowsCount = PAGE_SIZE - paginatedProcesses.length;
+	const emptyRowsCount = 8 - paginatedProcesses.length;
 	const emptyRows = Array(emptyRowsCount).fill(null);
 
 	return (
 		<div className="space-y-4">
 			<div className="border-[1.5px] border-font-400 rounded-lg box-border overflow-hidden flex flex-col">
-				<div className="flex bg-[#f7f7f7] border-b-[1.5px] border-font-400 shrink-0">
+				<div className="flex bg-[#f7f7f7] border-b-[1.5px] border-font-400 shrink-0  py-1">
 					<div className="body-3 text-font-800 w-[10%] pl-5 py-1.5 bg-transparent font-medium">
 						ID
 					</div>
@@ -111,7 +76,7 @@ const ProcessTable: React.FC<ProcessTableProps> = ({
 
 				<div className="flex-1 h-full">
 					{processes.length === 0 ? (
-						<div className="flex items-center justify-center h-full py-8">
+						<div className="flex items-center justify-center h-fit ">
 							<div className="text-font-600 body-2">
 								No se encontraron procesos con los filtros aplicados
 							</div>
@@ -121,7 +86,7 @@ const ProcessTable: React.FC<ProcessTableProps> = ({
 							{paginatedProcesses.map((process) => (
 								<div
 									key={process.id}
-									className="flex hover:bg-font-50 border-b border-font-300 items-center h-[50px]"
+									className="flex hover:bg-font-50 border-b border-font-300 items-center h-[45px]"
 								>
 									<div className="body-3 text-font-1000 w-[10%] pl-5 truncate">
 										{process.id}
@@ -167,7 +132,7 @@ const ProcessTable: React.FC<ProcessTableProps> = ({
 							{emptyRows.map((_, index) => (
 								<div
 									key={`empty-row-page-${currentPage}-processes-${paginatedProcesses.length}-slot-${index}`}
-									className="flex border-b border-font-300 items-center h-[50px]"
+									className="flex border-b border-font-300 items-center h-[45px]"
 								>
 									<div className="w-[10%] pl-5" />
 									<div className="w-[20%] pl-3" />
@@ -182,7 +147,7 @@ const ProcessTable: React.FC<ProcessTableProps> = ({
 				</div>
 
 				{/* Footer */}
-				<div className="flex justify-between items-center px-5 py-2 bg-font-50 shrink-0">
+				<div className="flex justify-between items-center px-5 py-5 bg-font-50 shrink-0">
 					<span className="body-2 italic text-font-800">
 						Página {currentPage} de {totalPages} ({processes.length} procesos
 						{showFilterInfo &&

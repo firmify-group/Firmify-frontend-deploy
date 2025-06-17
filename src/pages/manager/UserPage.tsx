@@ -1,11 +1,10 @@
 import Header from 'src/components/ui/atoms/Header';
 import Input from 'src/components/ui/atoms/Input';
 import UserModal from 'src/components/ui/molecules/UserModal';
-import UserTable from 'src/components/ui/molecules/UserTable'; // Cambiar esta línea
+import UserTable from 'src/components/ui/molecules/UserTable';
 import { useModal } from 'src/hook/useModal';
 import { useAllUsers } from 'src/hook/useProcessData';
 
-// ...existing code...
 const RequestManagerPage: React.FC = () => {
 	const { isModalOpen, handleCardClick, handleCloseModal } = useModal();
 	const {
