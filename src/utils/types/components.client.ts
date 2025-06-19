@@ -15,3 +15,11 @@ export interface ProcessTableProps {
     showFilterInfo?: boolean;
     totalProcesses?: number;
 }
+
+
+export type ProcessFormData = {
+    categoryProcess: string;
+    startDateProcess: string;
+    endDateProcess: string;
+    file: File | null;
+}

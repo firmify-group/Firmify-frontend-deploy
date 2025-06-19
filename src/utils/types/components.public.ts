@@ -9,12 +9,13 @@ export type HeaderProps = {
 export type InputProps = {
 	id?: string;
 	name?: string;
-	type?: string;
+	type?: string | number | Date | File;
 	disabled?: boolean;
 	placeholder?: string;
 	decoration?: string;
 	label?: string;
-	value?: string | number;
+	value?: string | number | Date | File;
+	required?: boolean;
 	onChange?: React.ChangeEventHandler<HTMLInputElement>;
 };
 

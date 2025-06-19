@@ -108,19 +108,12 @@ const ProcessTable: React.FC<ProcessTableProps> = ({
 										{process.finished_at ?? 'N/A'}
 									</div>
 									<div className="w-[25%] pl-3 flex gap-2 justify-center">
-										<button
-											type="button"
-											onClick={(e) => handleViewProcess(e, process.id)}
-											className="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded hover:bg-blue-200 transition-colors"
-										>
-											Ver
-										</button>
 										{(process.state.toUpperCase() === 'APROBADO' ||
 											process.state.toUpperCase() === 'RECHAZADO') && (
 											<button
 												type="button"
 												onClick={(e) => handleObjectProcess(e, process.id)}
-												className="px-2 py-1 text-xs bg-orange-100 text-orange-800 rounded hover:bg-orange-200 transition-colors"
+												className="px-2 py-1 text-xs bg-orange-100 active:bg-orange-100 text-orange-800 rounded hover:bg-orange-200 transition-colors cursor-pointer"
 											>
 												Objetar
 											</button>
