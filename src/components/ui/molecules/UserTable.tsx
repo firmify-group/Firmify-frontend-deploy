@@ -51,8 +51,6 @@ const UserTable: React.FC<
 	const emptyRowsCount = PAGE_SIZE - paginatedUsers.length;
 	const emptyRows = Array(emptyRowsCount).fill(null);
 
-	// TODO: Implementar lógica para aprobar/rechazar solicitudes
-
 	return (
 		<div className="border-[1.5px] border-font-400 rounded-lg box-border overflow-hidden flex flex-col">
 			<div className="flex bg-[#f7f7f7] border-b-[1.5px] border-font-400 shrink-0">

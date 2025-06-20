@@ -48,7 +48,7 @@ export const useProcessData = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_PROCES
     };
 };
 
-export const useSummaryData = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_PROCESSES) => {
+export const useSummaryData = () => {
     const { get } = usePrivateAPI();
     const [summaryData, setSummaryData] = useState<SummaryRequest | null>(null);
 
