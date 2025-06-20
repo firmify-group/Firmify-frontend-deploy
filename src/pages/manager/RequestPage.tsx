@@ -2,7 +2,7 @@ import Header from 'src/components/ui/atoms/Header';
 import FilterBar from 'src/components/ui/molecules/FilterBar';
 import KanvaColumn from 'src/components/ui/molecules/KanvaColum';
 import RequestModal from 'src/components/ui/molecules/KanvaModal';
-import { useProcessData } from 'src/hook/useProcessData';
+import { useProcessData } from 'src/config/api/ProcessDataServices';
 import { useFilteredData } from 'src/hook/useFilteredData';
 import { useGroupedByStatus } from 'src/hook/useStatus';
 import { useModal } from 'src/hook/useModal';

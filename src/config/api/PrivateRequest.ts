@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { FETCH_STATUS, FETCH_EXCEPTIONS, HTTP_METHOD } from "src/utils/constant/API"
-import { useBaseUrl } from "./useBaseUrl.API"
+import { useBaseUrl } from "./BaseUrl.API"
 import type { RequestBody } from "src/utils/types/components.public"
 
 export function usePrivateAPI() {

@@ -3,7 +3,7 @@ import MonitoringSummary from 'src/components/ui/organisms/MonitoringSummary';
 import ToDoSummary from 'src/components/ui/molecules/ToDoSummary';
 import CounterSummary from 'src/components/ui/molecules/CounterSummary';
 import CategorySummary from 'src/components/ui/molecules/CategorySummary';
-import { useSummaryData } from 'src/hook/useProcessData';
+import { useSummaryData } from 'src/config/api/ProcessDataServices';
 
 const HomeManagerPage: React.FC = () => {
 	const { summaryData, subtitleText, hasRequestData, counterCategoryData } = useSummaryData();

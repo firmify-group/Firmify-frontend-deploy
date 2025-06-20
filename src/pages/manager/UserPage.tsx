@@ -3,7 +3,7 @@ import Input from 'src/components/ui/atoms/Input';
 import UserModal from 'src/components/ui/molecules/UserModal';
 import UserTable from 'src/components/ui/molecules/UserTable';
 import { useModal } from 'src/hook/useModal';
-import { useAllUsers } from 'src/hook/useProcessData';
+import { useAllUsers } from 'src/config/api/ProcessDataServices';
 
 const RequestManagerPage: React.FC = () => {
 	const { isModalOpen, handleCardClick, handleCloseModal } = useModal();

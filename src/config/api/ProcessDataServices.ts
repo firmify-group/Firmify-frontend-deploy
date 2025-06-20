@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { usePrivateAPI } from 'src/config/api/usePrivateRequest';
+import { usePrivateAPI } from 'src/config/api/PrivateRequest';
 import type { AllProcessesResponse, SummaryRequest, AllUserResponse } from 'src/utils/types/response.admin';
 import type { AllProcessByUser } from 'src/utils/types/response.client';
 import { API_ENDPOINTS } from 'src/utils/constant/API';

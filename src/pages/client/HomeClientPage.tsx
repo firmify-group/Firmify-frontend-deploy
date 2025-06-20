@@ -1,6 +1,6 @@
 import Header from 'src/components/ui/atoms/Header';
 import ProcessTable from 'src/components/ui/molecules/ProcessTable';
-import { useAllProcessByUser } from 'src/hook/useProcessData';
+import { useAllProcessByUser } from 'src/config/api/ProcessDataServices';
 import FilterTable from 'src/components/ui/molecules/FilterProcess';
 import ProcessModal from 'src/components/ui/molecules/ProcessModal';
 import { useModal, useModalAlter } from 'src/hook/useModal';

@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router';
-import { useAllProcesses } from 'src/hook/useProcessData';
+import { useAllProcesses } from 'src/config/api/ProcessDataServices';
 
 const ToDoSummary: React.FC = () => {
 	const { pendingProcesses } = useAllProcesses();
