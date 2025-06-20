@@ -24,6 +24,28 @@ export const useModal = <T = unknown>() => {
     };
 };
 
+export const useModalAlter = () => {
+    const [isOpenAlter, setIsOpenAlter] = useState(false);
+    const [selectedProcessId, setSelectedProcessId] = useState<number | undefined>();
+
+    const handlerCardClickAlter = (processId?: number) => {
+        setSelectedProcessId(processId);
+        setIsOpenAlter(true);
+    };
+
+    const handleCloseModalAlter = () => {
+        setIsOpenAlter(false);
+        setSelectedProcessId(undefined);
+    };
+
+    return {
+        isOpenAlter,
+        selectedProcessId,
+        handlerCardClickAlter,
+        handleCloseModalAlter,
+    };
+};
+
 
 interface UseModalProps {
     isOpen: boolean;

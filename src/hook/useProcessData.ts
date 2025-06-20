@@ -231,15 +231,16 @@ export const useAllProcessByUser = (endpoint: string = API_ENDPOINTS.USER_ALL_RE
         finished_at: '',
     });
 
-    const handleObjectProcess = useCallback(async (processId: number) => {
-        console.log('Objetando proceso con ID:', processId);
-        // Aquí implementarías la lógica para objetar el proceso
+    const handleObjectProcess = useCallback(async (processId: number, description: string) => {
+        console.log('Objetando proceso con ID:', processId, 'Descripción:', description);
+
+        // TODO: Aquí debes implementar la llamada a la API para objetar el proceso
         await fetchProcessData();
     }, [fetchProcessData]);
 
     const handleViewProcess = useCallback(async (processId: number) => {
         console.log('Viendo proceso con ID:', processId);
-        // Aquí implementarías la lógica para ver el proceso
+        // TODO: Aquí implementarías la lógica para ver el proceso
     }, []);
 
     const updateFilter = useCallback((field: keyof FilterProcess, value: string) => {

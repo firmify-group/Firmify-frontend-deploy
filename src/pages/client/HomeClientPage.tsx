@@ -3,10 +3,14 @@ import ProcessTable from 'src/components/ui/molecules/ProcessTable';
 import { useAllProcessByUser } from 'src/hook/useProcessData';
 import FilterTable from 'src/components/ui/molecules/FilterProcess';
 import ProcessModal from 'src/components/ui/molecules/ProcessModal';
-import { useModal } from 'src/hook/useModal';
+import { useModal, useModalAlter } from 'src/hook/useModal';
+import ObjectedModal from 'src/components/ui/molecules/ObjectedModal';
 
 const HomeClientPage: React.FC = () => {
 	const { isModalOpen, handleCloseModal, handleCardClick } = useModal();
+	const { isOpenAlter, selectedProcessId, handleCloseModalAlter, handlerCardClickAlter } =
+		useModalAlter();
+
 	const {
 		date,
 		processes,
@@ -23,15 +27,12 @@ const HomeClientPage: React.FC = () => {
 		console.log(`Acción en proceso: ${processId}`);
 	};
 
-	const handleObjectProcessAction = (processId: number) => {
-		console.log(`Objetar proceso: ${processId}`);
-		// Aquí puedes agregar lógica específica para objetar o redirigir a otra página
-		handleObjectProcess(processId);
+	const handleObjectProcessAction = (processId: number, description: string) => {
+		handleObjectProcess(processId, description);
 	};
 
 	const handleViewProcessAction = (processId: number) => {
 		console.log(`Ver detalles del proceso: ${processId}`);
-		// Aquí puedes agregar lógica específica para ver detalles o redirigir a otra página
 		handleViewProcess(processId);
 	};
 
@@ -59,7 +60,7 @@ const HomeClientPage: React.FC = () => {
 					<ProcessTable
 						processes={filteredProcesses}
 						onProcessAction={handleProcessAction}
-						onObjectProcess={handleObjectProcessAction}
+						onObjectProcess={handlerCardClickAlter}
 						onViewProcess={handleViewProcessAction}
 						onRefetch={refetch}
 						showFilterInfo={true}
@@ -69,6 +70,12 @@ const HomeClientPage: React.FC = () => {
 			</main>
 
 			<ProcessModal isOpen={isModalOpen} onClose={handleCloseModal} />
+			<ObjectedModal
+				isOpen={isOpenAlter}
+				onClose={handleCloseModalAlter}
+				processId={selectedProcessId}
+				onObjectProcess={handleObjectProcessAction}
+			/>
 		</>
 	);
 };
