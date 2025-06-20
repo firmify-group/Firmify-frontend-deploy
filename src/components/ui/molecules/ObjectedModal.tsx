@@ -53,7 +53,7 @@ const ObjectedModal: React.FC<ObjectedModalProps> = ({
 
 	return (
 		<Modal isOpen={isOpen} onClose={handleCancel}>
-			<form onSubmit={handleSubmit} className="h-full flex flex-col">
+			<form onSubmit={handleSubmit} className="h-full flex flex-col gap-5">
 				<header className="flex justify-center items-center header-4">
 					<h2 className="text-[1.3rem] font-manrope font-bold text-font-1000">
 						Objetar respuesta
