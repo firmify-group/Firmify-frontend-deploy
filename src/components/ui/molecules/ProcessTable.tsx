@@ -5,7 +5,7 @@ import { useCallback } from 'react';
 const ProcessTable: React.FC<ProcessTableProps> = ({
 	processes,
 	onObjectProcess,
-	onViewProcess,
+	//onViewProcess,
 	showFilterInfo = false,
 	totalProcesses,
 }) => {
@@ -22,15 +22,15 @@ const ProcessTable: React.FC<ProcessTableProps> = ({
 		[onObjectProcess],
 	);
 
-	const handleViewProcess = useCallback(
-		(e: React.MouseEvent, processId: number) => {
-			e.stopPropagation();
-			if (onViewProcess) {
-				onViewProcess(processId);
-			}
-		},
-		[onViewProcess],
-	);
+	// const handleViewProcess = useCallback(
+	// 	(e: React.MouseEvent, processId: number) => {
+	// 		e.stopPropagation();
+	// 		if (onViewProcess) {
+	// 			onViewProcess(processId);
+	// 		}
+	// 	},
+	// 	[onViewProcess],
+	// );
 
 	const getStateStyles = (state: string) => {
 		switch (state.toUpperCase()) {
