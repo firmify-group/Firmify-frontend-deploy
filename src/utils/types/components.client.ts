@@ -23,3 +23,8 @@ export type ProcessFormData = {
     endDateProcess: string;
     file: File | null;
 }
+
+export type RequestFormData = {
+    id: number;
+    status: string;
+}

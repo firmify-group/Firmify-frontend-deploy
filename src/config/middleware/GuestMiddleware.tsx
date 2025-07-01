@@ -2,7 +2,7 @@
 
 import { type JSX, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate, Outlet } from 'react-router';
+import { useNavigate, Outlet } from 'react-router-dom';
 import type { NavigateFunction } from 'react-router';
 import type { RootState } from 'src/store';
 import { PATH_ROUTES, ROLE } from 'src/utils/constant/path';

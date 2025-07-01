@@ -34,11 +34,11 @@ const ProcessTable: React.FC<ProcessTableProps> = ({
 
 	const getStateStyles = (state: string) => {
 		switch (state.toUpperCase()) {
-			case 'APROBADO':
+			case 'APROBADA':
 				return 'bg-green-100 text-green-800';
-			case 'RECHAZADO':
+			case 'RECHAZADA':
 				return 'bg-red-100 text-red-800';
-			case 'OBJETADO':
+			case 'OBJETADA':
 				return 'bg-orange-100 text-orange-800';
 			case 'PENDIENTE':
 				return 'bg-yellow-100 text-yellow-800';
@@ -108,8 +108,7 @@ const ProcessTable: React.FC<ProcessTableProps> = ({
 										{process.finished_at ?? 'N/A'}
 									</div>
 									<div className="w-[25%] pl-3 flex gap-2 justify-center">
-										{(process.state.toUpperCase() === 'APROBADO' ||
-											process.state.toUpperCase() === 'RECHAZADO') && (
+										{(['APROBADO', 'RECHAZADA'].includes(process.state.toUpperCase())) && (
 											<button
 												type="button"
 												onClick={(e) => handleObjectProcess(e, process.id)}

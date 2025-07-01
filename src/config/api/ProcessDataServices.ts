@@ -3,69 +3,75 @@ import { usePrivateAPI } from 'src/config/api/PrivateRequest';
 import type { AllProcessesResponse, SummaryRequest, AllUserResponse } from 'src/utils/types/response.admin';
 import type { AllProcessByUser } from 'src/utils/types/response.client';
 import { API_ENDPOINTS } from 'src/utils/constant/API';
+import { formatToLocalTime } from 'src/utils/helpers/date';
 
-export const useProcessData = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_PROCESSES) => {
-    const { get } = usePrivateAPI();
-    const [data, setData] = useState<AllProcessesResponse | null>(null);
+//obtener todos las solicitudes existentes ADMIN
+export const useProcessData = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_REQUESTS) => {
+  const { get } = usePrivateAPI();
+  const [data, setData] = useState<AllProcessesResponse | null>(null);
+  const [refreshIndex, setRefreshIndex] = useState(0);
 
-    // TODO: Aqui se debe modificar el endpoint y adaptarlo al back.
+  const refresh = useCallback(() => {
+    setRefreshIndex((prev) => prev + 1);
+  }, []);
 
-    const fetchData = useCallback(async () => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
         const response = await get<AllProcessesResponse>(endpoint);
+        console.log('Datos obtenidos:', response);
         setData(response);
-    }, [get, endpoint]);
-
-    useEffect(() => {
-        fetchData();
-    }, [fetchData]);
-
-    const processes = useMemo(() => {
-        if (!data?.data?.processes) return [];
-        return data.data.processes;
-    }, [data?.data?.processes]);
-
-    const categories = useMemo(() => {
-        if (!processes.length) return [];
-
-        const uniqueCategories = processes
-            .map((process) => process.category)
-            .filter((category): category is string => !!category?.trim())
-            .filter((category, index, self) => self.indexOf(category) === index)
-            .sort((a, b) => a.localeCompare(b));
-
-        return uniqueCategories;
-    }, [processes]);
-
-    const subtitleText = useMemo(
-        () => `Ultima actualización hoy a las ${data?.timestamp ?? 'N/A'}`,
-        [data?.timestamp],
-    );
-
-    return {
-        subtitleText,
-        processes,
-        categories,
+      } catch (err) {
+        console.error('Error al obtener procesos:', err);
+      }
     };
+
+    fetchData();
+  }, [endpoint, refreshIndex]);
+
+  const processes = useMemo(() => {
+    return Array.isArray(data?.data)
+      ? data.data.map((p) => ({ ...p }))
+      : [];
+  }, [data]);
+
+  const categories = useMemo(() => {
+    if (!processes.length) return [];
+
+    const uniqueCategories = processes
+      .map((process) => process.category)
+      .filter((category): category is string => !!category?.trim())
+      .filter((category, index, self) => self.indexOf(category) === index)
+      .sort((a, b) => a.localeCompare(b));
+
+    return uniqueCategories;
+  }, [processes]);
+
+  const subtitleText = useMemo(() => {
+    return `Última actualización hoy a las ${data?.timestamp ?? 'N/A'}`;
+  }, [data?.timestamp]);
+
+  return {
+    subtitleText,
+    processes,
+    categories,
+    refresh,
+  };
 };
 
+//Resumen de solicitudes para dashboard
 export const useSummaryData = () => {
     const { get } = usePrivateAPI();
     const [summaryData, setSummaryData] = useState<SummaryRequest | null>(null);
-
-    // TODO: Aqui se debe modificar el endpoint y adaptarlo al back.
-    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
     const fetchSummaryData = useCallback(async () => {
         const response = await get<SummaryRequest>(API_ENDPOINTS.ADMIN_SUMMARY_PROCESS);
         setSummaryData(response);
     }, []);
 
     useEffect(() => {
-        fetchSummaryData();
     }, [fetchSummaryData]);
-
-    // TODO: Cuando hagas el cambio debes mantener esto, puesto que evita que se re consulte al re-renderizar el componente
     const subtitleText = useMemo(
-        () => `Ultima actualización hoy a las ${summaryData?.timestamp ?? 'N/A'}`,
+        () => `Ultima actualización hoy a las ${formatToLocalTime(summaryData?.timestamp)}`,
         [summaryData?.timestamp],
     );
 
@@ -87,53 +93,47 @@ export const useSummaryData = () => {
     };
 }
 
-export const useAllProcesses = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_PROCESSES) => {
-    const { get } = usePrivateAPI();
-    const [summaryData, setSummaryData] = useState<AllProcessesResponse | null>(null);
+//obtener todas las solicitudes como admin
+export const useAllProcesses = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_PROCESSES_WS) => {
+  const { get } = usePrivateAPI();
+  const [summaryData, setSummaryData] = useState<AllProcessesResponse | null>(null);
 
-    // TODO: No puedo simular el SEE con los mocks usando json. Aqui deberia implementarse esta logica
-    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-    const fetchSummaryData = useCallback(async () => {
-        const response = await get<AllProcessesResponse>(endpoint);
-        setSummaryData(response);
-    }, []);
+  const fetchSummaryData = useCallback(async () => {
+    const response = await get<AllProcessesResponse>(endpoint);
+    setSummaryData(response);
+  }, [get, endpoint]);
 
-    useEffect(() => {
-        fetchSummaryData();
-    }, [fetchSummaryData]);
+  useEffect(() => {
+    fetchSummaryData();
+  }, [fetchSummaryData]);
 
-    // TODO: Cuando hagas el cambio debes mantener esto, puesto que evita que se re consulte al re-renderizar el componente
-    const pendingProcesses = useMemo(() => {
-        if (!summaryData?.data?.processes) return [];
+  const pendingProcesses = useMemo(() => {
+    if (!summaryData?.data?.processes) return [];
 
-        return summaryData.data.processes
-            .filter((process) => process.status === 'Pendiente')
-            .reverse()
-            .slice(0, 6);
-    }, [summaryData?.data?.processes]);
+    return summaryData.data.processes
+      .filter((process) => process.status === 'Pendiente')
+      .reverse()
+      .slice(0, 6);
+  }, [summaryData?.data?.processes]);
 
-    return {
-        summaryData,
-        pendingProcesses,
-    }
-}
+  return {
+    summaryData,
+    pendingProcesses,
+  };
+};
+
+
 export const useAllUsers = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_USERS) => {
     const { get } = usePrivateAPI();
     const [usersData, setUsersData] = useState<AllUserResponse | null>(null);
-
-    // TODO: No puedo simular el SEE con los mocks usando json. Aqui deberia implementarse esta logica
     const fetchUsersData = useCallback(async () => {
         const response = await get<AllUserResponse>(endpoint);
         setUsersData(response);
         console.log('Users data fetched:', response);
     }, [get, endpoint]);
-
-    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
     useEffect(() => {
         fetchUsersData();
     }, []);
-
-    // TODO: Cuando hagas el cambio debes mantener esto, puesto que evita que se re consulte al re-renderizar el componente
     const users = useMemo(() => {
         if (!usersData?.data?.users) return [];
         return usersData.data.users;
@@ -171,7 +171,7 @@ export const useAllUsers = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_USERS) =>
     });
 
     const subtitleText = useMemo(
-        () => `Ultima actualización hoy a las ${usersData?.timestamp ?? 'N/A'}`,
+        () => `Ultima actualización hoy a las ${formatToLocalTime(usersData?.timestamp)}`,
         [usersData?.timestamp],
     );
 
@@ -188,7 +188,7 @@ export const useAllUsers = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_USERS) =>
     };
 }
 
-
+//obtener solicitudes del usuario
 export const useAllProcessByUser = (endpoint: string = API_ENDPOINTS.USER_ALL_REQUESTS) => {
     const { get } = usePrivateAPI();
     const [processData, setProcessData] = useState<AllProcessByUser | null>(null);
@@ -198,8 +198,6 @@ export const useAllProcessByUser = (endpoint: string = API_ENDPOINTS.USER_ALL_RE
         setProcessData(response);
         console.log('Process data fetched:', response);
     }, [get, endpoint]);
-
-    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
     useEffect(() => {
         fetchProcessData();
     }, []);
@@ -231,12 +229,27 @@ export const useAllProcessByUser = (endpoint: string = API_ENDPOINTS.USER_ALL_RE
         finished_at: '',
     });
 
-    const handleObjectProcess = useCallback(async (processId: number, description: string) => {
+    const { patch } = usePrivateAPI();
+
+    const handleObjectProcess = useCallback(
+    async (processId: number, description: string) => {
+        try {
         console.log('Objetando proceso con ID:', processId, 'Descripción:', description);
 
-        // TODO: Aquí debes implementar la llamada a la API para objetar el proceso
+        await patch(API_ENDPOINTS.USER_OBJECT_PROCESS, {
+            id: processId,
+            description,
+        });
+
         await fetchProcessData();
-    }, [fetchProcessData]);
+        } catch (error) {
+        console.error('Error al objetar proceso:', error);
+        }
+    },
+    [fetchProcessData, patch]
+    );
+
+
 
     const handleViewProcess = useCallback(async (processId: number) => {
         console.log('Viendo proceso con ID:', processId);
@@ -256,15 +269,15 @@ export const useAllProcessByUser = (endpoint: string = API_ENDPOINTS.USER_ALL_RE
         return (
             normalize(String(process.id ?? '')).includes(normalize(String(filters.id))) &&
             normalize(process.category ?? '').includes(normalize(filters.category)) &&
-            normalize(process.state ?? '').includes(normalize(filters.state)) &&
-            normalize(process.created_at ?? '').includes(normalize(filters.created_at)) &&
+            normalize(process.state ?? '').includes(normalize(filters.state)) 
+            &&normalize(process.created_at ?? '').includes(normalize(filters.created_at)) &&
             normalize(process.finished_at ?? '').includes(normalize(filters.finished_at))
         );
     });
 
 
     const subtitleText = useMemo(
-        () => `Ultima actualización hoy a las ${processData?.timestamp ?? 'N/A'}`,
+        () => `Ultima actualización hoy a las ${formatToLocalTime(processData?.timestamp)}`,
         [processData?.timestamp],
     );
 

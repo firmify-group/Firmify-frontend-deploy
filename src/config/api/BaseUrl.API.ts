@@ -3,7 +3,7 @@ let baseUrl: string | null = null;
 // TODO: Ante cualqueir cambio en la URL de la API, actualizar __API_URL__ en el archivo de configuración
 export function useBaseUrl(): string {
 	if (!baseUrl) {
-		baseUrl = __API_URL__ ?? 'http://localhost:8080/';
+		baseUrl = 'http://localhost:8000';
 	}
 	return baseUrl;
 }

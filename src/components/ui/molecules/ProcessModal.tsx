@@ -4,6 +4,8 @@ import type { RequestModalProps } from 'src/utils/types/components.admin';
 import Download from 'src/assets/icons/download.png';
 import Input from '../atoms/Input';
 import { useState } from 'react';
+import { API_ENDPOINTS } from 'src/utils/constant/API';
+import { usePrivateAPI } from 'src/config/api/PrivateRequest';
 
 const ProcessModal: React.FC<RequestModalProps> = ({ isOpen, onClose }) => {
 	const [formData, setFormData] = useState<ProcessFormData>({
@@ -38,25 +40,30 @@ const ProcessModal: React.FC<RequestModalProps> = ({ isOpen, onClose }) => {
 		});
 	};
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const { post } = usePrivateAPI();
+	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
-		// Validación básica
-		if (!formData.categoryProcess || !formData.startDateProcess || !formData.endDateProcess) {
-			alert('Por favor complete todos los campos obligatorios');
+		if (!formData.categoryProcess || !formData.endDateProcess || !formData.file) {
+			alert("Por favor complete todos los campos obligatorios");
 			return;
 		}
+		try {
+			const form = new FormData();
+			form.append("category_id", String(formData.categoryProcess));
+			form.append("start_date", formData.startDateProcess);
+			form.append("end_date", formData.endDateProcess);
+			form.append("file", formData.file);
 
-		// Validar que la fecha de inicio no sea posterior a la fecha de fin
-		if (new Date(formData.startDateProcess) > new Date(formData.endDateProcess)) {
-			alert('La fecha de inicio no puede ser posterior a la fecha de finalización');
-			return;
+			await post(API_ENDPOINTS.USER_CREATE_REQUEST, form, {});
+
+			alert("Solicitud creada con éxito");
+			onClose();
+			resetForm();
+		} catch (error) {
+			console.error("Error al enviar solicitud:", error);
+			alert("Error al crear la solicitud");
 		}
-
-		console.log('Datos del formulario:', formData);
-		// Aquí va la lógica para crear el proceso
-		onClose();
-		resetForm();
 	};
 
 	const handleCancel = () => {

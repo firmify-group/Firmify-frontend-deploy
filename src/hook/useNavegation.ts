@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { PATH_ROUTES, ROLE } from 'src/utils/constant/path';
 
 export const useRoleNavigation = (): { navigateByRole: (role: string) => void } => {

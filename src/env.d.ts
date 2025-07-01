@@ -1,3 +1,3 @@
 /// <reference types="@rsbuild/core/types" />
 
-declare const __API_URL__: string;
+declare const __API_URL__: "http://localhost:8000/";

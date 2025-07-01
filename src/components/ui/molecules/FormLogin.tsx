@@ -1,5 +1,5 @@
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
-import { NavLink } from 'react-router';
+import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setAuth } from 'src/store/auth';
 import type { Slot } from 'src/utils/types/components.public';
@@ -11,34 +11,30 @@ import { API_ENDPOINTS, FETCH_STATUS } from 'src/utils/constant/API';
 
 const FormLogin: React.FC<Slot> = ({ children }) => {
 	const { message, status, post } = usePublicAPI();
-
 	const { navigateByRole } = useRoleNavigation();
 	const dispatch = useDispatch();
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
 		e.preventDefault();
 
-		const formData: FormData = new FormData(e.currentTarget);
-		const username: FormDataEntryValue | null = formData.get('username');
-		const password: FormDataEntryValue | null = formData.get('password');
+		const formData = new FormData(e.currentTarget);
+		const email = formData.get('email');
+		const password = formData.get('password');
 
 		const response = await post<LoginResponse>(API_ENDPOINTS.LOGIN, {
-			username,
+			email,
 			password,
 		});
 
 		if (response.data.token) {
 			const token = response.data.token;
-			const decoded: JwtPayload & { id?: string; role?: string; sub?: string } =
-				jwtDecode(token);
+			const decoded: JwtPayload & { id?: string; role?: string } = jwtDecode(token);
 
-			dispatch(
-				setAuth({
-					token: token,
-					id: decoded.id ?? '',
-					role: decoded.role ?? '',
-				}),
-			);
+			dispatch(setAuth({
+				token,
+				id: decoded.id ?? '',
+				role: decoded.role ?? '',
+			}));
 
 			navigateByRole(decoded.role ?? '');
 		}

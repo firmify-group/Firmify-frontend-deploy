@@ -1,58 +1,53 @@
-import { useMemo } from 'react';
+    import { useMemo } from 'react';
 
-export interface StatusItem {
+    export interface StatusItem {
     id: string | number;
     status: string;
     [key: string]: unknown;
-}
+    }
 
-export interface StatusGroups {
+    export interface StatusGroups {
     pending: StatusItem[];
     rejected: StatusItem[];
+    objected: StatusItem[];
     completed: StatusItem[];
-}
-
-export interface StatusMapping {
-    pending: string;
-    rejected: string;
-    completed: string;
-}
-
-export const useGroupedByStatus = <T extends StatusItem>(
-    items: T[],
-    statusMapping: StatusMapping = {
-        pending: 'Pendiente',
-        rejected: 'Objetado',
-        completed: 'Completado',
     }
-): StatusGroups => {
+
+    export const useGroupedByStatus = <T extends StatusItem>(items: T[]): StatusGroups => {
+    const normalize = (s: string) => s.toLowerCase().trim();
+
     const pending = useMemo(
-        () =>
-            items
-                .filter((item) => item.status === statusMapping.pending)
-                .map((item) => ({ ...item, id: String(item.id) })),
-        [items, statusMapping.pending]
+        () => items.filter(item =>
+        ['pending', 'pendiente'].includes(normalize(item.status))
+        ),
+        [items]
     );
 
     const rejected = useMemo(
-        () =>
-            items
-                .filter((item) => item.status === statusMapping.rejected)
-                .map((item) => ({ ...item, id: String(item.id) })),
-        [items, statusMapping.rejected]
+        () => items.filter(item =>
+        ['rejected', 'rechazada'].includes(normalize(item.status))
+        ),
+        [items]
+    );
+
+    const objected = useMemo(
+        () => items.filter(item =>
+        ['object', 'objetada', 'objetado'].includes(normalize(item.status))
+        ),
+        [items]
     );
 
     const completed = useMemo(
-        () =>
-            items
-                .filter((item) => item.status === statusMapping.completed)
-                .map((item) => ({ ...item, id: String(item.id) })),
-        [items, statusMapping.completed]
+        () => items.filter(item =>
+        ['aprobada','completed', 'completado', 'finalizado'].includes(normalize(item.status))
+        ),
+        [items]
     );
 
     return {
         pending,
         rejected,
+        objected,
         completed,
     };
-};
+    };

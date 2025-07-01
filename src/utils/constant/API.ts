@@ -39,16 +39,19 @@ export enum SIGNATURE_STATUS {
 }
 
 export enum API_ENDPOINTS {
-    LOGIN = 'api/authentication/login',
-    ADMIN_SUMMARY_PROCESS = 'api/manager/process/summary',
-    ADMIN_ALL_PROCESSES = 'api/manager/process',
-    ADMIN_AUDIT_FILE = 'api/manager/process/audit/summary',
-    ADMIN_ALL_USERS = 'api/manager/officer/all',
-    ADMIN_ADD_FUNCTIONARY = 'api/manager/officer/add',
-    ADMIN_ADD_EVALUATION = 'api/manager/request/valuate',
-    ADMIN_DEL_FUNCTIONARY = 'api/manager/officer/delete',
-    USER_ALL_REQUESTS = 'api/office/request/all',
-    USER_OBJECT_PROCESS = 'api/office/request/object',
+    LOGIN = '/login',
+    ADMIN_SUMMARY_PROCESS = '/api/manager/process/summary',
+    ADMIN_ALL_REQUESTS = '/api/manager/process',
+    ADMIN_AUDIT_FILE = '/api/manager/process/audit/summary',
+    ADMIN_ALL_USERS = '/api/manager/officer/all',
+    ADMIN_ADD_FUNCTIONARY = '/api/manager/officer/add',
+    ADMIN_ADD_EVALUATION = '/api/manager/request/valuate',
+    ADMIN_DEL_FUNCTIONARY = '/api/manager/officer/delete',
+    USER_ALL_REQUESTS = '/api/office/request/all',
+    USER_OBJECT_PROCESS = '/api/office/request/object',
+    CATEGORIES="/api/categories",
+    ADMIN_ALL_PROCESSES_WS = "ADMIN_ALL_PROCESSES_WS",
+    USER_CREATE_REQUEST = "/api/office/request/create",
 }
 
 export enum HTTP_METHOD {

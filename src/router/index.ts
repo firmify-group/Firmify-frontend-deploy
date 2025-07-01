@@ -1,5 +1,5 @@
 import React from 'react';
-import { createBrowserRouter } from 'react-router';
+import { createBrowserRouter } from 'react-router-dom';
 import { AuthMiddleware } from 'src/config/middleware/AuthMiddleware';
 import { GuestMiddleware } from 'src/config/middleware/GuestMiddleware';
 import { ROLE } from 'src/utils/constant/path';
@@ -26,19 +26,9 @@ const router = createBrowserRouter([
 			{
 				Component: React.lazy(() => import('src/components/layout/ManagerLayout')),
 				children: [
-					{
-						path: 'home',
-						Component: React.lazy(() => import('src/pages/manager/HomePage')),
-
-					},
-					{
-						path: 'requests',
-						Component: React.lazy(() => import('src/pages/manager/RequestPage')),
-					},
-					{
-						path: 'users',
-						Component: React.lazy(() => import('src/pages/manager/UserPage')),
-					},
+					{ path: 'home', Component: React.lazy(() => import('src/pages/manager/HomePage')) },
+					{ path: 'requests', Component: React.lazy(() => import('src/pages/manager/RequestPage')) },
+					{ path: 'users', Component: React.lazy(() => import('src/pages/manager/UserPage')) },
 				],
 			},
 		],
@@ -52,9 +42,7 @@ const router = createBrowserRouter([
 				children: [
 					{
 						path: 'process',
-						Component: React.lazy(
-							() => import('src/pages/client/HomeClientPage'),
-						),
+						Component: React.lazy(() => import('src/pages/client/HomeClientPage')),
 					},
 				],
 			},
