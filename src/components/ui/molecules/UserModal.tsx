@@ -2,12 +2,14 @@ import Modal from 'src/components/ui/organisms/Modal';
 import type { RequestModalProps, UserFormData } from 'src/utils/types/components.admin';
 import Input from '../atoms/Input';
 import { useState } from 'react';
+import { API_ENDPOINTS } from 'src/utils/constant/API';
+import { usePrivateAPI } from 'src/config/api/PrivateRequest';
 
 const UserModal: React.FC<RequestModalProps> = ({ isOpen, onClose }) => {
 	const [formData, setFormData] = useState<UserFormData>({
-		requesterName: '',
-		requesterRut: '',
-		requesterEmail: '',
+		full_name: '',
+		rut: '',
+		email: '',
 	});
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,12 +20,29 @@ const UserModal: React.FC<RequestModalProps> = ({ isOpen, onClose }) => {
 		}));
 	};
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		console.log('Datos del formulario:', formData);
-		// Aqui va la logica
+
+	const resetForm = () => {
+    setFormData({ full_name: '',
+		rut: '',
+		email: '',});
+  };
+
+	const { post } = usePrivateAPI();
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+	e.preventDefault();
+
+	try {
+		const url = API_ENDPOINTS.ADMIN_ADD_FUNCTIONARY;
+
+		await post(url, formData);
 		onClose();
+		resetForm();
+
+	} catch (error) {
+		console.error('Error al enviar formulario:', error);
+	}
 	};
+	if (!isOpen) return null;
 
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
@@ -44,39 +63,39 @@ const UserModal: React.FC<RequestModalProps> = ({ isOpen, onClose }) => {
 
 						<div className="w-full h-fit flex flex-row gap-3 justify-between items-start">
 							<Input
-								id="requesterName"
-								name="requesterName"
+								id="full_name"
+								name="full_name"
 								label="Nombre del solicitante"
 								type="text"
 								placeholder="Ej: Juan Pérez García"
 								decoration="w-full flex flex-col"
 								disabled={false}
-								value={formData.requesterName}
+								value={formData.full_name}
 								onChange={handleInputChange}
 							/>
 
 							<Input
-								id="requesterRut"
-								name="requesterRut"
+								id="rut"
+								name="rut"
 								label="RUT del solicitante"
 								type="text"
 								placeholder="Ej: 12.345.678-9"
 								decoration="w-full flex flex-col"
 								disabled={false}
-								value={formData.requesterRut}
+								value={formData.rut}
 								onChange={handleInputChange}
 							/>
 						</div>
 
 						<Input
-							id="requesterEmail"
-							name="requesterEmail"
+							id="email"
+							name="email"
 							label="Correo del solicitante"
 							type="email"
 							placeholder="Ej: juan.perez@empresa.cl"
 							decoration="w-full flex flex-col"
 							disabled={false}
-							value={formData.requesterEmail}
+							value={formData.email}
 							onChange={handleInputChange}
 						/>
 					</section>

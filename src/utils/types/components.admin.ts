@@ -48,12 +48,13 @@ export type RequestModalProps = {
     isOpen: boolean;
     onClose: () => void;
     cardId?: cardInformation;
+    onSubmitSuccess?: () => void;
 }
 
 export type UserFormData = {
-    requesterName: string;
-    requesterRut: string;
-    requesterEmail: string;
+    full_name: string;
+    rut: string;
+    email: string;
 };
 
 export type KanvaCardProps = {
@@ -88,7 +89,7 @@ export type usersProps = {
 
 export type UserTableProps = {
     users: usersProps[];
-    onDeleteUser?: (userId: number) => void;
+    onDeleteUser?: (userId: string) => void | Promise<void>;
     showFilterInfo?: boolean;
     totalUsers?: number;
 }

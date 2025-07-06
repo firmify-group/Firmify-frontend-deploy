@@ -18,10 +18,7 @@ const parsedCategories = cachedCategories ? JSON.parse(cachedCategories) as stri
 export const fetchCategories = createAsyncThunk(
   'categories/fetchCategories',
   async (_, { getState }) => {
-    console.log('Fetching from:', API_ENDPOINTS.CATEGORIES);
-
     if (cachedCategories) {
-      console.log('Usando categorías cacheadas de sessionStorage');
       return parsedCategories;
     }
 
@@ -46,7 +43,6 @@ export const fetchCategories = createAsyncThunk(
     });
 
     if (response.status === 304 && cachedCategories) {
-      console.log('Respuesta 304: usando cache');
       return parsedCategories;
     }
 
@@ -75,19 +71,16 @@ const categoriesSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchCategories.pending, (state) => {
-        console.log('fetchCategories: pendiente...');
         state.loading = true;
         state.error = null;
         state.loaded = false;
       })
       .addCase(fetchCategories.fulfilled, (state, action) => {
-        console.log('fetchCategories: éxito', action.payload);
         state.list = action.payload;
         state.loading = false;
         state.loaded = true;
       })
       .addCase(fetchCategories.rejected, (state, action) => {
-        console.error('fetchCategories: error', action.error);
         state.loading = false;
         state.error = action.error.message ?? 'Error al cargar categorías';
         state.loaded = false;

@@ -3,7 +3,6 @@ import type { UserTableProps } from 'src/utils/types/components.admin';
 
 const PAGE_SIZE = 10;
 
-// El tema de las tablas es una corta de diuca no lo voy a limpiar
 function usePagination(users: UserTableProps['users'], pageSize = PAGE_SIZE) {
 	const [currentPage, setCurrentPage] = useState(1);
 
@@ -14,8 +13,7 @@ function usePagination(users: UserTableProps['users'], pageSize = PAGE_SIZE) {
 	const handlePageClick = useCallback((page: number) => {
 		setCurrentPage(page);
 	}, []);
-
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	
 	useEffect(() => {
 		setCurrentPage(1);
 	}, [users]);
@@ -25,7 +23,7 @@ function usePagination(users: UserTableProps['users'], pageSize = PAGE_SIZE) {
 
 const UserTable: React.FC<
 	UserTableProps & {
-		onDeleteUser?: (userId: number) => void;
+		onDeleteUser?: (userId: string) => void;
 		showFilterInfo?: boolean;
 		totalUsers?: number;
 	}
@@ -36,7 +34,7 @@ const UserTable: React.FC<
 	);
 
 	const handleDeleteUser = useCallback(
-		(e: React.MouseEvent, userId: number) => {
+		(e: React.MouseEvent, userId: string) => {
 			e.stopPropagation();
 			if (
 				onDeleteUser &&
@@ -103,7 +101,7 @@ const UserTable: React.FC<
 											<button
 												type="button"
 												onClick={(e) =>
-													handleDeleteUser(e, user.id as number)
+													handleDeleteUser(e, user.id as string)
 												}
 												className="text-feedback-error-100 hover:text-feedback-error-200 px-2 rounded-xl border-2 border-feedback-error-100 text-sm hover:border-feedback-error-200 hover:bg-[#fff1f2] cursor-pointer"
 											>

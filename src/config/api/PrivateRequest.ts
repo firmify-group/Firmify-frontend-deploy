@@ -49,6 +49,15 @@ export function usePrivateAPI() {
               const errorMessage = FETCH_EXCEPTIONS[errorStatus] || `Error ${errorStatus}`;
               throw new Error(errorMessage);
             }
+
+            // Para DELETE, algunos backend no devuelven JSON, evitamos error intentando parsear
+            if (method === HTTP_METHOD.DELETE) {
+              setStatus(FETCH_STATUS.SUCCESS);
+              setMessage("Solicitud exitosa");
+              resolve(undefined as unknown as T); // Resolvemos sin datos
+              return;
+            }
+
             const data: T = await response.json();
             setStatus(FETCH_STATUS.SUCCESS);
             setMessage("Solicitud exitosa");
@@ -94,11 +103,18 @@ export function usePrivateAPI() {
     [request]
   );
 
+  const del = useCallback(
+    <T = unknown>(url: string | (() => string), headers: Record<string, string> = {}) =>
+      request<T>(url, HTTP_METHOD.DELETE, {}, headers),
+    [request]
+  );
+
   return {
     status,
     message,
     get,
     post,
     patch,
+    del
   };
 }

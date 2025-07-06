@@ -50,8 +50,9 @@ export enum API_ENDPOINTS {
     USER_ALL_REQUESTS = '/api/office/request/all',
     USER_OBJECT_PROCESS = '/api/office/request/object',
     CATEGORIES="/api/categories",
-    ADMIN_ALL_PROCESSES_WS = "ADMIN_ALL_PROCESSES_WS",
+    ADMIN_ALL_PROCESSES_WS = "/ws/manager/process",
     USER_CREATE_REQUEST = "/api/office/request/create",
+    DELETE_USER = "/employee"
 }
 
 export enum HTTP_METHOD {

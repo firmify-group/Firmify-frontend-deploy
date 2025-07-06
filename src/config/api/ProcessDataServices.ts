@@ -4,6 +4,7 @@ import type { AllProcessesResponse, SummaryRequest, AllUserResponse } from 'src/
 import type { AllProcessByUser } from 'src/utils/types/response.client';
 import { API_ENDPOINTS } from 'src/utils/constant/API';
 import { formatToLocalTime } from 'src/utils/helpers/date';
+import { useBaseUrl } from 'src/config/api/BaseUrl.API';
 
 //obtener todos las solicitudes existentes ADMIN
 export const useProcessData = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_REQUESTS) => {
@@ -19,7 +20,6 @@ export const useProcessData = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_REQUES
     const fetchData = async () => {
       try {
         const response = await get<AllProcessesResponse>(endpoint);
-        console.log('Datos obtenidos:', response);
         setData(response);
       } catch (err) {
         console.error('Error al obtener procesos:', err);
@@ -59,31 +59,39 @@ export const useProcessData = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_REQUES
   };
 };
 
-//Resumen de solicitudes para dashboard
+// Resumen de solicitudes para dashboard
 export const useSummaryData = () => {
     const { get } = usePrivateAPI();
     const [summaryData, setSummaryData] = useState<SummaryRequest | null>(null);
-    const fetchSummaryData = useCallback(async () => {
-        const response = await get<SummaryRequest>(API_ENDPOINTS.ADMIN_SUMMARY_PROCESS);
-        setSummaryData(response);
-    }, []);
 
+    const fetchSummaryData = useCallback(async () => {
+        try {
+            const response = await get<SummaryRequest>(API_ENDPOINTS.ADMIN_SUMMARY_PROCESS);
+            setSummaryData(response);
+        } catch (error) {
+            console.error('Error al obtener resumen:', error);
+        }
+    }, [get]);
     useEffect(() => {
+        fetchSummaryData();
     }, [fetchSummaryData]);
+
     const subtitleText = useMemo(
-        () => `Ultima actualización hoy a las ${formatToLocalTime(summaryData?.timestamp)}`,
+        () => `Última actualización hoy a las ${formatToLocalTime(summaryData?.timestamp)}`,
         [summaryData?.timestamp],
     );
 
     const hasRequestData = useMemo(
-        () => Boolean(summaryData?.data?.request),
-        [summaryData?.data?.request],
+    () => !!summaryData?.data?.request && summaryData.data.request.totalProcesos > 0,
+    [summaryData?.data?.request]
     );
 
+
     const counterCategoryData = useMemo(
-        () => Boolean(summaryData?.data?.categorySumers),
+        () => Boolean(summaryData?.data?.categorySumers?.length),
         [summaryData?.data?.categorySumers],
     );
+
     return {
         summaryData,
         subtitleText,
@@ -91,36 +99,74 @@ export const useSummaryData = () => {
         counterCategoryData,
         refetch: fetchSummaryData,
     };
-}
-
-//obtener todas las solicitudes como admin
-export const useAllProcesses = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_PROCESSES_WS) => {
-  const { get } = usePrivateAPI();
-  const [summaryData, setSummaryData] = useState<AllProcessesResponse | null>(null);
-
-  const fetchSummaryData = useCallback(async () => {
-    const response = await get<AllProcessesResponse>(endpoint);
-    setSummaryData(response);
-  }, [get, endpoint]);
-
-  useEffect(() => {
-    fetchSummaryData();
-  }, [fetchSummaryData]);
-
-  const pendingProcesses = useMemo(() => {
-    if (!summaryData?.data?.processes) return [];
-
-    return summaryData.data.processes
-      .filter((process) => process.status === 'Pendiente')
-      .reverse()
-      .slice(0, 6);
-  }, [summaryData?.data?.processes]);
-
-  return {
-    summaryData,
-    pendingProcesses,
-  };
 };
+
+
+export const useAllProcesses = () => {
+	const [summaryData, setSummaryData] = useState<AllProcessesResponse | null>(null);
+	const [connected, setConnected] = useState(false);
+
+	useEffect(() => {
+		const baseUrl = useBaseUrl();
+		const wsUrl = `${baseUrl.replace(/^http/, 'ws')}${API_ENDPOINTS.ADMIN_ALL_PROCESSES_WS}`;
+
+		const ws = new WebSocket(wsUrl);
+
+		ws.onopen = () => {
+			setConnected(true);
+		};
+
+		ws.onmessage = (event) => {
+			try {
+				const data = JSON.parse(event.data);
+
+				if (data?.data?.processes) {
+					setSummaryData({
+						status: data.status,
+						timestamp: data.timestamp,
+						message: data.message,
+						data: {
+							processes: data.data.processes,
+						},
+					});
+				}
+			} catch (error) {
+				console.error('Error al procesar mensaje WebSocket:', error);
+			}
+		};
+
+		ws.onerror = (error) => {
+    if (ws.readyState === WebSocket.CLOSED) return;
+    console.error('Error WebSocket:', error);
+};
+
+
+		ws.onclose = () => {
+			console.warn('WebSocket cerrado');
+			setConnected(false);
+		};
+
+		return () => {
+			ws.close();
+		};
+	}, []);
+
+	const pendingProcesses = useMemo(() => {
+		if (!summaryData?.data?.processes) return [];
+
+		return summaryData.data.processes
+			.filter((process) => process.status?.toUpperCase() === 'PENDIENTE')
+			.reverse()
+			.slice(0, 6);
+	}, [summaryData?.data?.processes]);
+
+	return {
+		summaryData,
+		pendingProcesses,
+		connected,
+	};
+};
+
 
 
 export const useAllUsers = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_USERS) => {
@@ -129,7 +175,6 @@ export const useAllUsers = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_USERS) =>
     const fetchUsersData = useCallback(async () => {
         const response = await get<AllUserResponse>(endpoint);
         setUsersData(response);
-        console.log('Users data fetched:', response);
     }, [get, endpoint]);
     useEffect(() => {
         fetchUsersData();
@@ -149,10 +194,25 @@ export const useAllUsers = (endpoint: string = API_ENDPOINTS.ADMIN_ALL_USERS) =>
         rut: '',
     });
 
-    const handleDeleteUser = useCallback(async (userId: number) => {
-        console.log('Eliminando usuario con ID:', userId);
+    
+
+    const { del } = usePrivateAPI();
+
+    const handleDeleteUser = useCallback(
+    async (userId: string) => {
+        try {
+
+        await del(`${API_ENDPOINTS.DELETE_USER}/${userId}`);
+
         await fetchUsersData();
-    }, [fetchUsersData]);
+        } catch (error: any) {
+        alert(`Error al eliminar usuario: ${error.message || error}`);
+        }
+    },
+    [del, fetchUsersData]
+    );
+
+
 
     const updateFilter = useCallback((field: keyof FilterState, value: string) => {
         setFilters((prev) => ({ ...prev, [field]: value }));
@@ -196,7 +256,6 @@ export const useAllProcessByUser = (endpoint: string = API_ENDPOINTS.USER_ALL_RE
     const fetchProcessData = useCallback(async () => {
         const response = await get<AllProcessByUser>(endpoint);
         setProcessData(response);
-        console.log('Process data fetched:', response);
     }, [get, endpoint]);
     useEffect(() => {
         fetchProcessData();
@@ -234,8 +293,6 @@ export const useAllProcessByUser = (endpoint: string = API_ENDPOINTS.USER_ALL_RE
     const handleObjectProcess = useCallback(
     async (processId: number, description: string) => {
         try {
-        console.log('Objetando proceso con ID:', processId, 'Descripción:', description);
-
         await patch(API_ENDPOINTS.USER_OBJECT_PROCESS, {
             id: processId,
             description,

@@ -69,7 +69,14 @@ const HomeClientPage: React.FC = () => {
 				</section>
 			</main>
 
-			<ProcessModal isOpen={isModalOpen} onClose={handleCloseModal} />
+			<ProcessModal
+				isOpen={isModalOpen}
+				onSubmitSuccess={() => {
+					refetch();
+					handleCloseModal();
+				}}
+				onClose={handleCloseModal}
+			/>
 			<ObjectedModal
 				isOpen={isOpenAlter}
 				onClose={handleCloseModalAlter}
@@ -81,3 +88,4 @@ const HomeClientPage: React.FC = () => {
 };
 
 export default HomeClientPage;
+

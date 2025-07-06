@@ -10,18 +10,8 @@ import { useModal } from 'src/hook/useModal';
 const RequestManagerPage: React.FC = () => {
   const { processes, categories, subtitleText, refresh } = useProcessData();
   const { filters, filteredData, updateFilters } = useFilteredData(processes);
-  console.log('Estados únicos en filteredData:', [...new Set(filteredData.map(p => p.status))]);
   const { pending, rejected, completed, objected } = useGroupedByStatus(filteredData);
   const { isModalOpen, selectedCardId, handleCardClick, handleCloseModal } = useModal();
-
-  console.log('Procesos obtenidos:', processes);
-  console.log('categorias:', categories);
-  console.log('subt: ', subtitleText);
-  console.log('Filtrado:', filteredData);
-  console.log('Pendientes:', pending);
-  console.log('Rechazadas:', rejected);
-  console.log('Completadas:', completed);
-  console.log('objetadas:', objected);
 
   return (
     <>

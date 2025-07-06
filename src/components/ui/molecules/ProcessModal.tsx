@@ -7,7 +7,11 @@ import { useState } from 'react';
 import { API_ENDPOINTS } from 'src/utils/constant/API';
 import { usePrivateAPI } from 'src/config/api/PrivateRequest';
 
-const ProcessModal: React.FC<RequestModalProps> = ({ isOpen, onClose }) => {
+interface ExtendedRequestModalProps extends RequestModalProps {
+	onSubmitSuccess?: () => void;
+}
+
+const ProcessModal: React.FC<ExtendedRequestModalProps> = ({ isOpen, onClose, onSubmitSuccess }) => {
 	const [formData, setFormData] = useState<ProcessFormData>({
 		categoryProcess: '',
 		endDateProcess: '',
@@ -60,6 +64,7 @@ const ProcessModal: React.FC<RequestModalProps> = ({ isOpen, onClose }) => {
 			alert("Solicitud creada con éxito");
 			onClose();
 			resetForm();
+			if(onSubmitSuccess) onSubmitSuccess();
 		} catch (error) {
 			console.error("Error al enviar solicitud:", error);
 			alert("Error al crear la solicitud");
